@@ -5,10 +5,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -17,6 +20,7 @@ import dattran.game.superkid.character.kid.KidCharacter;
 import dattran.game.superkid.character.kid.KidCharacterImpl;
 import dattran.game.superkid.character.kid.KidStateIdle;
 import dattran.game.superkid.config.GameConfig;
+import dattran.game.superkid.listener.CharacterContactListener;
 
 public class SeaportScreen implements Screen {
     private final Batch batch;
@@ -43,12 +47,33 @@ public class SeaportScreen implements Screen {
 
 
         world = new World(new Vector2(0, GameConfig.WORLD_GRAVITY), true);
+        world.setContactListener(new CharacterContactListener());
 
         // load map
         TmxMapLoader loader = new TmxMapLoader();
         tiledMap = loader.load("graphic/level/seaport/seaport.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1f / GameConfig.PPM);
         createMapBound();
+
+        BodyDef bodyDef = new BodyDef();
+        Body body;
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fixtureDef = new FixtureDef();
+        for (MapObject object : tiledMap.getLayers().get("groundObject").getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / GameConfig.PPM,
+                (rect.getY() + rect.getHeight() / 2) / GameConfig.PPM);
+            body = world.createBody(bodyDef);
+
+            shape.setAsBox((rect.getWidth() / 2) / GameConfig.PPM,
+                (rect.getHeight() / 2) / GameConfig.PPM);
+
+            fixtureDef.shape = shape;
+            Fixture fixture = body.createFixture(fixtureDef);
+            fixture.setUserData("ground");
+        }
+
 
         kid = new KidCharacterImpl(world, new Vector2(64/*halb of kid width*/ / GameConfig.PPM,(32/*ground high*/ + 64 /*halb of kid height*/)/ GameConfig.PPM), new KidStateIdle());
     }

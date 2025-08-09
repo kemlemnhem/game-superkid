@@ -26,6 +26,9 @@ public class KidStateIdle extends KidStateGeneral {
         } else if (input.isShieldPressed()) {
             kid.changeState(new KidStateShield());
         }
+        else if (input.isJumpHeld()) {
+            kid.changeState(new KidStateJump());
+        }
     }
 
     @Override

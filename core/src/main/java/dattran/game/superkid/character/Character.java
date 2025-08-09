@@ -24,4 +24,10 @@ public interface Character<S extends CharacterState> {
     Body getBody();
 
     void setFacingRight(boolean facingRight);
+
+    boolean isOnGround();
+
+    void incrementGroundContacts();
+
+    void decrementGroundContacts();
 }

@@ -14,4 +14,6 @@ public interface KidInput {
     boolean isThumpPressed();
 
     boolean isShieldPressed();
+
+    boolean isJumpHeld();
 }

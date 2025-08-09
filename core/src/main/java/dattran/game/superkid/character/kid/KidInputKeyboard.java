@@ -12,6 +12,7 @@ public class KidInputKeyboard extends InputAdapter implements KidInput {
     private boolean punchPressed;
     private boolean thumpPressed;
     private boolean shieldPressed;
+    private boolean jumpHeld;
 
     @Override
     public boolean keyDown(int keycode) {
@@ -36,6 +37,9 @@ public class KidInputKeyboard extends InputAdapter implements KidInput {
                 break;
             case Input.Keys.D:
                 shieldPressed = true;
+                break;
+            case Input.Keys.SPACE:
+                jumpHeld = true;
                 break;
         }
         return true;
@@ -64,6 +68,9 @@ public class KidInputKeyboard extends InputAdapter implements KidInput {
                 break;
             case Input.Keys.D:
                 shieldPressed = false;
+                break;
+            case Input.Keys.SPACE:
+                jumpHeld = false;
                 break;
         }
         return true;
@@ -106,5 +113,10 @@ public class KidInputKeyboard extends InputAdapter implements KidInput {
     @Override
     public boolean isShieldPressed() {
         return shieldPressed;
+    }
+
+    @Override
+    public boolean isJumpHeld() {
+        return jumpHeld;
     }
 }

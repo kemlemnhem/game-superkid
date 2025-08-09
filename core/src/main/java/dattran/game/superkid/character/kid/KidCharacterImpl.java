@@ -14,6 +14,7 @@ public class KidCharacterImpl implements KidCharacter {
     private KidState currentState;
     private TextureRegion frame;
     private boolean facingRight = true;
+    private int groundContacts = 0;
 
 
     private World world;
@@ -56,6 +57,12 @@ public class KidCharacterImpl implements KidCharacter {
         }
         if (state instanceof KidStateShield) {
             return KidAnimationLoader.instance.loadedResource().getShield();
+        }
+        if (state instanceof KidStateJump) {
+            return KidAnimationLoader.instance.loadedResource().getJump();
+        }
+        if (state instanceof KidStateFall) {
+            return KidAnimationLoader.instance.loadedResource().getFall();
         }
         return KidAnimationLoader.instance.loadedResource().getIdle();
     }
@@ -128,5 +135,22 @@ public class KidCharacterImpl implements KidCharacter {
     @Override
     public void setFacingRight(boolean facingRight) {
         this.facingRight = facingRight;
+    }
+
+    @Override
+    public boolean isOnGround() {
+        return groundContacts > 0;
+    }
+
+    @Override
+    public void incrementGroundContacts() {
+        groundContacts++;
+    }
+
+    @Override
+    public void decrementGroundContacts() {
+        if (groundContacts > 0) {
+            groundContacts--;
+        }
     }
 }
