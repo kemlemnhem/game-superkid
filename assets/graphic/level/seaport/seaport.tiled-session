@@ -1,0 +1,20 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+    },
+    "last.imagePath": "C:/Projects/Privat/game/superkid/assets/graphic/level/seaport/tileset",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 36,
+    "openFiles": [
+    ],
+    "project": "seaport.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}
