@@ -15,6 +15,16 @@ public class KidStateIdle extends KidStateGeneral {
         } else if (input.isMoveRightPressed()) {
             kid.setFacingRight(true);
             kid.changeState(new KidStateWalk());
+        } else if(input.isKickPressed()) {
+            kid.changeState(new KidStateKick());
+        }
+        else if (input.isPunchPressed()) {
+            kid.changeState(new KidStatePunch());
+        }
+        else if (input.isThumpPressed()) {
+            kid.changeState(new KidStateThump());
+        } else if (input.isShieldPressed()) {
+            kid.changeState(new KidStateShield());
         }
     }
 

@@ -42,6 +42,21 @@ public class KidCharacterImpl implements KidCharacter {
         if (state instanceof KidStateWalk) {
             return KidAnimationLoader.instance.loadedResource().getWalk();
         }
+        if (state instanceof KidStateRun) {
+            return KidAnimationLoader.instance.loadedResource().getRun();
+        }
+        if (state instanceof KidStateKick) {
+            return KidAnimationLoader.instance.loadedResource().getKick();
+        }
+        if (state instanceof KidStatePunch) {
+            return KidAnimationLoader.instance.loadedResource().getPunch();
+        }
+        if (state instanceof KidStateThump) {
+            return KidAnimationLoader.instance.loadedResource().getThump();
+        }
+        if (state instanceof KidStateShield) {
+            return KidAnimationLoader.instance.loadedResource().getShield();
+        }
         return KidAnimationLoader.instance.loadedResource().getIdle();
     }
 

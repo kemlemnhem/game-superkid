@@ -15,8 +15,14 @@ public class KidStateWalk extends KidStateGeneral {
         } else if (input.isMoveRightPressed()) {
             kid.setFacingRight(true);
             kid.getBody().setLinearVelocity(GameConfig.KID_WALK_SPEED, kid.getBody().getLinearVelocity().y);
+        } else if (input.isKickPressed()) {
+            kid.changeState(new KidStateKick());
         } else {
             kid.changeState(new KidStateIdle());
+        }
+
+        if (input.isRunKeyHeld()) {
+            kid.changeState(new KidStateRun());
         }
     }
 
