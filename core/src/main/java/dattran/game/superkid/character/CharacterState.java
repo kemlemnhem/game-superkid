@@ -1,6 +1,6 @@
 package dattran.game.superkid.character;
 
-public interface CharacterState<C extends Character> {
+public interface CharacterState<C extends Character<S, C>, S extends CharacterState<C, S>> {
 
     void enter(C character);
 

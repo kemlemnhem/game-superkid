@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import dattran.game.superkid.character.AbstractCharacter;
 import dattran.game.superkid.character.kid.input.KidInput;
 import dattran.game.superkid.character.kid.input.KidInputKeyboard;
 import dattran.game.superkid.character.kid.state.*;

@@ -7,7 +7,7 @@ public class CharacterContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        Character<?> character = getCharacter(contact);
+        Character<?,?> character = getCharacter(contact);
         if (character != null && isCharacterGroundContact(contact)) {
             character.incrementGroundContacts();
         }
@@ -15,7 +15,7 @@ public class CharacterContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        Character<?> character = getCharacter(contact);
+        Character<?,?> character = getCharacter(contact);
         if (character != null && isCharacterGroundContact(contact)) {
             character.decrementGroundContacts();
         }
@@ -43,12 +43,12 @@ public class CharacterContactListener implements ContactListener {
             (isCharacter(contact.getFixtureB()) && isGround(contact.getFixtureA()));
     }
 
-    private Character getCharacter(Contact contact) {
+    private Character<?,?> getCharacter(Contact contact) {
         if (isCharacter(contact.getFixtureA())) {
-            return (Character) contact.getFixtureA().getBody().getUserData();
+            return (Character<?,?>) contact.getFixtureA().getBody().getUserData();
         }
         if (isCharacter(contact.getFixtureB())) {
-           return (Character) contact.getFixtureB().getBody().getUserData();
+           return (Character<?,?>) contact.getFixtureB().getBody().getUserData();
         }
         return null;
     }

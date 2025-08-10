@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
-public interface Character<S extends CharacterState> {
+public interface Character<S extends CharacterState<C, S>, C extends Character<S, C>>  {
     boolean isFacingRight();
 
     Animation<TextureRegion> getAnimation(S state);
