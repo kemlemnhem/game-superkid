@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -18,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dattran.game.superkid.character.kid.KidCharacter;
 import dattran.game.superkid.character.kid.KidCharacterImpl;
-import dattran.game.superkid.character.kid.KidStateIdle;
+import dattran.game.superkid.character.kid.state.KidStateIdle;
 import dattran.game.superkid.config.GameConfig;
 import dattran.game.superkid.listener.CharacterContactListener;
 
@@ -132,7 +131,16 @@ public class SeaportScreen implements Screen {
         camera.update();
 
         // map render
-        mapRenderer.setView(camera);
+        // mapRenderer.setView(camera);
+
+        // add margin to avoid cutting big tile
+        mapRenderer.setView(camera.combined,
+            camera.position.x - camera.viewportWidth / 2 - 2,
+            camera.position.y - camera.viewportHeight / 2 - 2,
+            camera.viewportWidth + 4,
+            camera.viewportHeight + 4
+        );
+
         mapRenderer.render();
 
         batch.setProjectionMatrix(camera.combined);

@@ -2,6 +2,7 @@ package dattran.game.superkid.character.kid;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import dattran.game.superkid.character.Character;
 
 public abstract class KidStateGeneral implements KidState {
     protected float stateTime;
@@ -19,4 +20,5 @@ public abstract class KidStateGeneral implements KidState {
         }
         kid.setCurrentFrame(frame);
     }
+
 }
