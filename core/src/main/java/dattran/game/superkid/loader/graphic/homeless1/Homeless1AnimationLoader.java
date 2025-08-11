@@ -37,7 +37,7 @@ public final class Homeless1AnimationLoader implements Loader<Homeless1Animation
             builder.withAttack2(attack2Ani);
 
             Animation<TextureRegion> deadAni = new Animation<>(FRAME_DURATION, textureRegions("Dead.png"));
-            deadAni.setPlayMode(Animation.PlayMode.LOOP);
+            deadAni.setPlayMode(Animation.PlayMode.NORMAL);
             builder.withDead(deadAni);
 
             Animation<TextureRegion> hurtAni = new Animation<>(FRAME_DURATION, textureRegions("Hurt.png"));

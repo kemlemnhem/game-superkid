@@ -26,7 +26,9 @@ import dattran.game.superkid.config.GameConfig;
 import dattran.game.superkid.listener.CharacterContactListener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SeaportScreen implements Screen {
     private final Batch batch;
@@ -170,10 +172,24 @@ public class SeaportScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         kid.render(batch);
+        updateEnemies();
         for(Character character : enemies) {
             character.render(batch);
         }
         batch.end();
+    }
+
+    private void updateEnemies() {
+        Set<Character> enemiesToRemove = new HashSet<>();
+        for (Character character : enemies) {
+            if (character.isDead()) {
+                enemiesToRemove.add(character);
+            }
+        }
+        for(Character character : enemiesToRemove) {
+            character.dispose();
+            enemies.remove(character);
+        }
     }
 
     @Override

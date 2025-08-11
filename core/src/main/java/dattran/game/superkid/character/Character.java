@@ -31,6 +31,11 @@ public interface Character<S extends CharacterState<C, S>, C extends Character<S
 
     void decrementGroundContacts();
 
-    S getCurrentState();
+    int getHp();
 
+    void setHp(int hp);
+
+    boolean isDead();
+
+    void dispose();
 }

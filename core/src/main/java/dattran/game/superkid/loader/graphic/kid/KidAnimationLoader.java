@@ -27,7 +27,7 @@ public final class KidAnimationLoader implements Loader<KidAnimation> {
             KidAnimation.KidAnimationBuilder builder = KidAnimation.KidAnimationBuilder.aKidAnimation();
 
             Animation<TextureRegion> deadAni = new Animation<>(FRAME_DURATION, textureRegions("Dead.png"));
-            deadAni.setPlayMode(Animation.PlayMode.LOOP);
+            deadAni.setPlayMode(Animation.PlayMode.NORMAL);
             builder.withDead(deadAni);
 
             Animation<TextureRegion> hurtAni = new Animation<>(FRAME_DURATION, textureRegions("Hurt.png"));

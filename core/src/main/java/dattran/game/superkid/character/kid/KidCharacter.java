@@ -13,4 +13,5 @@ public interface KidCharacter extends Character<KidState, KidCharacter> {
     boolean shouldKickHitEnemy(Enemy enemy);
     void onKickHitEnemy(Enemy enemy);
     Set<Enemy> getEnemiesKickHit();
+    int getKickPower();
 }

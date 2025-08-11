@@ -50,6 +50,16 @@ public final class GameConfig {
     public static final float KID_HEIGHT = 128 / PPM;
 
 
+
+    public static final float HOMELESS1_WIDTH  = 128 / PPM ;
+    public static final float HOMELESS1_HEIGHT = 128 / PPM;
+    public static final float HOMELESS1_HURT_SHIFT_X = 1f;
+    public static final float HOMELESS1_HURT_SHIFT_Y = 2f;
+
+
+
+
+
     public static final float SEAPORT_MAP_WIDTH = 2304 /*72 tile * 32 size*/ / PPM;
     public static final float SEAPORT_MAP_HEIGHT = 640 /*20 tile * 32 size*/ / PPM;
 

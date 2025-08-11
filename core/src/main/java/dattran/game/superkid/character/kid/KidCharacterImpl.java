@@ -27,10 +27,12 @@ public class KidCharacterImpl implements KidCharacter {
     private Set<Enemy> enemiesKickHit = new HashSet<>();
 
 
-    private World world;
+    private final World world;
     private Body body;
 
     private final KidInput playerInput;
+
+    private int hp = 100;
 
     public KidCharacterImpl(World world, Vector2 startPosition, KidState startState) {
         this.world = world;
@@ -103,15 +105,17 @@ public class KidCharacterImpl implements KidCharacter {
 
     @Override
     public void render(Batch batch) {
-        update(Gdx.graphics.getDeltaTime());
+        if (!isDead()) {
+            update(Gdx.graphics.getDeltaTime());
 
-        float width = frame.getRegionWidth() / GameConfig.PPM;
-        float height = frame.getRegionHeight() / GameConfig.PPM;
+            float width = frame.getRegionWidth() / GameConfig.PPM;
+            float height = frame.getRegionHeight() / GameConfig.PPM;
 
-        float spriteX = body.getPosition().x - width / 2;
-        float spriteY = body.getPosition().y - height / 2;
+            float spriteX = body.getPosition().x - width / 2;
+            float spriteY = body.getPosition().y - height / 2;
 
-        batch.draw(frame, spriteX, spriteY, width, height);
+            batch.draw(frame, spriteX, spriteY, width, height);
+        }
     }
 
     @Override
@@ -169,9 +173,25 @@ public class KidCharacterImpl implements KidCharacter {
     }
 
     @Override
-    public KidState getCurrentState() {
-        return currentState;
+    public int getHp() {
+        return hp;
     }
+
+    @Override
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    @Override
+    public boolean isDead() {
+        return getHp() <= 0;
+    }
+
+    @Override
+    public void dispose() {
+        world.destroyBody(body);
+    }
+
 
     @Override
     public boolean shouldKickHitEnemy(Enemy enemy) {
@@ -241,11 +261,18 @@ public class KidCharacterImpl implements KidCharacter {
             return;
         }
         enemiesKickHit.add(enemy);
-        Gdx.app.log("Kick Enemy:", enemy.toString());;
+        Gdx.app.log("Kicked", "enemy");
+        enemy.setFacingRight(!isFacingRight());
+        enemy.gettingHurtByKid(this);
     }
 
     @Override
     public Set<Enemy> getEnemiesKickHit() {
         return enemiesKickHit;
+    }
+
+    @Override
+    public int getKickPower() {
+        return 10;
     }
 }

@@ -8,7 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import dattran.game.superkid.character.Enemy;
 import dattran.game.superkid.character.homeless1.state.Homeless1State;
+import dattran.game.superkid.character.homeless1.state.Homeless1StateDead;
+import dattran.game.superkid.character.homeless1.state.Homeless1StateHurt;
 import dattran.game.superkid.character.homeless1.state.Homeless1StateIdle1;
+import dattran.game.superkid.character.kid.KidCharacter;
 import dattran.game.superkid.config.GameConfig;
 import dattran.game.superkid.loader.graphic.homeless1.Homeless1AnimationLoader;
 
@@ -19,8 +22,10 @@ public class Homeless1CharacterImpl implements Homeless1Character, Enemy {
     private int groundContacts = 0;
 
 
-    private World world;
+    private final World world;
     private Body body;
+
+    private int hp = 20;
 
 
     public Homeless1CharacterImpl(World world, Vector2 startPosition, Homeless1State startState) {
@@ -38,6 +43,12 @@ public class Homeless1CharacterImpl implements Homeless1Character, Enemy {
     public Animation<TextureRegion> getAnimation(Homeless1State state) {
         if (state instanceof Homeless1StateIdle1) {
             return Homeless1AnimationLoader.instance.loadedResource().getIdle1();
+        }
+        if (state instanceof Homeless1StateHurt) {
+            return Homeless1AnimationLoader.instance.loadedResource().getHurt();
+        }
+        if (state instanceof Homeless1StateDead) {
+            return Homeless1AnimationLoader.instance.loadedResource().getDead();
         }
 
         return Homeless1AnimationLoader.instance.loadedResource().getIdle1();
@@ -66,15 +77,17 @@ public class Homeless1CharacterImpl implements Homeless1Character, Enemy {
 
     @Override
     public void render(Batch batch) {
-        update(Gdx.graphics.getDeltaTime());
+        if (!isDead()) {
+            update(Gdx.graphics.getDeltaTime());
 
-        float width = frame.getRegionWidth() / GameConfig.PPM;
-        float height = frame.getRegionHeight() / GameConfig.PPM;
+            float width = frame.getRegionWidth() / GameConfig.PPM;
+            float height = frame.getRegionHeight() / GameConfig.PPM;
 
-        float spriteX = body.getPosition().x - width / 2;
-        float spriteY = body.getPosition().y - height / 2;
+            float spriteX = body.getPosition().x - width / 2;
+            float spriteY = body.getPosition().y - height / 2;
 
-        batch.draw(frame, spriteX, spriteY, width, height);
+            batch.draw(frame, spriteX, spriteY, width, height);
+        }
     }
 
     @Override
@@ -87,8 +100,8 @@ public class Homeless1CharacterImpl implements Homeless1Character, Enemy {
         body.setUserData(this);
 
         PolygonShape bodyShape = new PolygonShape();
-        float bodyWidth = GameConfig.KID_WIDTH/2;
-        float bodyHeight = GameConfig.KID_HEIGHT /2;
+        float bodyWidth = GameConfig.HOMELESS1_WIDTH/2;
+        float bodyHeight = GameConfig.HOMELESS1_HEIGHT /2;
         bodyShape.setAsBox(bodyWidth, bodyHeight);
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -115,6 +128,20 @@ public class Homeless1CharacterImpl implements Homeless1Character, Enemy {
     }
 
     @Override
+    public void gettingHurtByKid(KidCharacter kid) {
+        if (getHp() <= 0) {
+            die();
+            return;
+        }
+        setHp(getHp() - kid.getKickPower());
+        changeState(new Homeless1StateHurt());
+    }
+
+    private void die() {
+        changeState(new Homeless1StateDead());
+    }
+
+    @Override
     public boolean isOnGround() {
         return groundContacts > 0;
     }
@@ -132,7 +159,23 @@ public class Homeless1CharacterImpl implements Homeless1Character, Enemy {
     }
 
     @Override
-    public Homeless1State getCurrentState() {
-        return currentState;
+    public int getHp() {
+        return this.hp;
     }
+
+    @Override
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    @Override
+    public boolean isDead() {
+        return getHp() == Integer.MIN_VALUE;
+    }
+
+    @Override
+    public void dispose() {
+        world.destroyBody(body);
+    }
+
 }

@@ -1,0 +1,25 @@
+package dattran.game.superkid.character.homeless1.state;
+
+import dattran.game.superkid.character.homeless1.Homeless1Character;
+import dattran.game.superkid.config.GameConfig;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class Homeless1StateHurt extends HomeLess1StateGeneral {
+    private static final Logger LOGGER = Logger.getLogger(Homeless1StateHurt.class.getName());
+
+    @Override
+    public void enter(Homeless1Character homeless1) {
+        LOGGER.log(Level.INFO, "Homeless1-Entering Hurt State");
+        stateTime = 0;
+        if (homeless1.getBody() != null) {
+            homeless1.getBody().setLinearVelocity(homeless1.isFacingRight() ? -GameConfig.HOMELESS1_HURT_SHIFT_X : GameConfig.HOMELESS1_HURT_SHIFT_X, GameConfig.HOMELESS1_HURT_SHIFT_Y);
+        }
+    }
+
+    @Override
+    public void exit(Homeless1Character homeless1) {
+        LOGGER.log(Level.INFO, "Homeless1-Exiting Hurt State");
+    }
+}
