@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dattran.game.superkid.loader.graphic.AnimationLoader;
-import dattran.game.superkid.loader.graphic.kid.KidAnimationLoader;
 import dattran.game.superkid.screen.SeaportScreen;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */

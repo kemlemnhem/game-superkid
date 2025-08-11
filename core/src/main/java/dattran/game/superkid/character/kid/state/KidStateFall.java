@@ -14,8 +14,8 @@ public class KidStateFall extends KidStateGeneral {
     @Override
     public void update(KidCharacter kid, float delta) {
         super.update(kid, delta);
-        if (kid.isOnGround()) {
-            float velocityX = kid.getBody().getLinearVelocity().x;
+        if (kid.getPhysik().isOnGround()) {
+            float velocityX = kid.getPhysik().getBody().getLinearVelocity().x;
             if (Math.abs(velocityX) < GameConfig.KID_WALK_IDLE_DIFFERENCE) {
                 kid.changeState(new KidStateIdle());
             } else {
@@ -27,22 +27,22 @@ public class KidStateFall extends KidStateGeneral {
     @Override
     public void handleInput(KidCharacter kid, KidInput input) {
         if (input.isMoveLeftPressed()) {
-            kid.setFacingRight(false);
+            kid.getPhysik().setFacingRight(false);
         } else if (input.isMoveRightPressed()) {
-            kid.setFacingRight(true);
+            kid.getPhysik().setFacingRight(true);
         }
     }
 
     @Override
     public void enter(KidCharacter kid) {
         LOGGER.log(Level.INFO, "Entering FallState");
-        kid.getBody().setGravityScale(GameConfig.KID_JUMP_GRAVITY_SCALE_FAST);
+        kid.getPhysik().getBody().setGravityScale(GameConfig.KID_JUMP_GRAVITY_SCALE_FAST);
         stateTime = 0;
     }
 
     @Override
     public void exit(KidCharacter kid) {
         LOGGER.log(Level.INFO, "Exiting FallState");
-        kid.getBody().setGravityScale(GameConfig.KID_JUMP_GRAVITY_SCALE_NORMAL);
+        kid.getPhysik().getBody().setGravityScale(GameConfig.KID_JUMP_GRAVITY_SCALE_NORMAL);
     }
 }

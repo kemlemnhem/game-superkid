@@ -1,20 +1,17 @@
 package dattran.game.superkid.listener;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import dattran.game.superkid.character.Character;
 import dattran.game.superkid.character.Enemy;
 import dattran.game.superkid.character.kid.KidCharacter;
-import dattran.game.superkid.config.GameConfig;
+import dattran.game.superkid.character.Physik;
 
 public class CharacterContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        Character<?,?> character = getCharacter(contact);
-        if (character != null && isCharacterGroundContact(contact)) {
-            character.incrementGroundContacts();
+        Physik physik = getPhysik(contact);
+        if (physik != null && isPhysikGroundContact(contact)) {
+            physik.incrementGroundContacts();
         }
 
         if (isKidAttackHitsEnemy(contact)) {
@@ -44,9 +41,9 @@ public class CharacterContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        Character<?,?> character = getCharacter(contact);
-        if (character != null && isCharacterGroundContact(contact)) {
-            character.decrementGroundContacts();
+        Physik physik = getPhysik(contact);
+        if (physik != null && isPhysikGroundContact(contact)) {
+            physik.decrementGroundContacts();
         }
     }
 
@@ -55,7 +52,7 @@ public class CharacterContactListener implements ContactListener {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
 
-        if (isCharacter(fixtureA) && isCharacter(fixtureB)) {
+        if (isPhysik(fixtureA) && isPhysik(fixtureB)) {
             contact.setEnabled(false);
         }
     }
@@ -69,21 +66,21 @@ public class CharacterContactListener implements ContactListener {
         return "ground".equals(fixture.getUserData());
     }
 
-    private boolean isCharacter(Fixture fixture) {
-        return fixture.getBody() != null && fixture.getBody().getUserData() instanceof Character;
+    private boolean isPhysik(Fixture fixture) {
+        return fixture.getBody() != null && fixture.getBody().getUserData() instanceof Physik;
     }
 
-    private boolean isCharacterGroundContact(Contact contact) {
-        return (isCharacter(contact.getFixtureA()) && isGround(contact.getFixtureB())) ||
-            (isCharacter(contact.getFixtureB()) && isGround(contact.getFixtureA()));
+    private boolean isPhysikGroundContact(Contact contact) {
+        return (isPhysik(contact.getFixtureA()) && isGround(contact.getFixtureB())) ||
+            (isPhysik(contact.getFixtureB()) && isGround(contact.getFixtureA()));
     }
 
-    private Character<?,?> getCharacter(Contact contact) {
-        if (isCharacter(contact.getFixtureA())) {
-            return (Character<?,?>) contact.getFixtureA().getBody().getUserData();
+    private Physik getPhysik(Contact contact) {
+        if (isPhysik(contact.getFixtureA())) {
+            return (Physik) contact.getFixtureA().getBody().getUserData();
         }
-        if (isCharacter(contact.getFixtureB())) {
-           return (Character<?,?>) contact.getFixtureB().getBody().getUserData();
+        if (isPhysik(contact.getFixtureB())) {
+           return (Physik) contact.getFixtureB().getBody().getUserData();
         }
         return null;
     }

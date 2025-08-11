@@ -64,9 +64,5 @@ public final class GameConfig {
     public static final float SEAPORT_MAP_HEIGHT = 640 /*20 tile * 32 size*/ / PPM;
 
 
-    public static final short ENEMY_BIT = 1;
-    public static  final short KID_ATTACK_BIT = 2;
-    public static final short GROUND_BIT = 4;
-    public static final short KID_BIT = 8;
 
 }

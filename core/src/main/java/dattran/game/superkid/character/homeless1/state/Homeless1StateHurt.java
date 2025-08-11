@@ -13,8 +13,8 @@ public class Homeless1StateHurt extends HomeLess1StateGeneral {
     public void enter(Homeless1Character homeless1) {
         LOGGER.log(Level.INFO, "Homeless1-Entering Hurt State");
         stateTime = 0;
-        if (homeless1.getBody() != null) {
-            homeless1.getBody().setLinearVelocity(homeless1.isFacingRight() ? -GameConfig.HOMELESS1_HURT_SHIFT_X : GameConfig.HOMELESS1_HURT_SHIFT_X, GameConfig.HOMELESS1_HURT_SHIFT_Y);
+        if (homeless1.getPhysik().getBody() != null) {
+            homeless1.getPhysik().getBody().setLinearVelocity(homeless1.getPhysik().isFacingRight() ? -GameConfig.HOMELESS1_HURT_SHIFT_X : GameConfig.HOMELESS1_HURT_SHIFT_X, GameConfig.HOMELESS1_HURT_SHIFT_Y);
         }
     }
 

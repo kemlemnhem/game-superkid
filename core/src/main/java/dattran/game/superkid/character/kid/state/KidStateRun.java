@@ -14,11 +14,11 @@ public class KidStateRun extends KidStateGeneral {
     @Override
     public void handleInput(KidCharacter kid, KidInput input) {
         if (input.isMoveLeftPressed()) {
-            kid.setFacingRight(false);
-            kid.getBody().setLinearVelocity(-GameConfig.KID_RUN_SPEED, kid.getBody().getLinearVelocity().y);
+            kid.getPhysik().setFacingRight(false);
+            kid.getPhysik().getBody().setLinearVelocity(-GameConfig.KID_RUN_SPEED, kid.getPhysik().getBody().getLinearVelocity().y);
         } else if (input.isMoveRightPressed()) {
-            kid.setFacingRight(true);
-            kid.getBody().setLinearVelocity(GameConfig.KID_RUN_SPEED, kid.getBody().getLinearVelocity().y);
+            kid.getPhysik().setFacingRight(true);
+            kid.getPhysik().getBody().setLinearVelocity(GameConfig.KID_RUN_SPEED, kid.getPhysik().getBody().getLinearVelocity().y);
         } else {
             kid.changeState(new KidStateIdle());
         }

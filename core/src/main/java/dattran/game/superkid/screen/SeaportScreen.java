@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -15,13 +14,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dattran.game.superkid.character.Character;
+import dattran.game.superkid.character.GameCharacter;
 import dattran.game.superkid.character.homeless1.Homeless1Character;
 import dattran.game.superkid.character.homeless1.Homeless1CharacterImpl;
 import dattran.game.superkid.character.homeless1.state.Homeless1StateIdle1;
 import dattran.game.superkid.character.kid.KidCharacter;
 import dattran.game.superkid.character.kid.KidCharacterImpl;
 import dattran.game.superkid.character.kid.state.KidStateIdle;
+import dattran.game.superkid.config.Flag;
 import dattran.game.superkid.config.GameConfig;
 import dattran.game.superkid.listener.CharacterContactListener;
 
@@ -36,14 +36,14 @@ public class SeaportScreen implements Screen {
     private final OrthographicCamera camera;
     private final Viewport gameport;
 
-    private World world;
+    private final World world;
 
-    private TiledMap tiledMap;
-    private OrthogonalTiledMapRenderer mapRenderer;
+    private final TiledMap tiledMap;
+    private final OrthogonalTiledMapRenderer mapRenderer;
 
     private final KidCharacter kid;
 
-    private List<Character> enemies = new ArrayList<>();
+    private final List<GameCharacter<?,?>> enemies = new ArrayList<>();
 
     public SeaportScreen(Batch batch) {
         this.batch = batch;
@@ -66,8 +66,8 @@ public class SeaportScreen implements Screen {
         createMapBound();
 
 
-        for (MapObject object : tiledMap.getLayers().get("groundObject").getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+        for (RectangleMapObject object : tiledMap.getLayers().get("groundObject").getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = object.getRectangle();
             BodyDef bodyDef = new BodyDef();
             Body body;
             PolygonShape shape = new PolygonShape();
@@ -80,15 +80,15 @@ public class SeaportScreen implements Screen {
             shape.setAsBox(rect.width / 2 / GameConfig.PPM, rect.height / 2 / GameConfig.PPM);
 
             fixtureDef.shape = shape;
-            fixtureDef.filter.categoryBits  = GameConfig.GROUND_BIT;
-            fixtureDef.filter.maskBits = GameConfig.ENEMY_BIT | GameConfig.KID_BIT;
+            fixtureDef.filter.categoryBits  = Flag.combine(Flag.GROUND);
+            fixtureDef.filter.maskBits = Flag.combine(Flag.KID, Flag.ENEMY);
             body.createFixture(fixtureDef).setUserData("ground");
             shape.dispose();
         }
 
         //Enemy Layer
-        for (MapObject object : tiledMap.getLayers().get("enemyObject").getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+        for (RectangleMapObject object : tiledMap.getLayers().get("enemyObject").getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = object.getRectangle();
             float x = rect.x / GameConfig.PPM;
             float y = rect.y / GameConfig.PPM;
 
@@ -146,7 +146,7 @@ public class SeaportScreen implements Screen {
         world.step(GameConfig.WORLD_DELTA_TIME, GameConfig.WORLD_VELOCITY_ITERATION, GameConfig.WORLD_POSITION_ITERATION);
 
 
-        Vector2 playerPos = kid.getBody().getPosition();
+        Vector2 playerPos = kid.getPhysik().getBody().getPosition();
         float halfViewportWidth = camera.viewportWidth / 2f;
         float halfViewportHeight = camera.viewportHeight / 2f;
 
@@ -173,21 +173,21 @@ public class SeaportScreen implements Screen {
         batch.begin();
         kid.render(batch);
         updateEnemies();
-        for(Character character : enemies) {
+        for(GameCharacter<?,?> character : enemies) {
             character.render(batch);
         }
         batch.end();
     }
 
     private void updateEnemies() {
-        Set<Character> enemiesToRemove = new HashSet<>();
-        for (Character character : enemies) {
+        Set<GameCharacter<?,?>> enemiesToRemove = new HashSet<>();
+        for (GameCharacter<?,?> character : enemies) {
             if (character.isDead()) {
                 enemiesToRemove.add(character);
             }
         }
-        for(Character character : enemiesToRemove) {
-            character.dispose();
+        for(GameCharacter<?,?> character : enemiesToRemove) {
+            character.getPhysik().dispose();
             enemies.remove(character);
         }
     }

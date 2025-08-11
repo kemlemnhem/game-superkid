@@ -15,12 +15,12 @@ public abstract class HomeLess1StateGeneral implements Homeless1State {
         Animation<TextureRegion> animation = homeless1.getAnimation(this);
         TextureRegion frame = animation.getKeyFrame(stateTime);
 
-        if (!homeless1.isFacingRight() && !frame.isFlipX()) {
+        if (!homeless1.getPhysik().isFacingRight() && !frame.isFlipX()) {
             frame.flip(true, false);
-        } else if (homeless1.isFacingRight() && frame.isFlipX()) {
+        } else if (homeless1.getPhysik().isFacingRight() && frame.isFlipX()) {
             frame.flip(true, false);
         }
-        homeless1.setCurrentFrame(frame);
+        homeless1.getPhysik().setCurrentFrame(frame);
     }
 
 }
