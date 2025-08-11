@@ -15,11 +15,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import dattran.game.superkid.character.Character;
+import dattran.game.superkid.character.homeless1.Homeless1Character;
+import dattran.game.superkid.character.homeless1.Homeless1CharacterImpl;
+import dattran.game.superkid.character.homeless1.state.Homeless1StateIdle1;
 import dattran.game.superkid.character.kid.KidCharacter;
 import dattran.game.superkid.character.kid.KidCharacterImpl;
 import dattran.game.superkid.character.kid.state.KidStateIdle;
 import dattran.game.superkid.config.GameConfig;
 import dattran.game.superkid.listener.CharacterContactListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SeaportScreen implements Screen {
     private final Batch batch;
@@ -33,6 +40,8 @@ public class SeaportScreen implements Screen {
     private OrthogonalTiledMapRenderer mapRenderer;
 
     private final KidCharacter kid;
+
+    private List<Character> enemies = new ArrayList<>();
 
     public SeaportScreen(Batch batch) {
         this.batch = batch;
@@ -54,23 +63,38 @@ public class SeaportScreen implements Screen {
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1f / GameConfig.PPM);
         createMapBound();
 
-        BodyDef bodyDef = new BodyDef();
-        Body body;
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fixtureDef = new FixtureDef();
+
         for (MapObject object : tiledMap.getLayers().get("groundObject").getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            BodyDef bodyDef = new BodyDef();
+            Body body;
+            PolygonShape shape = new PolygonShape();
+            FixtureDef fixtureDef = new FixtureDef();
             bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / GameConfig.PPM,
-                (rect.getY() + rect.getHeight() / 2) / GameConfig.PPM);
+            bodyDef.position.set((rect.x + rect.width / 2) / GameConfig.PPM,
+                (rect.y + rect.height / 2) / GameConfig.PPM);
             body = world.createBody(bodyDef);
 
-            shape.setAsBox((rect.getWidth() / 2) / GameConfig.PPM,
-                (rect.getHeight() / 2) / GameConfig.PPM);
+            shape.setAsBox(rect.width / 2 / GameConfig.PPM, rect.height / 2 / GameConfig.PPM);
 
             fixtureDef.shape = shape;
-            Fixture fixture = body.createFixture(fixtureDef);
-            fixture.setUserData("ground");
+            fixtureDef.filter.categoryBits  = GameConfig.GROUND_BIT;
+            fixtureDef.filter.maskBits = GameConfig.ENEMY_BIT | GameConfig.KID_BIT;
+            body.createFixture(fixtureDef).setUserData("ground");
+            shape.dispose();
+        }
+
+        //Enemy Layer
+        for (MapObject object : tiledMap.getLayers().get("enemyObject").getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            float x = rect.x / GameConfig.PPM;
+            float y = rect.y / GameConfig.PPM;
+
+            String type = object.getProperties().get("type", String.class);
+            if ("Homeless1".equals(type)) {
+                Homeless1Character newEnemy = new Homeless1CharacterImpl(world, new Vector2(x,y), new Homeless1StateIdle1());
+                enemies.add(newEnemy);
+            }
         }
 
 
@@ -146,6 +170,9 @@ public class SeaportScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         kid.render(batch);
+        for(Character character : enemies) {
+            character.render(batch);
+        }
         batch.end();
     }
 

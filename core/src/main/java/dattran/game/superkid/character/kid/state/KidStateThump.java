@@ -14,13 +14,13 @@ public class KidStateThump extends KidStateBattle {
     }
 
     @Override
-    public void enter(KidCharacter character) {
+    public void enter(KidCharacter kid) {
         LOGGER.log(Level.INFO, "Entering Thump State");
         stateTime = 0;
     }
 
     @Override
-    public void exit(KidCharacter character) {
+    public void exit(KidCharacter kid) {
         LOGGER.log(Level.INFO, "Existing Thump State");
     }
 }

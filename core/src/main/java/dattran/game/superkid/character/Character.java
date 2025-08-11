@@ -30,4 +30,7 @@ public interface Character<S extends CharacterState<C, S>, C extends Character<S
     void incrementGroundContacts();
 
     void decrementGroundContacts();
+
+    S getCurrentState();
+
 }

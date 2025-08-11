@@ -3,7 +3,6 @@ package dattran.game.superkid.character.kid.state;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dattran.game.superkid.character.kid.KidCharacter;
-import dattran.game.superkid.character.kid.KidStateGeneral;
 
 public abstract class KidStateBattle extends KidStateGeneral {
 

@@ -14,13 +14,18 @@ public class KidStateKick extends KidStateBattle {
     }
 
     @Override
-    public void enter(KidCharacter character) {
+    public void enter(KidCharacter kid) {
         LOGGER.log(Level.INFO, "Entering Kick State");
         stateTime = 0;
+        kid.getEnemiesKickHit().clear();
+        kid.addKickHitBox();
+        kid.onKickHit();
+
     }
 
     @Override
-    public void exit(KidCharacter character) {
+    public void exit(KidCharacter kid) {
         LOGGER.log(Level.INFO, "Existing Kick State");
+        kid.removeKickHitBox();
     }
 }

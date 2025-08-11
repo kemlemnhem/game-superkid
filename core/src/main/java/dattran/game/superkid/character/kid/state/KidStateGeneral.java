@@ -1,8 +1,8 @@
-package dattran.game.superkid.character.kid;
+package dattran.game.superkid.character.kid.state;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import dattran.game.superkid.character.Character;
+import dattran.game.superkid.character.kid.KidCharacter;
 
 public abstract class KidStateGeneral implements KidState {
     protected float stateTime;

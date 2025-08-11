@@ -1,7 +1,12 @@
 package dattran.game.superkid.listener;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import dattran.game.superkid.character.Character;
+import dattran.game.superkid.character.Enemy;
+import dattran.game.superkid.character.kid.KidCharacter;
+import dattran.game.superkid.config.GameConfig;
 
 public class CharacterContactListener implements ContactListener {
 
@@ -11,6 +16,30 @@ public class CharacterContactListener implements ContactListener {
         if (character != null && isCharacterGroundContact(contact)) {
             character.incrementGroundContacts();
         }
+
+        if (isKidAttackHitsEnemy(contact)) {
+           KidCharacter kid = getKid(contact);
+           Enemy enemy = getEnemy(contact);
+           if (kid != null && enemy != null) {
+               if (kid.shouldKickHitEnemy(enemy)) {
+                   kid.onKickHitEnemy(enemy);
+               }
+           }
+        }
+    }
+
+    private boolean isKidAttackHitsEnemy(Contact contact) {
+        String udA = (String) contact.getFixtureA().getUserData();
+        String udB = (String) contact.getFixtureB().getUserData();
+        return (isKidAttackHitBox(udA) && isEnemy(udB)) || (isKidAttackHitBox(udB) && isEnemy(udA));
+    }
+
+    private boolean isKidAttackHitBox(String userData) {
+        return "kid_kick".equals(userData);
+    }
+
+    private boolean isEnemy(String userData) {
+        return userData.startsWith("enemy_");
     }
 
     @Override
@@ -23,6 +52,12 @@ public class CharacterContactListener implements ContactListener {
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
+        Fixture fixtureA = contact.getFixtureA();
+        Fixture fixtureB = contact.getFixtureB();
+
+        if (isCharacter(fixtureA) && isCharacter(fixtureB)) {
+            contact.setEnabled(false);
+        }
     }
 
     @Override
@@ -52,4 +87,31 @@ public class CharacterContactListener implements ContactListener {
         }
         return null;
     }
+
+    private KidCharacter getKid(Contact contact) {
+        Object userData = contact.getFixtureA().getBody().getUserData();
+        if (userData instanceof KidCharacter) {
+            return (KidCharacter) userData;
+        } else {
+            userData = contact.getFixtureB().getBody().getUserData();
+            if (userData instanceof KidCharacter) {
+                return (KidCharacter) userData;
+            }
+        }
+        return null;
+    }
+
+    private Enemy getEnemy(Contact contact) {
+        Object userData = contact.getFixtureA().getBody().getUserData();
+        if (userData instanceof Enemy) {
+            return (Enemy) userData;
+        } else {
+            userData = contact.getFixtureB().getBody().getUserData();
+            if (userData instanceof Enemy) {
+                return (Enemy) userData;
+            }
+        }
+        return null;
+    }
+
 }

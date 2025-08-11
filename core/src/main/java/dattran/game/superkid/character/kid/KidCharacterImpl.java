@@ -6,11 +6,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import dattran.game.superkid.character.Enemy;
 import dattran.game.superkid.character.kid.input.KidInput;
 import dattran.game.superkid.character.kid.input.KidInputKeyboard;
 import dattran.game.superkid.character.kid.state.*;
 import dattran.game.superkid.config.GameConfig;
 import dattran.game.superkid.loader.graphic.kid.KidAnimationLoader;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class KidCharacterImpl implements KidCharacter {
 
@@ -18,6 +22,9 @@ public class KidCharacterImpl implements KidCharacter {
     private TextureRegion frame;
     private boolean facingRight = true;
     private int groundContacts = 0;
+
+    private Fixture kickHitbox;
+    private Set<Enemy> enemiesKickHit = new HashSet<>();
 
 
     private World world;
@@ -32,6 +39,8 @@ public class KidCharacterImpl implements KidCharacter {
         this.changeState(startState);
         playerInput = new KidInputKeyboard();
     }
+
+
 
     @Override
     public boolean isFacingRight() {
@@ -123,6 +132,8 @@ public class KidCharacterImpl implements KidCharacter {
         fixtureDef.shape = bodyShape;
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.2f;
+        fixtureDef.filter.categoryBits = GameConfig.KID_BIT;
+        fixtureDef.filter.maskBits = GameConfig.GROUND_BIT;
 
         Fixture mainFixture = body.createFixture(fixtureDef);
         mainFixture.setUserData("kid");
@@ -155,5 +166,86 @@ public class KidCharacterImpl implements KidCharacter {
         if (groundContacts > 0) {
             groundContacts--;
         }
+    }
+
+    @Override
+    public KidState getCurrentState() {
+        return currentState;
+    }
+
+    @Override
+    public boolean shouldKickHitEnemy(Enemy enemy) {
+        Vector2 hitBoxOffset = new Vector2(isFacingRight() ? GameConfig.KID_KICK_OFFSET_RIGHT : GameConfig.KID_KICK_OFFSET_LEFT);
+        Vector2 hitBoxCenter = getBody().getPosition().cpy().add(hitBoxOffset);
+        Vector2 enemyPos = enemy.getBody().getPosition();
+
+        float hitboxDistance = hitBoxCenter.dst(enemyPos);
+        float bodyDistance = getBody().getPosition().dst(enemyPos);
+
+        Gdx.app.log("BodyDistance:" + bodyDistance, "Hitboxdistance:" + hitboxDistance);
+
+        return bodyDistance < GameConfig.KID_KICK_BODY_MAX_ALLOW_DISTANCE || hitboxDistance < GameConfig.KID_KICK_HIT_BOX_MAX_ALLOW_DISTANCE;
+    }
+
+
+    @Override
+    public void addKickHitBox() {
+        if  (kickHitbox == null) {
+            PolygonShape shape = new PolygonShape();
+            float halfWidth = GameConfig.KID_KICK_WIDTH / 2;
+            float halfHeight = GameConfig.KID_KICK_HEIGHT / 2;
+            Vector2 kickHitboxOffset = new Vector2(isFacingRight() ? GameConfig.KID_KICK_OFFSET_RIGHT : GameConfig.KID_KICK_OFFSET_LEFT);
+            shape.setAsBox(halfWidth, halfHeight, kickHitboxOffset, 0);
+
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = shape;
+            fixtureDef.isSensor = true;
+            fixtureDef.filter.categoryBits = GameConfig.KID_ATTACK_BIT;
+            fixtureDef.filter.maskBits = GameConfig.ENEMY_BIT;
+
+            kickHitbox = body.createFixture(fixtureDef);
+            kickHitbox.setUserData("kid_kick");
+
+            shape.dispose();
+        }
+    }
+
+    @Override
+    public void removeKickHitBox() {
+        if (kickHitbox != null) {
+            body.destroyFixture(kickHitbox);
+            kickHitbox = null;
+        }
+    }
+
+    @Override
+    public void onKickHit() {
+        Vector2 kickHitboxOffset = new Vector2(isFacingRight() ? GameConfig.KID_KICK_OFFSET_RIGHT : GameConfig.KID_KICK_OFFSET_LEFT);
+        Vector2 kickHitBoxCenter = body.getPosition().cpy().add(kickHitboxOffset);
+        float halfWidth = GameConfig.KID_KICK_WIDTH / 2;
+        float halfHeight = GameConfig.KID_KICK_HEIGHT / 2;
+        body.getWorld().QueryAABB(fixture -> {
+            if (fixture != kickHitbox && fixture.getUserData().toString().startsWith("enemy_")) {
+                Enemy enemy = (Enemy) fixture.getBody().getUserData();
+                if (shouldKickHitEnemy(enemy)) {
+                    onKickHitEnemy(enemy);
+                }
+            }
+            return true;
+        },kickHitBoxCenter.x - halfWidth, kickHitBoxCenter.y - halfHeight,kickHitBoxCenter.x + halfWidth, kickHitBoxCenter.y + halfHeight );
+    }
+
+    @Override
+    public void onKickHitEnemy(Enemy enemy) {
+        if (enemiesKickHit.contains(enemy)) {
+            return;
+        }
+        enemiesKickHit.add(enemy);
+        Gdx.app.log("Kick Enemy:", enemy.toString());;
+    }
+
+    @Override
+    public Set<Enemy> getEnemiesKickHit() {
+        return enemiesKickHit;
     }
 }
