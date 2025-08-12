@@ -5,7 +5,8 @@ public enum Flag {
     KID_ATTACK((short) (1 << 1)),
     ENEMY((short) (1 << 2)),
     ENEMY_ATTACK((short) (1 << 3)),
-    GROUND( (short) (1 << 4));
+    GROUND((short) (1 << 4)),
+    WALL((short) (1 << 5)) /*invisible wall left and right of map to prevent character go outside*/;
     private final short mask;
 
     Flag (short mask) {

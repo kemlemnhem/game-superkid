@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -20,6 +21,7 @@ import dattran.game.superkid.character.kid.state.KidStateIdle;
 import dattran.game.superkid.character.kid.type.Kid;
 import dattran.game.superkid.config.Flag;
 import dattran.game.superkid.config.GameConfig;
+import dattran.game.superkid.config.UserData;
 import dattran.game.superkid.listener.CharacterContactListener;
 public class BaseScreen implements GameScreen {
     private final Batch batch;
@@ -51,8 +53,15 @@ public class BaseScreen implements GameScreen {
         TmxMapLoader loader = new TmxMapLoader();
         tiledMap = loader.load(tileMap);
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1f / GameConfig.PPM);
-        createMapBound();
 
+        float mapStartX = 0f;
+        MapProperties prop = tiledMap.getProperties();
+        int mapWidth = prop.get("width", Integer.class);
+        int tilePixelWidth = prop.get("tilewidth", Integer.class);
+        float mapEndX = (mapWidth*tilePixelWidth)/GameConfig.PPM;
+        int mapHeight = prop.get("height", Integer.class);
+        int tilePixelHeight = prop.get("tileheight", Integer.class);
+        createMapBoundaries(mapStartX, mapEndX, (mapHeight*tilePixelHeight)/GameConfig.PPM);
 
         for (RectangleMapObject object : tiledMap.getLayers().get("groundObject").getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
@@ -89,27 +98,34 @@ public class BaseScreen implements GameScreen {
         new Kid(this, new Vector2(64/*halb of kid width*/ / GameConfig.PPM,(32/*ground high*/ + 64 /*halb of kid height*/)/ GameConfig.PPM), new KidStateIdle());
     }
 
-    private void createMapBound() {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        Body body = world.createBody(bodyDef);
+    private void createWall(float x, float centerY, float height) {
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(x, centerY);
+        bdef.type = BodyDef.BodyType.StaticBody;
+        Body body = world.createBody(bdef);
 
-        ChainShape chain = new ChainShape();
-        chain.createLoop(new Vector2[] {
-            new Vector2(0, 0),
-            new Vector2(GameConfig.SEAPORT_MAP_WIDTH, 0),
-            new Vector2(GameConfig.SEAPORT_MAP_WIDTH, GameConfig.SEAPORT_MAP_HEIGHT),
-            new Vector2(0, GameConfig.SEAPORT_MAP_HEIGHT),
-        });
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(0.1f, height / 2f);
 
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = chain;
-        fixtureDef.friction = 0f;
-        fixtureDef.isSensor = false;
+        FixtureDef fdef = new FixtureDef();
+        fdef.shape = shape;
+        fdef.friction = 0f;
+        fdef.restitution = 0f;
 
-        body.createFixture(fixtureDef);
-        chain.dispose();
+        fdef.filter.categoryBits = Flag.combine(Flag.WALL);
+        fdef.filter.maskBits = Flag.combine(Flag.KID, Flag.ENEMY);
+
+        body.createFixture(fdef).setUserData(UserData.WALL);
+
+        shape.dispose();
     }
+
+    private void createMapBoundaries(float mapStartX, float mapEndX, float mapHeight) {
+        createWall(mapStartX - 0.1f, mapHeight / 2f, mapHeight);
+        createWall(mapEndX + 0.1f, mapHeight / 2f, mapHeight);
+    }
+
+
 
     public void clampCamera() {
         camera.position.x = Math.max(camera.viewportWidth / 2f,

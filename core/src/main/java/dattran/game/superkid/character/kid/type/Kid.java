@@ -37,7 +37,7 @@ public class Kid implements KidCharacter, Player {
             .setCharacter(this)
             .setWorld(gameScreen.getWorld()).setStartPosition(startPosition)
             .setCategoryFlags(Flag.KID)
-            .setMaskFlags(Flag.GROUND)
+            .setMaskFlags(Flag.ENEMY_ATTACK, Flag.GROUND, Flag.WALL)
             .setUserData(UserData.KID)
             .build();
         this.changeState(startState);

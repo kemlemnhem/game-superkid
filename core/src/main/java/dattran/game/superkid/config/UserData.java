@@ -13,4 +13,6 @@ public final class UserData {
     public static final String HOMELESS_1 =  ENEMY + "_homeless_1";
     public static final String HOMELESS_1_ATTACK_1 = HOMELESS_1 + ".attack1";
 
+    public static final String WALL = "wall";
+
 }

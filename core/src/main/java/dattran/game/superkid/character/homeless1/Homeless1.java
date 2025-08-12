@@ -31,7 +31,7 @@ public class Homeless1 implements Homeless1Character, Enemy {
             .setCharacter(this)
             .setWorld(gameScreen.getWorld()).setStartPosition(startPosition)
             .setCategoryFlags(Flag.ENEMY)
-            .setMaskFlags(Flag.GROUND, Flag.KID_ATTACK)
+            .setMaskFlags(Flag.GROUND, Flag.KID_ATTACK, Flag.WALL)
             .setUserData(UserData.HOMELESS_1)
             .build();
         this.changeState(startState);
