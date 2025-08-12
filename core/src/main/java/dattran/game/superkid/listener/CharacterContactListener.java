@@ -3,26 +3,33 @@ package dattran.game.superkid.listener;
 import com.badlogic.gdx.physics.box2d.*;
 import dattran.game.superkid.character.Enemy;
 import dattran.game.superkid.character.kid.KidCharacter;
-import dattran.game.superkid.character.Physik;
+import dattran.game.superkid.character.Physic;
+import dattran.game.superkid.config.UserData;
 
 public class CharacterContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        Physik physik = getPhysik(contact);
-        if (physik != null && isPhysikGroundContact(contact)) {
-            physik.incrementGroundContacts();
+        Physic physic = getPhysik(contact);
+        if (physic != null && isPhysikGroundContact(contact)) {
+            physic.incrementGroundContacts();
         }
 
-        if (isKidAttackHitsEnemy(contact)) {
+      /*  if (isKidAttackHitsEnemy(contact)) {
            KidCharacter kid = getKid(contact);
            Enemy enemy = getEnemy(contact);
            if (kid != null && enemy != null) {
-               if (kid.shouldKickHitEnemy(enemy)) {
-                   kid.onKickHitEnemy(enemy);
+               if (kid.getPunchHitBoxManager().isEnableHitBox() && kid.getPunchHitBoxManager().shouldHit(enemy)) {
+                   kid.getPunchHitBoxManager().enemyIsGettingHit(enemy);
+               }
+               else if(kid.getThumpHitBoxManager().isEnableHitBox() && kid.getThumpHitBoxManager().shouldHit(enemy)) {
+                   kid.getThumpHitBoxManager().enemyIsGettingHit(enemy);
+               }
+               else if(kid.getKickHitBoxManager().isEnableHitBox() && kid.getKickHitBoxManager().shouldHit(enemy)) {
+                   kid.getKickHitBoxManager().enemyIsGettingHit(enemy);
                }
            }
-        }
+        }*/
     }
 
     private boolean isKidAttackHitsEnemy(Contact contact) {
@@ -32,7 +39,7 @@ public class CharacterContactListener implements ContactListener {
     }
 
     private boolean isKidAttackHitBox(String userData) {
-        return "kid_kick".equals(userData);
+        return UserData.KID_KICK.equals(userData) || UserData.KID_PUNCH.equals(userData) || UserData.KID_THUMP.equals(userData);
     }
 
     private boolean isEnemy(String userData) {
@@ -41,9 +48,9 @@ public class CharacterContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        Physik physik = getPhysik(contact);
-        if (physik != null && isPhysikGroundContact(contact)) {
-            physik.decrementGroundContacts();
+        Physic physic = getPhysik(contact);
+        if (physic != null && isPhysikGroundContact(contact)) {
+            physic.decrementGroundContacts();
         }
     }
 
@@ -67,7 +74,7 @@ public class CharacterContactListener implements ContactListener {
     }
 
     private boolean isPhysik(Fixture fixture) {
-        return fixture.getBody() != null && fixture.getBody().getUserData() instanceof Physik;
+        return fixture.getBody() != null && fixture.getBody().getUserData() instanceof Physic;
     }
 
     private boolean isPhysikGroundContact(Contact contact) {
@@ -75,12 +82,12 @@ public class CharacterContactListener implements ContactListener {
             (isPhysik(contact.getFixtureB()) && isGround(contact.getFixtureA()));
     }
 
-    private Physik getPhysik(Contact contact) {
+    private Physic getPhysik(Contact contact) {
         if (isPhysik(contact.getFixtureA())) {
-            return (Physik) contact.getFixtureA().getBody().getUserData();
+            return (Physic) contact.getFixtureA().getBody().getUserData();
         }
         if (isPhysik(contact.getFixtureB())) {
-           return (Physik) contact.getFixtureB().getBody().getUserData();
+           return (Physic) contact.getFixtureB().getBody().getUserData();
         }
         return null;
     }

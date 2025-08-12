@@ -12,8 +12,8 @@ public class Homeless1StateIdle1 extends HomeLess1StateGeneral {
     public void enter(Homeless1Character homeless1) {
         LOGGER.log(Level.INFO, "Homeless1-Entering Idle State");
         stateTime = 0;
-        if (homeless1.getPhysik().getBody() != null) {
-            homeless1.getPhysik().getBody().setLinearVelocity(0, homeless1.getPhysik().getBody().getLinearVelocity().y);
+        if (homeless1.getPhysic().getBody() != null) {
+            homeless1.getPhysic().getBody().setLinearVelocity(0, homeless1.getPhysic().getBody().getLinearVelocity().y);
         }
     }
 

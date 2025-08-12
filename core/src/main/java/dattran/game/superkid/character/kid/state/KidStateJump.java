@@ -13,7 +13,7 @@ public class KidStateJump extends KidStateGeneral {
     @Override
     public void update(KidCharacter kid, float delta) {
         super.update(kid, delta);
-        if ( stateTime >= GameConfig.KID_JUMP_MAX_TIME || kid.getPhysik().getBody().getLinearVelocity().y < 0) {
+        if ( stateTime >= GameConfig.KID_JUMP_MAX_TIME || kid.getPhysic().getBody().getLinearVelocity().y < 0) {
             kid.changeState(new KidStateFall());
         }
     }
@@ -21,12 +21,12 @@ public class KidStateJump extends KidStateGeneral {
     @Override
     public void handleInput(KidCharacter kid, KidInput input) {
         if (input.isJumpHeld() && stateTime < GameConfig.KID_JUMP_MAX_TIME) {
-            float direction = kid.getPhysik().isFacingRight() ? 1 : -1;
-            kid.getPhysik().getBody().setLinearVelocity(GameConfig.KID_JUMP_SPEED * direction, GameConfig.KID_JUMP_VELOCITY);
-            kid.getPhysik().getBody().setGravityScale(GameConfig.KID_JUMP_GRAVITY_SCALE_SLOW);
+            float direction = kid.getPhysic().isFacingRight() ? 1 : -1;
+            kid.getPhysic().getBody().setLinearVelocity(GameConfig.KID_JUMP_SPEED * direction, GameConfig.KID_JUMP_VELOCITY);
+            kid.getPhysic().getBody().setGravityScale(GameConfig.KID_JUMP_GRAVITY_SCALE_SLOW);
         }
         else {
-            kid.getPhysik().getBody().setGravityScale(GameConfig.KID_JUMP_GRAVITY_SCALE_FAST);
+            kid.getPhysic().getBody().setGravityScale(GameConfig.KID_JUMP_GRAVITY_SCALE_FAST);
         }
     }
 
@@ -34,14 +34,14 @@ public class KidStateJump extends KidStateGeneral {
     public void enter(KidCharacter kid) {
         LOGGER.log(Level.INFO, "Entering JumpState");
         stateTime = 0;
-        float direction = kid.getPhysik().isFacingRight() ? 1 : -1;
-        kid.getPhysik().getBody().setLinearVelocity(GameConfig.KID_JUMP_SPEED * direction, GameConfig.KID_JUMP_VELOCITY);
-        kid.getPhysik().getBody().setGravityScale(GameConfig.KID_JUMP_GRAVITY_SCALE_SLOW);
+        float direction = kid.getPhysic().isFacingRight() ? 1 : -1;
+        kid.getPhysic().getBody().setLinearVelocity(GameConfig.KID_JUMP_SPEED * direction, GameConfig.KID_JUMP_VELOCITY);
+        kid.getPhysic().getBody().setGravityScale(GameConfig.KID_JUMP_GRAVITY_SCALE_SLOW);
     }
 
     @Override
     public void exit(KidCharacter kid) {
         LOGGER.log(Level.INFO, "Exiting JumpState");
-        kid.getPhysik().getBody().setGravityScale(GameConfig.KID_JUMP_GRAVITY_SCALE_NORMAL);
+        kid.getPhysic().getBody().setGravityScale(GameConfig.KID_JUMP_GRAVITY_SCALE_NORMAL);
     }
 }

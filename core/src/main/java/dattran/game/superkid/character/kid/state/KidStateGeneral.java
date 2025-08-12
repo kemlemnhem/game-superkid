@@ -13,12 +13,12 @@ public abstract class KidStateGeneral implements KidState {
         Animation<TextureRegion> animation = kid.getAnimation(this);
         TextureRegion frame = animation.getKeyFrame(stateTime);
 
-        if (!kid.getPhysik().isFacingRight() && !frame.isFlipX()) {
+        if (!kid.getPhysic().isFacingRight() && !frame.isFlipX()) {
             frame.flip(true, false);
-        } else if (kid.getPhysik().isFacingRight() && frame.isFlipX()) {
+        } else if (kid.getPhysic().isFacingRight() && frame.isFlipX()) {
             frame.flip(true, false);
         }
-        kid.getPhysik().setCurrentFrame(frame);
+        kid.getPhysic().setCurrentFrame(frame);
     }
 
 }

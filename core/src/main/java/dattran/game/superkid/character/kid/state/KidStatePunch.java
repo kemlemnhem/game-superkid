@@ -17,10 +17,12 @@ public class KidStatePunch extends KidStateBattle {
     public void enter(KidCharacter kid) {
         LOGGER.log(Level.INFO, "Entering Punch State");
         stateTime = 0;
+        kid.getPunchHitBoxManager().enterState();
     }
 
     @Override
     public void exit(KidCharacter kid) {
         LOGGER.log(Level.INFO, "Existing Punch State");
+        kid.getPunchHitBoxManager().exitState();
     }
 }

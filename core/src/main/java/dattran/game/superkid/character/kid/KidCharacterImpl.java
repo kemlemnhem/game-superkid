@@ -5,37 +5,35 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import dattran.game.superkid.character.Enemy;
+import com.badlogic.gdx.physics.box2d.World;
+import dattran.game.superkid.character.Physic;
+import dattran.game.superkid.character.PhysicImpl;
+import dattran.game.superkid.character.kid.hitbox.KidHitBoxManager;
 import dattran.game.superkid.character.kid.input.KidInput;
 import dattran.game.superkid.character.kid.input.KidInputKeyboard;
 import dattran.game.superkid.character.kid.state.*;
-import dattran.game.superkid.character.Physik;
-import dattran.game.superkid.character.PhysikImpl;
 import dattran.game.superkid.config.Flag;
-import dattran.game.superkid.config.GameConfig;
 import dattran.game.superkid.config.UserData;
 import dattran.game.superkid.loader.graphic.kid.KidAnimationLoader;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class KidCharacterImpl implements KidCharacter {
-    private final Physik physik;
+    private final Physic physic;
 
     private KidState currentState;
-    private Fixture kickHitbox;
-    private final Set<Enemy> enemiesKickHit = new HashSet<>();
     private final KidInput playerInput;
 
     private int hp = 100;
 
+    private final KidHitBoxManager kickHitBoxManager = KidHitBoxManager.createKick(this);
+    private final KidHitBoxManager punchHitBoxManager = KidHitBoxManager.createPunch(this);
+    private final KidHitBoxManager thumbHitBoxManager = KidHitBoxManager.createThump(this);
+
     public KidCharacterImpl(World world, Vector2 startPosition, KidState startState) {
-        this.physik = PhysikImpl.PhysikImplBuilder.aPhysikImpl()
+        this.physic = PhysicImpl.PhysikImplBuilder.aPhysikImpl()
             .setCharacter(this)
             .setWorld(world).setStartPosition(startPosition)
-            .setCategoryBits(Flag.KID)
-            .setMaskBits(Flag.GROUND)
+            .setCategoryFlags(Flag.KID)
+            .setMaskFlags(Flag.GROUND)
             .setUserData(UserData.KID)
             .build();
         this.changeState(startState);
@@ -108,95 +106,28 @@ public class KidCharacterImpl implements KidCharacter {
     }
 
     @Override
-    public Physik getPhysik() {
-        return physik;
+    public Physic getPhysic() {
+        return physic;
     }
 
     @Override
     public void render(Batch batch) {
         update(Gdx.graphics.getDeltaTime());
-        getPhysik().render(batch);
-    }
-
-
-    @Override
-    public boolean shouldKickHitEnemy(Enemy enemy) {
-        Vector2 hitBoxOffset = new Vector2(physik.isFacingRight() ? GameConfig.KID_KICK_OFFSET_RIGHT : GameConfig.KID_KICK_OFFSET_LEFT);
-        Vector2 hitBoxCenter = physik.getBody().getPosition().cpy().add(hitBoxOffset);
-        Vector2 enemyPos = enemy.getPhysik().getBody().getPosition();
-
-        float hitboxDistance = hitBoxCenter.dst(enemyPos);
-        float bodyDistance = physik.getBody().getPosition().dst(enemyPos);
-
-        return bodyDistance < GameConfig.KID_KICK_BODY_MAX_ALLOW_DISTANCE || hitboxDistance < GameConfig.KID_KICK_HIT_BOX_MAX_ALLOW_DISTANCE;
-    }
-
-
-    @Override
-    public void addKickHitBox() {
-        if  (kickHitbox == null) {
-            PolygonShape shape = new PolygonShape();
-            float halfWidth = GameConfig.KID_KICK_WIDTH / 2;
-            float halfHeight = GameConfig.KID_KICK_HEIGHT / 2;
-            Vector2 kickHitboxOffset = new Vector2(physik.isFacingRight() ? GameConfig.KID_KICK_OFFSET_RIGHT : GameConfig.KID_KICK_OFFSET_LEFT);
-            shape.setAsBox(halfWidth, halfHeight, kickHitboxOffset, 0);
-
-            FixtureDef fixtureDef = new FixtureDef();
-            fixtureDef.shape = shape;
-            fixtureDef.isSensor = true;
-            fixtureDef.filter.categoryBits = Flag.combine(Flag.KID_ATTACK);
-            fixtureDef.filter.maskBits = Flag.combine(Flag.ENEMY);
-
-            kickHitbox = physik.getBody().createFixture(fixtureDef);
-            kickHitbox.setUserData("kid_kick");
-
-            shape.dispose();
-        }
+        getPhysic().render(batch);
     }
 
     @Override
-    public void removeKickHitBox() {
-        if (kickHitbox != null) {
-            physik.getBody().destroyFixture(kickHitbox);
-            kickHitbox = null;
-        }
+    public KidHitBoxManager getKickHitBoxManager() {
+        return kickHitBoxManager;
     }
 
     @Override
-    public void onKickHit() {
-        Vector2 kickHitboxOffset = new Vector2(physik.isFacingRight() ? GameConfig.KID_KICK_OFFSET_RIGHT : GameConfig.KID_KICK_OFFSET_LEFT);
-        Vector2 kickHitBoxCenter = physik.getBody().getPosition().cpy().add(kickHitboxOffset);
-        float halfWidth = GameConfig.KID_KICK_WIDTH / 2;
-        float halfHeight = GameConfig.KID_KICK_HEIGHT / 2;
-        physik.getBody().getWorld().QueryAABB(fixture -> {
-            if (fixture != kickHitbox && fixture.getUserData().toString().startsWith("enemy_")) {
-
-                Enemy enemy = (Enemy) ((Physik) fixture.getBody().getUserData()).getCharacter();
-                if (shouldKickHitEnemy(enemy)) {
-                    onKickHitEnemy(enemy);
-                }
-            }
-            return true;
-        },kickHitBoxCenter.x - halfWidth, kickHitBoxCenter.y - halfHeight,kickHitBoxCenter.x + halfWidth, kickHitBoxCenter.y + halfHeight );
+    public KidHitBoxManager getPunchHitBoxManager() {
+        return punchHitBoxManager;
     }
 
     @Override
-    public void onKickHitEnemy(Enemy enemy) {
-        if (enemiesKickHit.contains(enemy)) {
-            return;
-        }
-        enemiesKickHit.add(enemy);
-        enemy.getPhysik().setFacingRight(!physik.isFacingRight());
-        enemy.gettingHurtByKid(this);
-    }
-
-    @Override
-    public Set<Enemy> getEnemiesKickHit() {
-        return enemiesKickHit;
-    }
-
-    @Override
-    public int getKickPower() {
-        return 10;
+    public KidHitBoxManager getThumpHitBoxManager() {
+        return thumbHitBoxManager;
     }
 }

@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import dattran.game.superkid.config.Flag;
 import dattran.game.superkid.config.GameConfig;
 
-public class PhysikImpl implements Physik {
+public class PhysicImpl implements Physic {
     private final GameCharacter<?,?> character;
     private TextureRegion currentFrame;
     private boolean facingRight = true;
@@ -15,14 +15,14 @@ public class PhysikImpl implements Physik {
     private final World world;
     private Body body;
 
-    private PhysikImpl(GameCharacter<?,?> character, World world, Vector2 startPosition, String userData, Flag[] categoryBits, Flag[] maskBits) {
+    private PhysicImpl(GameCharacter<?,?> character, World world, Vector2 startPosition, String userData, Flag[] categoryFlags, Flag[] maskFlags) {
         this.character = character;
         this.world = world;
-        this.body = defineBody(startPosition, userData, categoryBits, maskBits);
+        this.body = defineBody(startPosition, userData, categoryFlags, maskFlags);
     }
 
     @Override
-    public Body defineBody(Vector2 position, String userData, Flag[] categoryBits, Flag[] maskBits) {
+    public Body defineBody(Vector2 position, String userData, Flag[] categoryFlags, Flag[] maskFlags) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(position.x, position.y);
@@ -39,8 +39,8 @@ public class PhysikImpl implements Physik {
         fixtureDef.shape = bodyShape;
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.2f;
-        fixtureDef.filter.categoryBits = Flag.combine(categoryBits);
-        fixtureDef.filter.maskBits = Flag.combine(maskBits);
+        fixtureDef.filter.categoryBits = Flag.combine(categoryFlags);
+        fixtureDef.filter.maskBits = Flag.combine(maskFlags);
 
         Fixture mainFixture = body.createFixture(fixtureDef);
         mainFixture.setUserData(userData);
@@ -107,12 +107,12 @@ public class PhysikImpl implements Physik {
     }
 
     public static final class PhysikImplBuilder {
-        private GameCharacter character;
+        private GameCharacter<?,?> character;
         private World world;
         private Vector2 startPosition;
         private String userData;
-        private Flag[] categoryBits;
-        private Flag[] maskBits;
+        private Flag[] categoryFlags;
+        private Flag[] maskFlags;
 
         private PhysikImplBuilder() {
         }
@@ -121,7 +121,7 @@ public class PhysikImpl implements Physik {
             return new PhysikImplBuilder();
         }
 
-        public PhysikImplBuilder setCharacter(GameCharacter character) {
+        public PhysikImplBuilder setCharacter(GameCharacter<?,?> character) {
             this.character = character;
             return this;
         }
@@ -141,18 +141,18 @@ public class PhysikImpl implements Physik {
             return this;
         }
 
-        public PhysikImplBuilder setCategoryBits(Flag ... categoryBits) {
-            this.categoryBits = categoryBits;
+        public PhysikImplBuilder setCategoryFlags(Flag ... categoryFlags) {
+            this.categoryFlags = categoryFlags;
             return this;
         }
 
-        public PhysikImplBuilder setMaskBits(Flag ... maskBits) {
-            this.maskBits = maskBits;
+        public PhysikImplBuilder setMaskFlags(Flag ... maskFlags) {
+            this.maskFlags = maskFlags;
             return this;
         }
 
-        public PhysikImpl build() {
-            return new PhysikImpl(character, world, startPosition, userData, categoryBits, maskBits);
+        public PhysicImpl build() {
+            return new PhysicImpl(character, world, startPosition, userData, categoryFlags, maskFlags);
         }
     }
 }

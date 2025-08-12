@@ -13,10 +13,10 @@ public class KidStateIdle extends KidStateGeneral {
     @Override
     public void handleInput(KidCharacter kid, KidInput input) {
         if (input.isMoveLeftPressed()) {
-            kid.getPhysik().setFacingRight(false);
+            kid.getPhysic().setFacingRight(false);
             kid.changeState(new KidStateWalk());
         } else if (input.isMoveRightPressed()) {
-            kid.getPhysik().setFacingRight(true);
+            kid.getPhysic().setFacingRight(true);
             kid.changeState(new KidStateWalk());
         } else if(input.isKickPressed()) {
             kid.changeState(new KidStateKick());
@@ -38,8 +38,8 @@ public class KidStateIdle extends KidStateGeneral {
     public void enter(KidCharacter kid) {
         LOGGER.log(Level.INFO, "Entering Idle State");
         stateTime = 0;
-        if (kid.getPhysik().getBody() != null) {
-            kid.getPhysik().getBody().setLinearVelocity(0, kid.getPhysik().getBody().getLinearVelocity().y);
+        if (kid.getPhysic().getBody() != null) {
+            kid.getPhysic().getBody().setLinearVelocity(0, kid.getPhysic().getBody().getLinearVelocity().y);
         }
     }
 

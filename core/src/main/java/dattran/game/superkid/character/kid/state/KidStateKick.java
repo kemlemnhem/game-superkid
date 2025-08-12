@@ -17,15 +17,12 @@ public class KidStateKick extends KidStateBattle {
     public void enter(KidCharacter kid) {
         LOGGER.log(Level.INFO, "Entering Kick State");
         stateTime = 0;
-        kid.getEnemiesKickHit().clear();
-        kid.addKickHitBox();
-        kid.onKickHit();
-
+        kid.getKickHitBoxManager().enterState();
     }
 
     @Override
     public void exit(KidCharacter kid) {
         LOGGER.log(Level.INFO, "Existing Kick State");
-        kid.removeKickHitBox();
+        kid.getKickHitBoxManager().exitState();
     }
 }

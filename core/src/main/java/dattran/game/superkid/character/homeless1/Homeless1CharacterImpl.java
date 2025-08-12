@@ -12,24 +12,24 @@ import dattran.game.superkid.character.homeless1.state.Homeless1StateDead;
 import dattran.game.superkid.character.homeless1.state.Homeless1StateHurt;
 import dattran.game.superkid.character.homeless1.state.Homeless1StateIdle1;
 import dattran.game.superkid.character.kid.KidCharacter;
-import dattran.game.superkid.character.Physik;
-import dattran.game.superkid.character.PhysikImpl;
+import dattran.game.superkid.character.Physic;
+import dattran.game.superkid.character.PhysicImpl;
 import dattran.game.superkid.config.Flag;
 import dattran.game.superkid.config.UserData;
 import dattran.game.superkid.loader.graphic.homeless1.Homeless1AnimationLoader;
 
 public class Homeless1CharacterImpl implements Homeless1Character, Enemy {
-    private final Physik physik;
+    private final Physic physic;
 
     private Homeless1State currentState;
     private int hp = 20;
 
     public Homeless1CharacterImpl(World world, Vector2 startPosition, Homeless1State startState) {
-        this.physik = PhysikImpl.PhysikImplBuilder.aPhysikImpl()
+        this.physic = PhysicImpl.PhysikImplBuilder.aPhysikImpl()
             .setCharacter(this)
             .setWorld(world).setStartPosition(startPosition)
-            .setCategoryBits(Flag.ENEMY)
-            .setMaskBits(Flag.GROUND, Flag.KID_ATTACK)
+            .setCategoryFlags(Flag.ENEMY)
+            .setMaskFlags(Flag.GROUND, Flag.KID_ATTACK)
             .setUserData(UserData.HOMELESS_1)
             .build();
         this.changeState(startState);
@@ -68,8 +68,8 @@ public class Homeless1CharacterImpl implements Homeless1Character, Enemy {
     }
 
     @Override
-    public void gettingHurtByKid(KidCharacter kid) {
-        setHp(getHp() - kid.getKickPower());
+    public void gettingHurt(int damage) {
+        setHp(getHp() - damage);
         if (getHp() <= 0) {
             die();
             return;
@@ -98,14 +98,14 @@ public class Homeless1CharacterImpl implements Homeless1Character, Enemy {
     }
 
     @Override
-    public Physik getPhysik() {
-        return this.physik;
+    public Physic getPhysic() {
+        return this.physic;
     }
 
     @Override
     public void render(Batch batch) {
         update(Gdx.graphics.getDeltaTime());
-        getPhysik().render(batch);
+        getPhysic().render(batch);
     }
 
 }

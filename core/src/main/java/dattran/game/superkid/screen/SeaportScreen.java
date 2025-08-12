@@ -146,7 +146,7 @@ public class SeaportScreen implements Screen {
         world.step(GameConfig.WORLD_DELTA_TIME, GameConfig.WORLD_VELOCITY_ITERATION, GameConfig.WORLD_POSITION_ITERATION);
 
 
-        Vector2 playerPos = kid.getPhysik().getBody().getPosition();
+        Vector2 playerPos = kid.getPhysic().getBody().getPosition();
         float halfViewportWidth = camera.viewportWidth / 2f;
         float halfViewportHeight = camera.viewportHeight / 2f;
 
@@ -187,7 +187,7 @@ public class SeaportScreen implements Screen {
             }
         }
         for(GameCharacter<?,?> character : enemiesToRemove) {
-            character.getPhysik().dispose();
+            character.getPhysic().dispose();
             enemies.remove(character);
         }
     }

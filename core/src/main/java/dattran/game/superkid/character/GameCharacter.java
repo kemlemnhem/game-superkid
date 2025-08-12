@@ -17,7 +17,7 @@ public interface GameCharacter<S extends CharacterState<C, S>, C extends GameCha
 
     boolean isDead();
 
-    Physik getPhysik();
+    Physic getPhysic();
 
     void render(Batch batch);
 }
