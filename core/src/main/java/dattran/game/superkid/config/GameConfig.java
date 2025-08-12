@@ -48,13 +48,15 @@ public final class GameConfig {
 
     public static final float KID_WIDTH  = 128 / PPM ;
     public static final float KID_HEIGHT = 128 / PPM;
+    public static final float KID_HURT_SHIFT_X = 0.1f;
+    public static final float KID_HURT_SHIFT_Y = 0f;
 
 
 
     public static final float HOMELESS1_WIDTH  = 128 / PPM ;
     public static final float HOMELESS1_HEIGHT = 128 / PPM;
-    public static final float HOMELESS1_HURT_SHIFT_X = 1f;
-    public static final float HOMELESS1_HURT_SHIFT_Y = 2f;
+    public static final float HOMELESS1_HURT_SHIFT_X = 0.3f;
+    public static final float HOMELESS1_HURT_SHIFT_Y = 0f;
 
 
 

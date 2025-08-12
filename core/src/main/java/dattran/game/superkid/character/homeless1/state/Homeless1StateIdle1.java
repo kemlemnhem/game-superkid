@@ -5,7 +5,7 @@ import dattran.game.superkid.character.homeless1.Homeless1Character;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Homeless1StateIdle1 extends HomeLess1StateGeneral {
+public class Homeless1StateIdle1 extends HomeLess1StateBase {
     private static final Logger LOGGER = Logger.getLogger(Homeless1StateIdle1.class.getName());
 
     @Override

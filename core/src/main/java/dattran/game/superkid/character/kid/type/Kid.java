@@ -1,4 +1,4 @@
-package dattran.game.superkid.character.kid;
+package dattran.game.superkid.character.kid.type;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -8,7 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import dattran.game.superkid.character.Physic;
 import dattran.game.superkid.character.PhysicImpl;
-import dattran.game.superkid.character.kid.hitbox.KidHitBoxManager;
+import dattran.game.superkid.character.base.type.Player;
+import dattran.game.superkid.character.homeless1.state.Homeless1StateHurt;
+import dattran.game.superkid.character.kid.hitbox.KidManager;
 import dattran.game.superkid.character.kid.input.KidInput;
 import dattran.game.superkid.character.kid.input.KidInputKeyboard;
 import dattran.game.superkid.character.kid.state.*;
@@ -16,7 +18,7 @@ import dattran.game.superkid.config.Flag;
 import dattran.game.superkid.config.UserData;
 import dattran.game.superkid.loader.graphic.kid.KidAnimationLoader;
 
-public class KidCharacterImpl implements KidCharacter {
+public class Kid implements KidCharacter, Player {
     private final Physic physic;
 
     private KidState currentState;
@@ -24,11 +26,11 @@ public class KidCharacterImpl implements KidCharacter {
 
     private int hp = 100;
 
-    private final KidHitBoxManager kickHitBoxManager = KidHitBoxManager.createKick(this);
-    private final KidHitBoxManager punchHitBoxManager = KidHitBoxManager.createPunch(this);
-    private final KidHitBoxManager thumbHitBoxManager = KidHitBoxManager.createThump(this);
+    private final KidManager kickHitBoxManager = KidManager.createKick(this);
+    private final KidManager punchHitBoxManager = KidManager.createPunch(this);
+    private final KidManager thumbHitBoxManager = KidManager.createThump(this);
 
-    public KidCharacterImpl(World world, Vector2 startPosition, KidState startState) {
+    public Kid(World world, Vector2 startPosition, KidState startState) {
         this.physic = PhysicImpl.PhysikImplBuilder.aPhysikImpl()
             .setCharacter(this)
             .setWorld(world).setStartPosition(startPosition)
@@ -69,6 +71,12 @@ public class KidCharacterImpl implements KidCharacter {
         if (state instanceof KidStateFall) {
             return KidAnimationLoader.instance.loadedResource().getFall();
         }
+        if (state instanceof KidStateHurt) {
+            return KidAnimationLoader.instance.loadedResource().getHurt();
+        }
+        if (state instanceof KidStateDead) {
+            return KidAnimationLoader.instance.loadedResource().getDead();
+        }
         return KidAnimationLoader.instance.loadedResource().getIdle();
     }
 
@@ -106,6 +114,16 @@ public class KidCharacterImpl implements KidCharacter {
     }
 
     @Override
+    public void gettingHurt(int damage) {
+        setHp(getHp() - damage);
+        if (getHp() <= 0) {
+            changeState(new KidStateDead());
+            return;
+        }
+        changeState(new KidStateHurt());
+    }
+
+    @Override
     public Physic getPhysic() {
         return physic;
     }
@@ -117,17 +135,17 @@ public class KidCharacterImpl implements KidCharacter {
     }
 
     @Override
-    public KidHitBoxManager getKickHitBoxManager() {
+    public KidManager getKickHitBoxManager() {
         return kickHitBoxManager;
     }
 
     @Override
-    public KidHitBoxManager getPunchHitBoxManager() {
+    public KidManager getPunchHitBoxManager() {
         return punchHitBoxManager;
     }
 
     @Override
-    public KidHitBoxManager getThumpHitBoxManager() {
+    public KidManager getThumpHitBoxManager() {
         return thumbHitBoxManager;
     }
 }

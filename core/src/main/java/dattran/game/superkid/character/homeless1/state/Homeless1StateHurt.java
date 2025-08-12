@@ -6,7 +6,7 @@ import dattran.game.superkid.config.GameConfig;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Homeless1StateHurt extends HomeLess1StateGeneral {
+public class Homeless1StateHurt extends HomeLess1StateBase {
     private static final Logger LOGGER = Logger.getLogger(Homeless1StateHurt.class.getName());
 
     @Override

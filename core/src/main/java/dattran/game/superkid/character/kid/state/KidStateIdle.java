@@ -1,12 +1,12 @@
 package dattran.game.superkid.character.kid.state;
 
-import dattran.game.superkid.character.kid.KidCharacter;
+import dattran.game.superkid.character.kid.type.KidCharacter;
 import dattran.game.superkid.character.kid.input.KidInput;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class KidStateIdle extends KidStateGeneral {
+public class KidStateIdle extends KidStateBase {
     private static final Logger LOGGER = Logger.getLogger(KidStateIdle.class.getName());
 
 

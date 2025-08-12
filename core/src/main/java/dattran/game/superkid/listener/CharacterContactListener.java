@@ -1,8 +1,8 @@
 package dattran.game.superkid.listener;
 
 import com.badlogic.gdx.physics.box2d.*;
-import dattran.game.superkid.character.Enemy;
-import dattran.game.superkid.character.kid.KidCharacter;
+import dattran.game.superkid.character.base.type.Enemy;
+import dattran.game.superkid.character.kid.type.KidCharacter;
 import dattran.game.superkid.character.Physic;
 import dattran.game.superkid.config.UserData;
 

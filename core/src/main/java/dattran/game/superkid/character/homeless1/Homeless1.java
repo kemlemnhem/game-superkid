@@ -6,25 +6,25 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import dattran.game.superkid.character.Enemy;
-import dattran.game.superkid.character.homeless1.state.Homeless1State;
-import dattran.game.superkid.character.homeless1.state.Homeless1StateDead;
-import dattran.game.superkid.character.homeless1.state.Homeless1StateHurt;
-import dattran.game.superkid.character.homeless1.state.Homeless1StateIdle1;
-import dattran.game.superkid.character.kid.KidCharacter;
+import dattran.game.superkid.character.base.type.Enemy;
+import dattran.game.superkid.character.base.type.Player;
+import dattran.game.superkid.character.homeless1.hitbox.Homeless1Manager;
+import dattran.game.superkid.character.homeless1.state.*;
 import dattran.game.superkid.character.Physic;
 import dattran.game.superkid.character.PhysicImpl;
 import dattran.game.superkid.config.Flag;
 import dattran.game.superkid.config.UserData;
 import dattran.game.superkid.loader.graphic.homeless1.Homeless1AnimationLoader;
 
-public class Homeless1CharacterImpl implements Homeless1Character, Enemy {
+public class Homeless1 implements Homeless1Character, Enemy {
     private final Physic physic;
 
     private Homeless1State currentState;
     private int hp = 20;
 
-    public Homeless1CharacterImpl(World world, Vector2 startPosition, Homeless1State startState) {
+    private final Homeless1Manager attack1BoxManager = Homeless1Manager.createAttack1(this);
+
+    public Homeless1(World world, Vector2 startPosition, Homeless1State startState) {
         this.physic = PhysicImpl.PhysikImplBuilder.aPhysikImpl()
             .setCharacter(this)
             .setWorld(world).setStartPosition(startPosition)
@@ -46,6 +46,9 @@ public class Homeless1CharacterImpl implements Homeless1Character, Enemy {
         }
         if (state instanceof Homeless1StateDead) {
             return Homeless1AnimationLoader.instance.loadedResource().getDead();
+        }
+        if (state instanceof Homeless1StateAttack1) {
+            return Homeless1AnimationLoader.instance.loadedResource().getAttack1();
         }
 
         return Homeless1AnimationLoader.instance.loadedResource().getIdle1();
@@ -71,16 +74,11 @@ public class Homeless1CharacterImpl implements Homeless1Character, Enemy {
     public void gettingHurt(int damage) {
         setHp(getHp() - damage);
         if (getHp() <= 0) {
-            die();
+            changeState(new Homeless1StateDead());
             return;
         }
         changeState(new Homeless1StateHurt());
     }
-
-    private void die() {
-        changeState(new Homeless1StateDead());
-    }
-
 
     @Override
     public int getHp() {
@@ -107,5 +105,12 @@ public class Homeless1CharacterImpl implements Homeless1Character, Enemy {
         update(Gdx.graphics.getDeltaTime());
         getPhysic().render(batch);
     }
+
+    @Override
+    public Homeless1Manager getAttack1HitBoxManager() {
+        return attack1BoxManager;
+    }
+
+
 
 }

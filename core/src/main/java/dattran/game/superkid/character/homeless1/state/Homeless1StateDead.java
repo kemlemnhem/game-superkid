@@ -3,12 +3,11 @@ package dattran.game.superkid.character.homeless1.state;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dattran.game.superkid.character.homeless1.Homeless1Character;
-import dattran.game.superkid.config.GameConfig;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Homeless1StateDead extends HomeLess1StateGeneral {
+public class Homeless1StateDead extends HomeLess1StateBase {
     private static final Logger LOGGER = Logger.getLogger(Homeless1StateDead.class.getName());
 
     @Override

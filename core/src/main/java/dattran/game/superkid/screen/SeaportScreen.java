@@ -14,12 +14,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dattran.game.superkid.character.GameCharacter;
+import dattran.game.superkid.character.base.type.GameCharacter;
 import dattran.game.superkid.character.homeless1.Homeless1Character;
-import dattran.game.superkid.character.homeless1.Homeless1CharacterImpl;
+import dattran.game.superkid.character.homeless1.Homeless1;
 import dattran.game.superkid.character.homeless1.state.Homeless1StateIdle1;
-import dattran.game.superkid.character.kid.KidCharacter;
-import dattran.game.superkid.character.kid.KidCharacterImpl;
+import dattran.game.superkid.character.kid.type.KidCharacter;
+import dattran.game.superkid.character.kid.type.Kid;
 import dattran.game.superkid.character.kid.state.KidStateIdle;
 import dattran.game.superkid.config.Flag;
 import dattran.game.superkid.config.GameConfig;
@@ -94,13 +94,13 @@ public class SeaportScreen implements Screen {
 
             String type = object.getProperties().get("type", String.class);
             if ("Homeless1".equals(type)) {
-                Homeless1Character newEnemy = new Homeless1CharacterImpl(world, new Vector2(x,y), new Homeless1StateIdle1());
+                Homeless1Character newEnemy = new Homeless1(world, new Vector2(x,y), new Homeless1StateIdle1());
                 enemies.add(newEnemy);
             }
         }
 
 
-        kid = new KidCharacterImpl(world, new Vector2(64/*halb of kid width*/ / GameConfig.PPM,(32/*ground high*/ + 64 /*halb of kid height*/)/ GameConfig.PPM), new KidStateIdle());
+        kid = new Kid(world, new Vector2(64/*halb of kid width*/ / GameConfig.PPM,(32/*ground high*/ + 64 /*halb of kid height*/)/ GameConfig.PPM), new KidStateIdle());
     }
 
     private void createMapBound() {
