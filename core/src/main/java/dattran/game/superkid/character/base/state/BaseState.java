@@ -3,6 +3,7 @@ package dattran.game.superkid.character.base.state;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dattran.game.superkid.character.base.type.GameCharacter;
+import dattran.game.superkid.config.GameConfig;
 
 public abstract class BaseState<
     C extends GameCharacter<S, C>,
@@ -18,6 +19,10 @@ public abstract class BaseState<
         Animation<TextureRegion> animation = character.getAnimation((S) this);
         TextureRegion frame = animation.getKeyFrame(stateTime);
 
+        if (character.hitWall()) {
+            character.getPhysic().setFacingRight(!character.getPhysic().isFacingRight());
+            character.getPhysic().getBody().setLinearVelocity(character.getPhysic().isFacingRight() ? -0.2f : 0.2f, character.getPhysic().getBody().getLinearVelocity().y);
+        }
         boolean facingRight = character.getPhysic().isFacingRight();
         if (!facingRight && !frame.isFlipX()) {
             frame.flip(true, false);

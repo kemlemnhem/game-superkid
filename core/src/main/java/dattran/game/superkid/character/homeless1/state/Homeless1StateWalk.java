@@ -22,7 +22,6 @@ public class Homeless1StateWalk extends HomeLess1StateBase {
     @Override
     public void update(Homeless1Character homeless1, float delta) {
         super.update(homeless1, delta);
-
         if (stateTime < walkDuration) {
             homeless1.getPhysic().getBody().setLinearVelocity(homeless1.getPhysic().isFacingRight() ? GameConfig.HOMELESS_WALK_SPEED : -GameConfig.HOMELESS_WALK_SPEED, homeless1.getPhysic().getBody().getLinearVelocity().y);
         }

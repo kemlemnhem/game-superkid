@@ -26,7 +26,7 @@ public final class GameConfig {
     public static final float KID_JUMP_GRAVITY_SCALE_NORMAL = 1f;
     public static final float KID_JUMP_GRAVITY_SCALE_FAST = 5f;
     public static final float KID_JUMP_MAX_TIME = 0.4f;
-    public static final float KID_WALK_SPEED = 1f;
+    public static final float KID_WALK_SPEED = 0.8f;
     public static final float KID_RUN_SPEED = 1.2f;
     public static final float KID_WALK_IDLE_DIFFERENCE = 0.1f;
 
@@ -58,7 +58,7 @@ public final class GameConfig {
     public static final float HOMELESS1_HURT_SHIFT_X = 0.3f;
     public static final float HOMELESS1_HURT_SHIFT_Y = 0f;
 
-    public static final float HOMELESS_WALK_SPEED = 0.8f;
+    public static final float HOMELESS_WALK_SPEED = 0.4f;
 
 
 

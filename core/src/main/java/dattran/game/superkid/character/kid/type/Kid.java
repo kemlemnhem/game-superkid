@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import dattran.game.superkid.character.CharacterManager;
 import dattran.game.superkid.character.Physic;
 import dattran.game.superkid.character.PhysicImpl;
 import dattran.game.superkid.character.base.type.Player;
@@ -43,7 +42,7 @@ public class Kid implements KidCharacter, Player {
         this.changeState(startState);
         playerInput = new KidInputKeyboard();
         this.gameScreen = gameScreen;
-        gameScreen.getCharacterManager().addKid(this);
+        gameScreen.getScreenManager().addKid(this);
     }
 
     @Override

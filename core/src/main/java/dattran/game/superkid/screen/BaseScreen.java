@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dattran.game.superkid.character.CharacterManager;
 import dattran.game.superkid.character.homeless1.Homeless1;
 import dattran.game.superkid.character.homeless1.state.Homeless1StateIdle1;
 import dattran.game.superkid.character.kid.state.KidStateIdle;
@@ -30,7 +29,7 @@ public class BaseScreen implements GameScreen {
     private final Viewport gameport;
 
     private final World world;
-    private final CharacterManager characterManager = new CharacterManager();
+    private final ScreenManager screenManager = new BaseScreenManager();
 
     private final TiledMap tiledMap;
     private final OrthogonalTiledMapRenderer mapRenderer;
@@ -59,9 +58,13 @@ public class BaseScreen implements GameScreen {
         int mapWidth = prop.get("width", Integer.class);
         int tilePixelWidth = prop.get("tilewidth", Integer.class);
         float mapEndX = (mapWidth*tilePixelWidth)/GameConfig.PPM;
+        screenManager.setMapWidth(mapEndX);
+
         int mapHeight = prop.get("height", Integer.class);
         int tilePixelHeight = prop.get("tileheight", Integer.class);
-        createMapBoundaries(mapStartX, mapEndX, (mapHeight*tilePixelHeight)/GameConfig.PPM);
+        float mapEndY = (mapHeight*tilePixelHeight)/GameConfig.PPM;
+        screenManager.setMapHeight(mapEndY);
+        createMapBoundaries(mapStartX, mapEndX, mapEndY);
 
         for (RectangleMapObject object : tiledMap.getLayers().get("groundObject").getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
@@ -148,7 +151,7 @@ public class BaseScreen implements GameScreen {
         world.step(GameConfig.WORLD_DELTA_TIME, GameConfig.WORLD_VELOCITY_ITERATION, GameConfig.WORLD_POSITION_ITERATION);
 
 
-        Vector2 playerPos = characterManager.getKid().getPhysic().getBody().getPosition();
+        Vector2 playerPos = screenManager.getKid().getPhysic().getBody().getPosition();
         float halfViewportWidth = camera.viewportWidth / 2f;
         float halfViewportHeight = camera.viewportHeight / 2f;
 
@@ -173,7 +176,7 @@ public class BaseScreen implements GameScreen {
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        characterManager.render(batch);
+        screenManager.render(batch);
         batch.end();
     }
 
@@ -211,7 +214,7 @@ public class BaseScreen implements GameScreen {
     }
 
     @Override
-    public CharacterManager getCharacterManager() {
-        return characterManager;
+    public ScreenManager getScreenManager() {
+        return screenManager;
     }
 }

@@ -1,4 +1,4 @@
-package dattran.game.superkid.character;
+package dattran.game.superkid.screen;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import dattran.game.superkid.character.base.type.GameCharacter;
@@ -7,22 +7,26 @@ import dattran.game.superkid.character.kid.type.KidCharacter;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class CharacterManager {
+public class BaseScreenManager implements ScreenManager {
     private KidCharacter kid;
     private Set<GameCharacter<?,?>> enemies = new HashSet<>();
-
+    private float mapWidth, mapHeight;
+    @Override
     public void addKid(KidCharacter kid) {
         this.kid = kid;
     }
 
-    public void addEnemy(GameCharacter<?,?> enemy) {
+    @Override
+    public void addEnemy(GameCharacter<?, ?> enemy) {
         enemies.add(enemy);
     }
 
+    @Override
     public KidCharacter getKid() {
         return kid;
     }
 
+    @Override
     public void render(Batch batch) {
         update();
         for(GameCharacter<?,?> character : enemies) {
@@ -49,5 +53,25 @@ public final class CharacterManager {
             kid.getPhysic().dispose();
             kid = null;
         }
+    }
+
+    @Override
+    public float getMapWidth() {
+        return mapWidth;
+    }
+
+    @Override
+    public float getMapHeight() {
+        return mapHeight;
+    }
+
+    @Override
+    public void setMapWidth(float mapWidth) {
+        this.mapWidth = mapWidth;
+    }
+
+    @Override
+    public void setMapHeight(float mapHeight) {
+        this.mapHeight = mapHeight;
     }
 }

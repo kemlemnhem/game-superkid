@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import dattran.game.superkid.character.CharacterManager;
 import dattran.game.superkid.character.base.type.Enemy;
 import dattran.game.superkid.character.homeless1.hitbox.Homeless1Manager;
 import dattran.game.superkid.character.homeless1.state.*;
@@ -35,7 +34,7 @@ public class Homeless1 implements Homeless1Character, Enemy {
             .setUserData(UserData.HOMELESS_1)
             .build();
         this.changeState(startState);
-        gameScreen.getCharacterManager().addEnemy(this);
+        gameScreen.getScreenManager().addEnemy(this);
     }
 
 
