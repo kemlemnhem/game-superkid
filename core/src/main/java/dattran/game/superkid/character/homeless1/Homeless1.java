@@ -5,9 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import dattran.game.superkid.character.CharacterManager;
 import dattran.game.superkid.character.base.type.Enemy;
-import dattran.game.superkid.character.base.type.Player;
 import dattran.game.superkid.character.homeless1.hitbox.Homeless1Manager;
 import dattran.game.superkid.character.homeless1.state.*;
 import dattran.game.superkid.character.Physic;
@@ -15,8 +14,10 @@ import dattran.game.superkid.character.PhysicImpl;
 import dattran.game.superkid.config.Flag;
 import dattran.game.superkid.config.UserData;
 import dattran.game.superkid.loader.graphic.homeless1.Homeless1AnimationLoader;
+import dattran.game.superkid.screen.GameScreen;
 
 public class Homeless1 implements Homeless1Character, Enemy {
+    private final GameScreen gameScreen;
     private final Physic physic;
 
     private Homeless1State currentState;
@@ -24,15 +25,17 @@ public class Homeless1 implements Homeless1Character, Enemy {
 
     private final Homeless1Manager attack1BoxManager = Homeless1Manager.createAttack1(this);
 
-    public Homeless1(World world, Vector2 startPosition, Homeless1State startState) {
+    public Homeless1(GameScreen gameScreen, Vector2 startPosition, Homeless1State startState) {
+        this.gameScreen = gameScreen;
         this.physic = PhysicImpl.PhysikImplBuilder.aPhysikImpl()
             .setCharacter(this)
-            .setWorld(world).setStartPosition(startPosition)
+            .setWorld(gameScreen.getWorld()).setStartPosition(startPosition)
             .setCategoryFlags(Flag.ENEMY)
             .setMaskFlags(Flag.GROUND, Flag.KID_ATTACK)
             .setUserData(UserData.HOMELESS_1)
             .build();
         this.changeState(startState);
+        gameScreen.getCharacterManager().addEnemy(this);
     }
 
 
@@ -104,6 +107,11 @@ public class Homeless1 implements Homeless1Character, Enemy {
     public void render(Batch batch) {
         update(Gdx.graphics.getDeltaTime());
         getPhysic().render(batch);
+    }
+
+    @Override
+    public GameScreen getGameScreen() {
+        return gameScreen;
     }
 
     @Override

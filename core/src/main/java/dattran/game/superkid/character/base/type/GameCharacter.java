@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dattran.game.superkid.character.Physic;
 import dattran.game.superkid.character.base.state.State;
+import dattran.game.superkid.screen.GameScreen;
 
 public interface GameCharacter<S extends State<C, S>, C extends GameCharacter<S, C>> {
     Animation<TextureRegion> getAnimation(S state);
@@ -22,4 +23,6 @@ public interface GameCharacter<S extends State<C, S>, C extends GameCharacter<S,
     Physic getPhysic();
 
     void render(Batch batch);
+
+    GameScreen getGameScreen();
 }

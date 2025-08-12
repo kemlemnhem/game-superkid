@@ -5,11 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
+import dattran.game.superkid.character.CharacterManager;
 import dattran.game.superkid.character.Physic;
 import dattran.game.superkid.character.PhysicImpl;
 import dattran.game.superkid.character.base.type.Player;
-import dattran.game.superkid.character.homeless1.state.Homeless1StateHurt;
 import dattran.game.superkid.character.kid.hitbox.KidManager;
 import dattran.game.superkid.character.kid.input.KidInput;
 import dattran.game.superkid.character.kid.input.KidInputKeyboard;
@@ -17,8 +16,11 @@ import dattran.game.superkid.character.kid.state.*;
 import dattran.game.superkid.config.Flag;
 import dattran.game.superkid.config.UserData;
 import dattran.game.superkid.loader.graphic.kid.KidAnimationLoader;
+import dattran.game.superkid.screen.GameScreen;
 
 public class Kid implements KidCharacter, Player {
+    private final GameScreen gameScreen;
+
     private final Physic physic;
 
     private KidState currentState;
@@ -30,16 +32,18 @@ public class Kid implements KidCharacter, Player {
     private final KidManager punchHitBoxManager = KidManager.createPunch(this);
     private final KidManager thumbHitBoxManager = KidManager.createThump(this);
 
-    public Kid(World world, Vector2 startPosition, KidState startState) {
+    public Kid(GameScreen gameScreen, Vector2 startPosition, KidState startState) {
         this.physic = PhysicImpl.PhysikImplBuilder.aPhysikImpl()
             .setCharacter(this)
-            .setWorld(world).setStartPosition(startPosition)
+            .setWorld(gameScreen.getWorld()).setStartPosition(startPosition)
             .setCategoryFlags(Flag.KID)
             .setMaskFlags(Flag.GROUND)
             .setUserData(UserData.KID)
             .build();
         this.changeState(startState);
         playerInput = new KidInputKeyboard();
+        this.gameScreen = gameScreen;
+        gameScreen.getCharacterManager().addKid(this);
     }
 
     @Override
@@ -132,6 +136,11 @@ public class Kid implements KidCharacter, Player {
     public void render(Batch batch) {
         update(Gdx.graphics.getDeltaTime());
         getPhysic().render(batch);
+    }
+
+    @Override
+    public GameScreen getGameScreen() {
+        return gameScreen;
     }
 
     @Override
