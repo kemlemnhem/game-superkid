@@ -19,7 +19,7 @@ public class Homeless1StateDead extends HomeLess1StateBase {
        super.update(homeless1, delta);
         Animation<TextureRegion> animation = homeless1.getAnimation(this);
         if (animation.isAnimationFinished(stateTime)) {
-            homeless1.setHp(Integer.MIN_VALUE);
+            homeless1.getPhysic().markForRemoval();
         }
     }
 

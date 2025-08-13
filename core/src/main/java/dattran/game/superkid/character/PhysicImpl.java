@@ -16,6 +16,8 @@ public class PhysicImpl implements Physic {
     private final World world;
     private Body body;
 
+    private boolean remove = false;
+
     private PhysicImpl(GameCharacter<?,?> character, World world, Vector2 startPosition, String userData, Flag[] categoryFlags, Flag[] maskFlags) {
         this.character = character;
         this.world = world;
@@ -105,6 +107,16 @@ public class PhysicImpl implements Physic {
     @Override
     public GameCharacter<?, ?> getCharacter() {
         return character;
+    }
+
+    @Override
+    public boolean isReadyToRemove() {
+        return remove;
+    }
+
+    @Override
+    public void markForRemoval() {
+        remove = true;
     }
 
     public static final class PhysikImplBuilder {

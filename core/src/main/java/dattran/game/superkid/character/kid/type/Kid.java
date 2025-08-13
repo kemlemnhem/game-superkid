@@ -112,11 +112,6 @@ public class Kid implements KidCharacter, Player {
     }
 
     @Override
-    public boolean isDead() {
-        return getHp() <= 0;
-    }
-
-    @Override
     public void gettingHurt(int damage) {
         setHp(getHp() - damage);
         if (getHp() <= 0) {

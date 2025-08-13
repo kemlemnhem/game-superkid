@@ -40,7 +40,7 @@ public class BaseScreenManager implements ScreenManager {
     private void update() {
         Set<GameCharacter<?,?>> enemiesToRemove = new HashSet<>();
         for (GameCharacter<?,?> character : enemies) {
-            if (character.isDead()) {
+            if (character.getPhysic().isReadyToRemove()) {
                 enemiesToRemove.add(character);
             }
         }
@@ -49,7 +49,7 @@ public class BaseScreenManager implements ScreenManager {
             enemies.remove(character);
         }
 
-        if (kid.isDead()) {
+        if (kid.getPhysic().isReadyToRemove()) {
             kid.getPhysic().dispose();
             kid = null;
         }

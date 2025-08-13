@@ -3,7 +3,6 @@ package dattran.game.superkid.character.base.state;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dattran.game.superkid.character.base.type.GameCharacter;
-import dattran.game.superkid.config.GameConfig;
 
 public abstract class BaseState<
     C extends GameCharacter<S, C>,

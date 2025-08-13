@@ -2,8 +2,6 @@ package dattran.game.superkid.character.kid.state;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import dattran.game.superkid.character.homeless1.Homeless1Character;
-import dattran.game.superkid.character.homeless1.state.HomeLess1StateBase;
 import dattran.game.superkid.character.kid.input.KidInput;
 import dattran.game.superkid.character.kid.type.KidCharacter;
 
@@ -22,7 +20,7 @@ public class KidStateDead extends KidStateBase {
        super.update(kid, delta);
         Animation<TextureRegion> animation = kid.getAnimation(this);
         if (animation.isAnimationFinished(stateTime)) {
-            kid.setHp(Integer.MIN_VALUE);
+            kid.getPhysic().markForRemoval();
         }
     }
 

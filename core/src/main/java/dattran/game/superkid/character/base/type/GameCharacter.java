@@ -19,7 +19,9 @@ public interface GameCharacter<S extends State<C, S>, C extends GameCharacter<S,
 
     void setHp(int hp);
 
-    boolean isDead();
+    default boolean isDead() {
+        return getHp() <= 0;
+    }
 
     Physic getPhysic();
 

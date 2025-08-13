@@ -29,4 +29,8 @@ public interface Physic {
     void dispose();
 
     GameCharacter<?,?> getCharacter();
+
+    boolean isReadyToRemove();
+
+    void markForRemoval();
 }

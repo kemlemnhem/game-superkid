@@ -96,11 +96,6 @@ public class Homeless1 implements Homeless1Character, Enemy {
     }
 
     @Override
-    public boolean isDead() {
-        return getHp() == Integer.MIN_VALUE;
-    }
-
-    @Override
     public Physic getPhysic() {
         return this.physic;
     }
