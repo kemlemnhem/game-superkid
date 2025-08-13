@@ -92,7 +92,7 @@ public abstract class BaseManager<H extends HitableCharacter> implements Manager
         Vector2 kickHitBoxOffset = new Vector2(character.getPhysic().isFacingRight() ? offsetRight : offsetLeft);
         Vector2 kickHitBoxCenter = character.getPhysic().getBody().getPosition().cpy().add(kickHitBoxOffset);
         character.getPhysic().getBody().getWorld().QueryAABB(fixture -> {
-            if (fixture != hitbox && fixture.getUserData().toString().startsWith(enemyUserDataPrefix)) {
+            if (fixture != null && fixture != hitbox && fixture.getUserData().toString().startsWith(enemyUserDataPrefix)) {
                 @SuppressWarnings("unchecked")
                 H enemy = (H) ((Physic) fixture.getBody().getUserData()).getCharacter();
                 if (shouldHit(enemy)) {

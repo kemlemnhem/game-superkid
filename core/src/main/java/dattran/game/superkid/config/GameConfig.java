@@ -58,7 +58,12 @@ public final class GameConfig {
     public static final float HOMELESS1_HURT_SHIFT_X = 0.3f;
     public static final float HOMELESS1_HURT_SHIFT_Y = 0f;
 
-    public static final float HOMELESS_WALK_SPEED = 0.4f;
+    public static final float HOMELESS_1_WALK_SPEED = 0.4f;
+    public static final float HOMELESS_1_RUN_SPEED = 0.8f;
+
+    public static final float HOMELESS_1_ATTACK_RANGE = 0.15f;
+
+    public static final float HOMELESS_1_VIEW_RANGE = 1.5f;
 
 
 

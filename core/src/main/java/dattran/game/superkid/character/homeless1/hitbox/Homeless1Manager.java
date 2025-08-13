@@ -17,6 +17,6 @@ public final class Homeless1Manager extends BaseManager<Kid> {
     }
 
     public static Homeless1Manager createAttack1(Homeless1 homeless1) {
-        return new Homeless1Manager(homeless1, UserData.HOMELESS_1_ATTACK_1, new Flag[]{Flag.ENEMY_ATTACK}, new Flag[]{Flag.KID}, new Vector2(0.1f,0), new Vector2(-0.1f, 0), 0.15f, 0.13f, 3);
+        return new Homeless1Manager(homeless1, UserData.HOMELESS_1_ATTACK_1, new Flag[]{Flag.ENEMY_ATTACK}, new Flag[]{Flag.KID}, new Vector2(0.1f,0), new Vector2(-0.1f, 0), GameConfig.HOMELESS_1_ATTACK_RANGE, 0.13f, 3);
     }
 }

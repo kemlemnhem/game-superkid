@@ -29,17 +29,9 @@ public class Homeless1StateIdle1 extends HomeLess1StateBase {
     @Override
     public void update(Homeless1Character homeless1, float delta) {
         super.update(homeless1, delta);
-
-        KidCharacter kid = homeless1.getGameScreen().getScreenManager().getKid();
-        if (kid != null && !kid.isDead()) {
-            Vector2 kidPos = kid.getPhysic().getBody().getPosition();
-            Vector2 homelessPos = homeless1.getPhysic().getBody().getPosition();
-            if (homelessPos.dst(kidPos) < 0.3f && !kid.isDead()) {
-                homeless1.changeState(new Homeless1StateAttack1());
-                return;
-            }
-        }
-
+         if(attackKid(homeless1) || huntKid(homeless1)) {
+             return;
+         }
         if (stateTime > idleDuration) {
             homeless1.getPhysic().setFacingRight(random.nextBoolean());
             homeless1.changeState(new Homeless1StateWalk());

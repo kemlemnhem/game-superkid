@@ -71,7 +71,7 @@ public final class Homeless1AnimationLoader implements Loader<Homeless1Animation
             builder.withRun(runAni);
 
             Animation<TextureRegion> specAni = new Animation<>(FRAME_DURATION, textureRegions("Special.png"));
-            runAni.setPlayMode(Animation.PlayMode.NORMAL);
+            specAni.setPlayMode(Animation.PlayMode.NORMAL);
             builder.withSpecial(specAni);
 
             Animation<TextureRegion> walkAni = new Animation<>(FRAME_DURATION, textureRegions("Walk.png"));

@@ -55,6 +55,9 @@ public class Homeless1 implements Homeless1Character, Enemy {
         if (state instanceof Homeless1StateWalk) {
             return Homeless1AnimationLoader.instance.loadedResource().getWalk();
         }
+        if (state instanceof Homeless1StateRun) {
+            return Homeless1AnimationLoader.instance.loadedResource().getRun();
+        }
 
         return Homeless1AnimationLoader.instance.loadedResource().getIdle1();
     }

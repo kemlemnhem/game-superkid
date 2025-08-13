@@ -19,6 +19,15 @@ public class Homeless1StateHurt extends HomeLess1StateBase {
     }
 
     @Override
+    public void update(Homeless1Character homeless1, float delta) {
+        super.update(homeless1, delta);
+        if (attackKid(homeless1) || huntKid(homeless1)) {
+            return;
+        }
+        // TODOf
+    }
+
+    @Override
     public void exit(Homeless1Character homeless1) {
         LOGGER.log(Level.INFO, "Homeless1-Exiting Hurt State");
     }
