@@ -9,9 +9,6 @@ import java.util.logging.Logger;
 public class Homeless1StateAttack1 extends Homeless1StateBattle {
     private static final Logger LOGGER = Logger.getLogger(Homeless1StateAttack1.class.getName());
 
-    public Homeless1StateAttack1(Player target) {
-        super(target);
-    }
 
     @Override
     public void enter(Homeless1Character homeless1) {

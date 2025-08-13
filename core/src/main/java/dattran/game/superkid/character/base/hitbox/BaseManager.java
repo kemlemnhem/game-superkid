@@ -9,7 +9,6 @@ import dattran.game.superkid.character.base.type.Enemy;
 import dattran.game.superkid.character.base.type.GameCharacter;
 import dattran.game.superkid.character.Physic;
 import dattran.game.superkid.character.base.type.HitableCharacter;
-import dattran.game.superkid.character.base.type.Player;
 import dattran.game.superkid.config.Flag;
 
 import java.util.HashSet;
@@ -100,6 +99,7 @@ public abstract class BaseManager<H extends HitableCharacter> implements Manager
                     enemyIsGettingHit(enemy);
                 }
             }
+
             return true;
         },kickHitBoxCenter.x - width, kickHitBoxCenter.y - height,kickHitBoxCenter.x + width, kickHitBoxCenter.y + height );
     }
@@ -111,9 +111,7 @@ public abstract class BaseManager<H extends HitableCharacter> implements Manager
         }
         enemiesHit.add(enemy);
         enemy.getPhysic().setFacingRight(!character.getPhysic().isFacingRight());
-        if (enemy instanceof Enemy) {
-            enemy.gettingHurt(damage);
-        }
+        enemy.gettingHurt(damage);
     }
 
 

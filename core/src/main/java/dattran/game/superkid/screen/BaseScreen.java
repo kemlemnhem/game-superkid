@@ -151,12 +151,12 @@ public class BaseScreen implements GameScreen {
         world.step(GameConfig.WORLD_DELTA_TIME, GameConfig.WORLD_VELOCITY_ITERATION, GameConfig.WORLD_POSITION_ITERATION);
 
 
-        Vector2 playerPos = screenManager.getKid().getPhysic().getBody().getPosition();
+        Vector2 kidPosition = screenManager.getKidPosition();
         float halfViewportWidth = camera.viewportWidth / 2f;
         float halfViewportHeight = camera.viewportHeight / 2f;
 
-        float cameraX = Math.min(Math.max(playerPos.x, halfViewportWidth), GameConfig.SEAPORT_MAP_WIDTH - halfViewportWidth);
-        float cameraY = Math.min(Math.max(playerPos.y, halfViewportHeight), GameConfig.SEAPORT_MAP_HEIGHT - halfViewportHeight);
+        float cameraX = Math.min(Math.max(kidPosition.x, halfViewportWidth), GameConfig.SEAPORT_MAP_WIDTH - halfViewportWidth);
+        float cameraY = Math.min(Math.max(kidPosition.y, halfViewportHeight), GameConfig.SEAPORT_MAP_HEIGHT - halfViewportHeight);
         camera.position.set(cameraX, cameraY, 0);
         clampCamera();
         camera.update();

@@ -29,7 +29,7 @@ public class Homeless1ChasePlayerState extends HomeLess1StateBase {
             float distance = Math.abs(playerX - homeless1X);
             homeless1.getPhysic().setFacingRight(homeless1X < playerX);
             if (distance < 0.11 /*attack range*/) {
-                homeless1.changeState(new Homeless1StateAttack1(target));
+                homeless1.changeState(new Homeless1StateAttack1());
             }
             else {
                 float direction = (playerX > homeless1X) ? 1 : -1;

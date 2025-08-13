@@ -1,6 +1,7 @@
 package dattran.game.superkid.screen;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import dattran.game.superkid.character.base.type.GameCharacter;
 import dattran.game.superkid.character.kid.type.KidCharacter;
 
@@ -13,4 +14,5 @@ public interface ScreenManager {
     float getMapHeight();
     void setMapWidth(float mapWidth);
     void setMapHeight(float mapHeight);
+    Vector2 getKidPosition();
 }

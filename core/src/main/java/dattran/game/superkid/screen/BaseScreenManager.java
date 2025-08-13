@@ -1,6 +1,7 @@
 package dattran.game.superkid.screen;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import dattran.game.superkid.character.base.type.GameCharacter;
 import dattran.game.superkid.character.kid.type.KidCharacter;
 
@@ -11,9 +12,11 @@ public class BaseScreenManager implements ScreenManager {
     private KidCharacter kid;
     private Set<GameCharacter<?,?>> enemies = new HashSet<>();
     private float mapWidth, mapHeight;
+    private Vector2 kidPosition;
     @Override
     public void addKid(KidCharacter kid) {
         this.kid = kid;
+        kidPosition = kid.getPhysic().getBody().getPosition();
     }
 
     @Override
@@ -49,9 +52,12 @@ public class BaseScreenManager implements ScreenManager {
             enemies.remove(character);
         }
 
-        if (kid.getPhysic().isReadyToRemove()) {
-            kid.getPhysic().dispose();
-            kid = null;
+        if (kid != null) {
+            kidPosition = kid.getPhysic().getBody().getPosition();
+            if (kid.getPhysic().isReadyToRemove()) {
+                kid.getPhysic().dispose();
+                kid = null;
+            }
         }
     }
 
@@ -74,4 +80,10 @@ public class BaseScreenManager implements ScreenManager {
     public void setMapHeight(float mapHeight) {
         this.mapHeight = mapHeight;
     }
+
+    @Override
+    public Vector2 getKidPosition() {
+        return kidPosition;
+    }
+
 }
