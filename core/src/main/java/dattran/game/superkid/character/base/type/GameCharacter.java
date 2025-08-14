@@ -19,6 +19,10 @@ public interface GameCharacter<S extends State<C, S>, C extends GameCharacter<S,
 
     void setHp(int hp);
 
+    float getAttackCoolDown();
+
+    void setAttackCoolDown(float coolDown);
+
     default boolean isDead() {
         return getHp() <= 0;
     }
@@ -36,4 +40,6 @@ public interface GameCharacter<S extends State<C, S>, C extends GameCharacter<S,
         }
         return false;
     }
+
+    S getCurrentState();
 }

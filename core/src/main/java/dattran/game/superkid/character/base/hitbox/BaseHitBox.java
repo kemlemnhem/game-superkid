@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import dattran.game.superkid.character.base.type.Enemy;
 import dattran.game.superkid.character.base.type.GameCharacter;
 import dattran.game.superkid.character.Physic;
 import dattran.game.superkid.character.base.type.HitableCharacter;
@@ -14,7 +13,7 @@ import dattran.game.superkid.config.Flag;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class BaseManager<H extends HitableCharacter> implements Manager<H> {
+public abstract class BaseHitBox<H extends HitableCharacter> implements HitBox<H> {
     private Fixture hitbox;
     private final float width;
     private final float height;
@@ -31,7 +30,7 @@ public abstract class BaseManager<H extends HitableCharacter> implements Manager
     private final int damage;
 
 
-    protected BaseManager(float width, float height, String enemyUserDataPrefix, GameCharacter<?,?> character, String userData, Flag[] categoryFlags, Flag[] maskFlags, Vector2 offsetRight, Vector2 offsetLeft, float maxAllowDistanceBody, float maxAllowDistanceBox, int damage) {
+    protected BaseHitBox(float width, float height, String enemyUserDataPrefix, GameCharacter<?,?> character, String userData, Flag[] categoryFlags, Flag[] maskFlags, Vector2 offsetRight, Vector2 offsetLeft, float maxAllowDistanceBody, float maxAllowDistanceBox, int damage) {
         this.width = width;
         this.height = height;
         this.enemyUserDataPrefix = enemyUserDataPrefix;

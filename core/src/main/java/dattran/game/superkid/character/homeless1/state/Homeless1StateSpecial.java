@@ -10,6 +10,6 @@ public class Homeless1StateSpecial extends Homeless1StateAttack {
 
     @Override
     public void exit(Homeless1Character character) {
-        super.enter(character.getSpecialHitBoxManager());
+        super.exit(character.getSpecialHitBoxManager(), character);
     }
 }

@@ -13,6 +13,13 @@ import java.util.Random;
 public abstract class HomeLess1StateBase extends BaseState<Homeless1Character, Homeless1State> implements Homeless1State {
     private final Random random = new SecureRandom();
     protected boolean attackKid(Homeless1Character homeless1) {
+        if (homeless1.getCurrentState() instanceof Homeless1StateAttack) {
+            return false;
+        }
+        if (homeless1.getAttackCoolDown() > 0) {
+            System.out.println("Cool Down");
+            return false;
+        }
         KidCharacter kid = homeless1.getGameScreen().getScreenManager().getKid();
         if (kid != null && !kid.isDead()) {
             Vector2 kidPos = kid.getPhysic().getBody().getPosition();
@@ -24,8 +31,10 @@ public abstract class HomeLess1StateBase extends BaseState<Homeless1Character, H
                     case 1: homeless1.changeState(new Homeless1StateAttack1()); break;
                     case 2: homeless1.changeState(new Homeless1StateAttack2()); break;
                 }
-                homeless1.changeState(new Homeless1StateAttack1());
                 return true;
+            }
+            else {
+                return false;
             }
         }
         return false;

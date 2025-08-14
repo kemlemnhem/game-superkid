@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import dattran.game.superkid.character.base.type.Enemy;
-import dattran.game.superkid.character.homeless1.hitbox.Homeless1Manager;
-import dattran.game.superkid.character.homeless1.state.*;
 import dattran.game.superkid.character.Physic;
 import dattran.game.superkid.character.PhysicImpl;
+import dattran.game.superkid.character.base.type.Enemy;
+import dattran.game.superkid.character.homeless1.hitbox.Homeless1HitBox;
+import dattran.game.superkid.character.homeless1.state.*;
 import dattran.game.superkid.config.Flag;
 import dattran.game.superkid.config.UserData;
 import dattran.game.superkid.loader.graphic.homeless1.Homeless1AnimationLoader;
@@ -20,13 +20,14 @@ public class Homeless1 implements Homeless1Character, Enemy {
     private final Physic physic;
 
     private Homeless1State currentState;
-    private int hp = 20;
+    private int hp = 200;
+    private float attackCoolDown;
 
-    private final Homeless1Manager attack1BoxManager = Homeless1Manager.createAttack1(this);
+    private final Homeless1HitBox attack1BoxManager = Homeless1HitBox.createAttack1(this);
 
-    private final Homeless1Manager attack2BoxManager = Homeless1Manager.createAttack2(this);
+    private final Homeless1HitBox attack2BoxManager = Homeless1HitBox.createAttack2(this);
 
-    private final Homeless1Manager specialBoxManager = Homeless1Manager.createSpecial(this);
+    private final Homeless1HitBox specialBoxManager = Homeless1HitBox.createSpecial(this);
 
     public Homeless1(GameScreen gameScreen, Vector2 startPosition, Homeless1State startState) {
         this.gameScreen = gameScreen;
@@ -89,6 +90,12 @@ public class Homeless1 implements Homeless1Character, Enemy {
     @Override
     public void update(float delta) {
         currentState.update(this, delta);
+        if (attackCoolDown > 0) {
+            attackCoolDown -= delta;
+            if (attackCoolDown < 0) {
+                attackCoolDown = 0;
+            }
+        }
     }
 
     @Override
@@ -128,19 +135,34 @@ public class Homeless1 implements Homeless1Character, Enemy {
     }
 
     @Override
-    public Homeless1Manager getAttack1HitBoxManager() {
+    public Homeless1State getCurrentState() {
+        return currentState;
+    }
+
+    @Override
+    public Homeless1HitBox getAttack1HitBoxManager() {
         return attack1BoxManager;
     }
 
     @Override
-    public Homeless1Manager getAttack2HitBoxManager() {
+    public Homeless1HitBox getAttack2HitBoxManager() {
         return attack2BoxManager;
     }
 
     @Override
-    public Homeless1Manager getSpecialHitBoxManager() {
+    public Homeless1HitBox getSpecialHitBoxManager() {
         return specialBoxManager;
     }
 
+
+    @Override
+    public float getAttackCoolDown() {
+        return attackCoolDown;
+    }
+
+    @Override
+    public void setAttackCoolDown(float coolDown) {
+        this.attackCoolDown = coolDown;
+    }
 
 }

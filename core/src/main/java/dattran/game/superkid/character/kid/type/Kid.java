@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import dattran.game.superkid.character.Physic;
 import dattran.game.superkid.character.PhysicImpl;
 import dattran.game.superkid.character.base.type.Player;
-import dattran.game.superkid.character.kid.hitbox.KidManager;
+import dattran.game.superkid.character.kid.hitbox.KidHitBox;
 import dattran.game.superkid.character.kid.input.KidInput;
 import dattran.game.superkid.character.kid.input.KidInputKeyboard;
 import dattran.game.superkid.character.kid.state.*;
@@ -27,9 +27,9 @@ public class Kid implements KidCharacter, Player {
 
     private int hp = 100;
 
-    private final KidManager kickHitBoxManager = KidManager.createKick(this);
-    private final KidManager punchHitBoxManager = KidManager.createPunch(this);
-    private final KidManager thumbHitBoxManager = KidManager.createThump(this);
+    private final KidHitBox kickHitBoxManager = KidHitBox.createKick(this);
+    private final KidHitBox punchHitBoxManager = KidHitBox.createPunch(this);
+    private final KidHitBox thumbHitBoxManager = KidHitBox.createThump(this);
 
     public Kid(GameScreen gameScreen, Vector2 startPosition, KidState startState) {
         this.physic = PhysicImpl.PhysikImplBuilder.aPhysikImpl()
@@ -112,6 +112,16 @@ public class Kid implements KidCharacter, Player {
     }
 
     @Override
+    public float getAttackCoolDown() {
+        return 0;
+    }
+
+    @Override
+    public void setAttackCoolDown(float coolDown) {
+
+    }
+
+    @Override
     public void gettingHurt(int damage) {
         setHp(getHp() - damage);
         if (getHp() <= 0) {
@@ -138,17 +148,22 @@ public class Kid implements KidCharacter, Player {
     }
 
     @Override
-    public KidManager getKickHitBoxManager() {
+    public KidState getCurrentState() {
+        return currentState;
+    }
+
+    @Override
+    public KidHitBox getKickHitBoxManager() {
         return kickHitBoxManager;
     }
 
     @Override
-    public KidManager getPunchHitBoxManager() {
+    public KidHitBox getPunchHitBoxManager() {
         return punchHitBoxManager;
     }
 
     @Override
-    public KidManager getThumpHitBoxManager() {
+    public KidHitBox getThumpHitBoxManager() {
         return thumbHitBoxManager;
     }
 }
