@@ -64,6 +64,7 @@ public final class GameConfig {
     public static final float HOMELESS_1_ATTACK_RANGE = 0.15f;
 
     public static final float HOMELESS_1_VIEW_RANGE = 1.5f;
+    public static final float HOMELESS_1_DETECT_RANGE = 0.4f;
 
 
 

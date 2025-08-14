@@ -31,7 +31,7 @@ public class Homeless1StateWalk extends HomeLess1StateBase {
             homeless1.getPhysic().getBody().setLinearVelocity(homeless1.getPhysic().isFacingRight() ? GameConfig.HOMELESS_1_WALK_SPEED : -GameConfig.HOMELESS_1_WALK_SPEED, homeless1.getPhysic().getBody().getLinearVelocity().y);
         }
         else {
-            homeless1.changeState(new Homeless1StateIdle1());
+            homeless1.changeState(random.nextBoolean() ? new Homeless1StateIdle1() : new Homeless1StateIdle2());
         }
     }
 

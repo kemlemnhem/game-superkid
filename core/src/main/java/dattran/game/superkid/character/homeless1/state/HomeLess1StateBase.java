@@ -7,14 +7,23 @@ import dattran.game.superkid.character.homeless1.Homeless1Character;
 import dattran.game.superkid.character.kid.type.KidCharacter;
 import dattran.game.superkid.config.GameConfig;
 
-public abstract class HomeLess1StateBase extends BaseState<Homeless1Character, Homeless1State> implements Homeless1State {
+import java.security.SecureRandom;
+import java.util.Random;
 
+public abstract class HomeLess1StateBase extends BaseState<Homeless1Character, Homeless1State> implements Homeless1State {
+    private final Random random = new SecureRandom();
     protected boolean attackKid(Homeless1Character homeless1) {
         KidCharacter kid = homeless1.getGameScreen().getScreenManager().getKid();
         if (kid != null && !kid.isDead()) {
             Vector2 kidPos = kid.getPhysic().getBody().getPosition();
             Vector2 homelessPos = homeless1.getPhysic().getBody().getPosition();
             if (homelessPos.dst(kidPos) < GameConfig.HOMELESS_1_ATTACK_RANGE && !kid.isDead()) {
+                int number = random.nextInt(3);
+                switch (number) {
+                    case 0: homeless1.changeState(new Homeless1StateSpecial()); break;
+                    case 1: homeless1.changeState(new Homeless1StateAttack1()); break;
+                    case 2: homeless1.changeState(new Homeless1StateAttack2()); break;
+                }
                 homeless1.changeState(new Homeless1StateAttack1());
                 return true;
             }
@@ -24,7 +33,7 @@ public abstract class HomeLess1StateBase extends BaseState<Homeless1Character, H
 
     protected boolean huntKid(Homeless1Character homeless1) {
         KidCharacter kid = homeless1.getGameScreen().getScreenManager().getKid();
-        if (kid != null && !kid.isDead() && isVisible(homeless1, kid, GameConfig.HOMELESS_1_VIEW_RANGE)) {
+        if (kid != null && !kid.isDead() && isVisible(homeless1, kid, GameConfig.HOMELESS_1_VIEW_RANGE, GameConfig.HOMELESS_1_DETECT_RANGE)) {
             homeless1.changeState(new Homeless1StateRun());
             return true;
         }
@@ -36,11 +45,14 @@ public abstract class HomeLess1StateBase extends BaseState<Homeless1Character, H
         if (kid == null || kid.isDead()) {
             return false;
         }
-        return(isVisible(homeless1, kid, GameConfig.HOMELESS_1_VIEW_RANGE));
+        return(isVisible(homeless1, kid, GameConfig.HOMELESS_1_VIEW_RANGE, GameConfig.HOMELESS_1_DETECT_RANGE));
     }
 
-    private static boolean isVisible(GameCharacter<?,?> ch1, GameCharacter<?,?> ch2,float visionRadius) {
+    private static boolean isVisible(GameCharacter<?,?> ch1, GameCharacter<?,?> ch2, float visionRadius, float detectRadius) {
         float dst = ch1.getPhysic().getBody().getPosition().dst(ch2.getPhysic().getBody().getPosition());
+        if (dst < detectRadius) {
+            return true;
+        }
         if (dst > visionRadius) {
             return false;
         }

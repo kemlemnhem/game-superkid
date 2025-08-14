@@ -12,6 +12,10 @@ public class KidStateIdle extends KidStateBase {
 
     @Override
     public void handleInput(KidCharacter kid, KidInput input) {
+        fullControl(kid, input);
+    }
+
+    static void fullControl(KidCharacter kid, KidInput input) {
         if (input.isMoveLeftPressed()) {
             kid.getPhysic().setFacingRight(false);
             kid.changeState(new KidStateWalk());

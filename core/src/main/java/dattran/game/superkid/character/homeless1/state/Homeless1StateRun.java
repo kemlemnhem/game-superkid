@@ -3,12 +3,14 @@ package dattran.game.superkid.character.homeless1.state;
 import dattran.game.superkid.character.homeless1.Homeless1Character;
 import dattran.game.superkid.config.GameConfig;
 
+import java.security.SecureRandom;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Homeless1StateRun extends HomeLess1StateBase {
     private static final Logger LOGGER = Logger.getLogger(Homeless1StateRun.class.getName());
-
+    private final Random random = new SecureRandom();
     @Override
     public void update(Homeless1Character homeless1, float delta) {
         super.update(homeless1, delta);
@@ -20,10 +22,10 @@ public class Homeless1StateRun extends HomeLess1StateBase {
             homeless1.getPhysic().getBody().setLinearVelocity(
                 0, homeless1.getPhysic().getBody().getLinearVelocity().y
             );
-            homeless1.changeState(new Homeless1StateIdle1());
+            homeless1.changeState(random.nextBoolean() ? new Homeless1StateIdle1() : new Homeless1StateIdle2());
             return;
         }
-
+        homeless1.getPhysic().setFacingRight(homeless1.getPhysic().getBody().getPosition().x < homeless1.getGameScreen().getScreenManager().getKid().getPhysic().getBody().getPosition().x);
         homeless1.getPhysic().getBody().setLinearVelocity(homeless1.getPhysic().isFacingRight() ? GameConfig.HOMELESS_1_RUN_SPEED : -GameConfig.HOMELESS_1_RUN_SPEED, homeless1.getPhysic().getBody().getLinearVelocity().y);
 
     }

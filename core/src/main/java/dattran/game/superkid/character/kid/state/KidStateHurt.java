@@ -26,6 +26,6 @@ public class KidStateHurt extends KidStateBattle {
 
     @Override
     public void handleInput(KidCharacter kid, KidInput input) {
-
+        KidStateIdle.fullControl(kid, input);
     }
 }

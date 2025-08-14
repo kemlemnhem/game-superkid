@@ -24,6 +24,10 @@ public class Homeless1 implements Homeless1Character, Enemy {
 
     private final Homeless1Manager attack1BoxManager = Homeless1Manager.createAttack1(this);
 
+    private final Homeless1Manager attack2BoxManager = Homeless1Manager.createAttack2(this);
+
+    private final Homeless1Manager specialBoxManager = Homeless1Manager.createSpecial(this);
+
     public Homeless1(GameScreen gameScreen, Vector2 startPosition, Homeless1State startState) {
         this.gameScreen = gameScreen;
         this.physic = PhysicImpl.PhysikImplBuilder.aPhysikImpl()
@@ -43,6 +47,9 @@ public class Homeless1 implements Homeless1Character, Enemy {
         if (state instanceof Homeless1StateIdle1) {
             return Homeless1AnimationLoader.instance.loadedResource().getIdle1();
         }
+        if (state instanceof Homeless1StateIdle2) {
+            return Homeless1AnimationLoader.instance.loadedResource().getIdle2();
+        }
         if (state instanceof Homeless1StateHurt) {
             return Homeless1AnimationLoader.instance.loadedResource().getHurt();
         }
@@ -57,6 +64,12 @@ public class Homeless1 implements Homeless1Character, Enemy {
         }
         if (state instanceof Homeless1StateRun) {
             return Homeless1AnimationLoader.instance.loadedResource().getRun();
+        }
+        if (state instanceof Homeless1StateAttack2) {
+            return Homeless1AnimationLoader.instance.loadedResource().getAttack2();
+        }
+        if (state instanceof Homeless1StateSpecial) {
+            return Homeless1AnimationLoader.instance.loadedResource().getSpecial();
         }
 
         return Homeless1AnimationLoader.instance.loadedResource().getIdle1();
@@ -119,6 +132,15 @@ public class Homeless1 implements Homeless1Character, Enemy {
         return attack1BoxManager;
     }
 
+    @Override
+    public Homeless1Manager getAttack2HitBoxManager() {
+        return attack2BoxManager;
+    }
+
+    @Override
+    public Homeless1Manager getSpecialHitBoxManager() {
+        return specialBoxManager;
+    }
 
 
 }
