@@ -33,4 +33,8 @@ public interface Physic {
     boolean isReadyToRemove();
 
     void markForRemoval();
+
+    void moveForward(float speed);
+
+    void moveBackward(float speed);
 }

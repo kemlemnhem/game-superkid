@@ -119,6 +119,16 @@ public class PhysicImpl implements Physic {
         remove = true;
     }
 
+    @Override
+    public void moveForward(float speed) {
+        body.setLinearVelocity(speed, body.getLinearVelocity().y);
+    }
+
+    @Override
+    public void moveBackward(float speed) {
+        body.setLinearVelocity(-speed, body.getLinearVelocity().y);
+    }
+
     public static final class PhysikImplBuilder {
         private GameCharacter<?,?> character;
         private World world;

@@ -9,13 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Homeless1StateHurt extends HomeLess1StateBase {
-    private static final Logger LOGGER = Logger.getLogger(Homeless1StateHurt.class.getName());
-
-    @Override
-    public void enter(Homeless1Character homeless1) {
-        LOGGER.log(Level.INFO, "Homeless1-Entering Hurt State");
-        stateTime = 0;
-    }
 
     @Override
     public void update(Homeless1Character homeless1, float delta) {
@@ -28,10 +21,5 @@ public class Homeless1StateHurt extends HomeLess1StateBase {
             }
         }
 
-    }
-
-    @Override
-    public void exit(Homeless1Character homeless1) {
-        LOGGER.log(Level.INFO, "Homeless1-Exiting Hurt State");
     }
 }

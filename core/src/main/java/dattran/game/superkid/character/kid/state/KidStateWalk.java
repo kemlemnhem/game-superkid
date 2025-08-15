@@ -13,10 +13,10 @@ public class KidStateWalk extends KidStateBase {
     public void handleInput(KidCharacter kid, KidInput input) {
         if (input.isMoveLeftPressed()) {
             kid.getPhysic().setFacingRight(false);
-            kid.getPhysic().getBody().setLinearVelocity(-GameConfig.KID_WALK_SPEED, kid.getPhysic().getBody().getLinearVelocity().y);
+            kid.getPhysic().moveBackward(GameConfig.KID_WALK_SPEED);
         } else if (input.isMoveRightPressed()) {
             kid.getPhysic().setFacingRight(true);
-            kid.getPhysic().getBody().setLinearVelocity(GameConfig.KID_WALK_SPEED, kid.getPhysic().getBody().getLinearVelocity().y);
+            kid.getPhysic().moveForward(GameConfig.KID_WALK_SPEED);
         } else if (input.isKickPressed()) {
             kid.changeState(new KidStateKick());
         } else {
