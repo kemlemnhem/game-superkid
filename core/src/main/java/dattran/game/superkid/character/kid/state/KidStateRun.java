@@ -8,9 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class KidStateRun extends KidStateBase {
-    private static final Logger LOGGER = Logger.getLogger(KidStateRun.class.getName());
-
-
     @Override
     public void handleInput(KidCharacter kid, KidInput input) {
         if (input.isMoveLeftPressed()) {
@@ -23,16 +20,5 @@ public class KidStateRun extends KidStateBase {
             kid.changeState(new KidStateIdle());
         }
 
-    }
-
-    @Override
-    public void enter(KidCharacter kid) {
-        LOGGER.log(Level.INFO, "Entering Run State");
-        stateTime = 0;
-    }
-
-    @Override
-    public void exit(KidCharacter character) {
-        LOGGER.log(Level.INFO, "Exiting Run State");
     }
 }

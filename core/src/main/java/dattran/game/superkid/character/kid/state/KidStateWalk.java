@@ -27,16 +27,4 @@ public class KidStateWalk extends KidStateBase {
             kid.changeState(new KidStateRun());
         }
     }
-
-    @Override
-    public void enter(KidCharacter character) {
-        LOGGER.log(Level.INFO, "Entering WalkState");
-        stateTime = 0;
-    }
-
-
-    @Override
-    public void exit(KidCharacter character) {
-        LOGGER.log(Level.INFO, "Exiting WalkState");
-    }
 }
