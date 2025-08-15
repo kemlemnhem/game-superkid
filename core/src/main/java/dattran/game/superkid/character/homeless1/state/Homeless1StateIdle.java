@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 
 public abstract class Homeless1StateIdle extends HomeLess1StateBase {
     private static final Logger LOGGER = Logger.getLogger(Homeless1StateIdle.class.getName());
-    private final Random random = new SecureRandom();
     private float idleDuration;
 
     @Override

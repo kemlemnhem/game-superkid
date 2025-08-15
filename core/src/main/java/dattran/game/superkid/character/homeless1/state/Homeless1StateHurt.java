@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 
 public class Homeless1StateHurt extends HomeLess1StateBase {
     private static final Logger LOGGER = Logger.getLogger(Homeless1StateHurt.class.getName());
-    private final Random random = new SecureRandom();
 
     @Override
     public void enter(Homeless1Character homeless1) {
@@ -21,7 +20,7 @@ public class Homeless1StateHurt extends HomeLess1StateBase {
     @Override
     public void update(Homeless1Character homeless1, float delta) {
         super.update(homeless1, delta);
-        if (stateTime >= 0.4f) { // Thời gian bị hit
+        if (stateTime >= 0.4f) { // hit time
             if (homeless1.isDead()) {
                 homeless1.changeState(new Homeless1StateDead());
             } else {

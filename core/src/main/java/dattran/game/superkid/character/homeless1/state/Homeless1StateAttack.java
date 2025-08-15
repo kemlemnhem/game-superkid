@@ -3,7 +3,6 @@ package dattran.game.superkid.character.homeless1.state;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dattran.game.superkid.character.homeless1.Homeless1Character;
-import dattran.game.superkid.character.homeless1.hitbox.Homeless1HitBox;
 import dattran.game.superkid.character.kid.type.KidCharacter;
 import dattran.game.superkid.config.GameConfig;
 
@@ -26,16 +25,16 @@ public abstract class Homeless1StateAttack extends HomeLess1StateBase {
     @Override
     public void update(Homeless1Character homeless1, float delta) {
         super.update(homeless1, delta);
-
-        if (!hitTriggered && stateTime >= 0.4f) {
+        // avoid spamt hitbox
+        if (!hitTriggered && stateTime >= 0.4f ) {
             homeless1.getCurrentAttackHitBox().enterState();
             hitTriggered = true;
         }
 
-        Animation<TextureRegion> animation = homeless1.getAnimation(this);
         KidCharacter kid = homeless1.getGameScreen().getScreenManager().getKid();
-        if (animation.isAnimationFinished(stateTime) || kid.isDead()) {
-            homeless1.setAttackCoolDown(GameConfig.HOMELESS_1_ATTACK_DELAY);
+
+        Animation<TextureRegion> animation = homeless1.getAnimation(this);
+        if (animation.isAnimationFinished(stateTime) || kid == null || kid.isDead()) {
             homeless1.changeState(random.nextBoolean() ? new Homeless1StateIdle1() : new Homeless1StateIdle2());
         }
 

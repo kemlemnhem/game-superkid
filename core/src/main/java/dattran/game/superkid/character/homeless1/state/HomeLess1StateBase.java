@@ -11,7 +11,8 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 public abstract class HomeLess1StateBase extends BaseState<Homeless1Character, Homeless1State> implements Homeless1State {
-    private final Random random = new SecureRandom();
+    protected final Random random = new SecureRandom();
+
     protected boolean attackKid(Homeless1Character homeless1) {
         if (homeless1.getCurrentState() instanceof Homeless1StateAttack) {
             return false;
@@ -61,13 +62,6 @@ public abstract class HomeLess1StateBase extends BaseState<Homeless1Character, H
         return false;
     }
 
-    protected boolean isKidVisible(Homeless1Character homeless1) {
-        KidCharacter kid = homeless1.getGameScreen().getScreenManager().getKid();
-        if (kid == null || kid.isDead()) {
-            return false;
-        }
-        return(isVisible(homeless1, kid, GameConfig.HOMELESS_1_VIEW_RANGE, GameConfig.HOMELESS_1_DETECT_RANGE));
-    }
 
     private static boolean isVisible(GameCharacter<?,?> ch1, GameCharacter<?,?> ch2, float visionRadius, float detectRadius) {
         float dst = ch1.getPhysic().getBody().getPosition().dst(ch2.getPhysic().getBody().getPosition());
@@ -81,9 +75,6 @@ public abstract class HomeLess1StateBase extends BaseState<Homeless1Character, H
         if (ch1.getPhysic().isFacingRight() && dx > 0) {
             return false;
         }
-        if (!ch1.getPhysic().isFacingRight() && dx < 0) {
-            return false;
-        }
-        return true;
+        return ch1.getPhysic().isFacingRight() || !(dx < 0);
     }
 }
