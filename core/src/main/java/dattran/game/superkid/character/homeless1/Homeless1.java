@@ -101,10 +101,6 @@ public class Homeless1 implements Homeless1Character, Enemy {
     @Override
     public void gettingHurt(int damage) {
         setHp(getHp() - damage);
-        if (getHp() <= 0) {
-            changeState(new Homeless1StateDead());
-            return;
-        }
         changeState(new Homeless1StateHurt());
     }
 
@@ -152,6 +148,20 @@ public class Homeless1 implements Homeless1Character, Enemy {
     @Override
     public Homeless1HitBox getSpecialHitBoxManager() {
         return specialBoxManager;
+    }
+
+    @Override
+    public Homeless1HitBox getCurrentAttackHitBox() {
+        if (currentState instanceof Homeless1StateAttack1) {
+            return attack1BoxManager;
+        }
+        else if (currentState instanceof Homeless1StateAttack2) {
+            return attack2BoxManager;
+        }
+        else if (currentState instanceof Homeless1StateSpecial) {
+            return specialBoxManager;
+        }
+        return null;
     }
 
 

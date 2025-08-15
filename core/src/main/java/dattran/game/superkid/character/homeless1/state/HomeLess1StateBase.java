@@ -17,7 +17,6 @@ public abstract class HomeLess1StateBase extends BaseState<Homeless1Character, H
             return false;
         }
         if (homeless1.getAttackCoolDown() > 0) {
-            System.out.println("Cool Down");
             return false;
         }
         KidCharacter kid = homeless1.getGameScreen().getScreenManager().getKid();
@@ -33,18 +32,31 @@ public abstract class HomeLess1StateBase extends BaseState<Homeless1Character, H
                 }
                 return true;
             }
-            else {
-                return false;
-            }
         }
         return false;
     }
 
     protected boolean huntKid(Homeless1Character homeless1) {
         KidCharacter kid = homeless1.getGameScreen().getScreenManager().getKid();
-        if (kid != null && !kid.isDead() && isVisible(homeless1, kid, GameConfig.HOMELESS_1_VIEW_RANGE, GameConfig.HOMELESS_1_DETECT_RANGE)) {
-            homeless1.changeState(new Homeless1StateRun());
-            return true;
+        if (kid != null && !kid.isDead()) {
+            float distance = homeless1.getPhysic().getBody().getPosition().dst(
+                kid.getPhysic().getBody().getPosition()
+            );
+            if (distance <= GameConfig.HOMELESS_1_ATTACK_RANGE) {
+                return false;
+            }
+
+            if (isVisible(homeless1, kid, GameConfig.HOMELESS_1_VIEW_RANGE, GameConfig.HOMELESS_1_DETECT_RANGE)) {
+                if (homeless1.getCurrentState() instanceof Homeless1StateRun) {
+                    return false;
+                }
+                if ((homeless1.getCurrentState() instanceof Homeless1StateIdle
+                    || homeless1.getCurrentState() instanceof Homeless1StateWalk)
+                    && ((HomeLess1StateBase) homeless1.getCurrentState()).getStateTime() > 0.2f) {
+                    homeless1.changeState(new Homeless1StateRun());
+                    return true;
+                }
+            }
         }
         return false;
     }

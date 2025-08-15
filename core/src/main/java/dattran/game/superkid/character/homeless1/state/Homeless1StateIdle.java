@@ -25,16 +25,13 @@ public abstract class Homeless1StateIdle extends HomeLess1StateBase {
     @Override
     public void update(Homeless1Character homeless1, float delta) {
         super.update(homeless1, delta);
-        if (homeless1.getAttackCoolDown() <= 0) {
-            if (attackKid(homeless1) || huntKid(homeless1)) {
-                return;
-            }
-        }
-        if (stateTime > idleDuration) {
+
+        if (attackKid(homeless1) || huntKid(homeless1)) return;
+
+        if (stateTime >= idleDuration) {
             homeless1.getPhysic().setFacingRight(random.nextBoolean());
             homeless1.changeState(new Homeless1StateWalk());
         }
-
     }
 
     @Override

@@ -31,4 +31,8 @@ public abstract class BaseState<
 
         character.getPhysic().setCurrentFrame(frame);
     }
+
+    public float getStateTime() {
+        return stateTime;
+    }
 }

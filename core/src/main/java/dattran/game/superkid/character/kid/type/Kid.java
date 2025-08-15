@@ -25,7 +25,7 @@ public class Kid implements KidCharacter, Player {
     private KidState currentState;
     private final KidInput playerInput;
 
-    private int hp = 100;
+    private int hp = 10;
 
     private final KidHitBox kickHitBoxManager = KidHitBox.createKick(this);
     private final KidHitBox punchHitBoxManager = KidHitBox.createPunch(this);
