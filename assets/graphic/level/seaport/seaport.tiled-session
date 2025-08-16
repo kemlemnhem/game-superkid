@@ -5,11 +5,21 @@
     },
     "activeFile": "",
     "expandedProjectPaths": [
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "decorator/decorator.tsx": {
-            "dynamicWrapping": true
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "seaport.tmx": {
+            "scale": 0.9256727430555556,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 1152.135036924159,
+                "y": 320.3075841050287
+            }
         },
         "tileset/container.tsx": {
             "dynamicWrapping": false,
@@ -27,7 +37,8 @@
             "scaleInEditor": 1
         },
         "tileset/tileset1.tsx": {
-            "dynamicWrapping": false
+            "dynamicWrapping": false,
+            "scaleInDock": 1
         }
     },
     "last.imagePath": "C:/Projects/Privat/game/superkid/assets/graphic/level/seaport/decorator/fencing",
@@ -37,6 +48,7 @@
     ],
     "project": "seaport.tiled-project",
     "recentFiles": [
+        "seaport.tmx",
         "tileset/decorator.tsx",
         "tileset/container.tsx",
         "tileset/deco.tsx"

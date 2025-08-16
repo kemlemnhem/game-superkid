@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -22,6 +23,10 @@ import dattran.game.superkid.config.Flag;
 import dattran.game.superkid.config.GameConfig;
 import dattran.game.superkid.config.UserData;
 import dattran.game.superkid.listener.CharacterContactListener;
+import dattran.game.superkid.loader.graphic.homeless1.Homeless1AnimationLoader;
+import dattran.game.superkid.loader.graphic.kid.KidAnimationLoader;
+import dattran.game.superkid.ui.Hud;
+
 public class BaseScreen implements GameScreen {
     private final Batch batch;
 
@@ -33,6 +38,8 @@ public class BaseScreen implements GameScreen {
 
     private final TiledMap tiledMap;
     private final OrthogonalTiledMapRenderer mapRenderer;
+
+    private Hud hud;
 
     protected BaseScreen(Batch batch, String tileMap) {
         this.batch = batch;
@@ -90,15 +97,20 @@ public class BaseScreen implements GameScreen {
         for (RectangleMapObject object : tiledMap.getLayers().get("enemyObject").getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
             float x = rect.x / GameConfig.PPM;
-            float y = rect.y / GameConfig.PPM;
-
+            float y = (Homeless1AnimationLoader.instance.loadedResource().getMaxHeight() + 32) / (2*GameConfig.PPM);
             String type = object.getProperties().get("type", String.class);
             if ("Homeless1".equals(type)) {
                 new Homeless1(this, new Vector2(x,y), new Homeless1StateIdle1());
             }
         }
 
-        new Kid(this, new Vector2(64/*halb of kid width*/ / GameConfig.PPM,(32/*ground high*/ + 64 /*halb of kid height*/)/ GameConfig.PPM), new KidStateIdle());
+        float kidX = KidAnimationLoader.instance.loadedResource().getMaxWidth() / (2*GameConfig.PPM);
+        float kidY = (KidAnimationLoader.instance.loadedResource().getMaxHeight() + 32) / (2*GameConfig.PPM);
+        new Kid(this, new Vector2(kidX, kidY), new KidStateIdle());
+
+        //Hud
+
+        hud = new Hud(100);
     }
 
     private void createWall(float x, float centerY, float height) {
@@ -178,12 +190,20 @@ public class BaseScreen implements GameScreen {
         batch.begin();
         screenManager.render(batch);
         batch.end();
+        if (screenManager.getKid() != null) {
+            hud.updateHealth(screenManager.getKid().getHp());
+        }
+        else {
+            hud.updateHealth(0);
+        }
+        hud.draw();
     }
 
     @Override
     public void resize(int width, int height) {
         gameport.update(width, height);
         gameport.apply();
+        hud.resize(width, height);
     }
 
     @Override
@@ -206,6 +226,7 @@ public class BaseScreen implements GameScreen {
         world.dispose();
         tiledMap.dispose();
         mapRenderer.dispose();
+        hud.dispose();
     }
 
     @Override

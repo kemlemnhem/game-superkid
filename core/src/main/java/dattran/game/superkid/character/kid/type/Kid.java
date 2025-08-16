@@ -38,6 +38,8 @@ public class Kid implements KidCharacter, Player {
             .setCategoryFlags(Flag.KID)
             .setMaskFlags(Flag.ENEMY_ATTACK, Flag.GROUND, Flag.WALL)
             .setUserData(UserData.KID)
+            .setMaxHeight(KidAnimationLoader.instance.loadedResource().getMaxHeight())
+            .setMaxWidth(KidAnimationLoader.instance.loadedResource().getMaxWidth())
             .build();
         this.changeState(startState);
         playerInput = new KidInputKeyboard();

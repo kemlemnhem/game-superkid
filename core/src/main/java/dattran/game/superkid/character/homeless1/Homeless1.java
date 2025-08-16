@@ -20,7 +20,7 @@ public class Homeless1 implements Homeless1Character, Enemy {
     private final Physic physic;
 
     private Homeless1State currentState;
-    private int hp = 200;
+    private int hp = 20;
     private float attackCoolDown;
 
     private final Homeless1HitBox attack1BoxManager = Homeless1HitBox.createAttack1(this);
@@ -37,6 +37,8 @@ public class Homeless1 implements Homeless1Character, Enemy {
             .setCategoryFlags(Flag.ENEMY)
             .setMaskFlags(Flag.GROUND, Flag.KID_ATTACK, Flag.WALL)
             .setUserData(UserData.HOMELESS_1)
+            .setMaxWidth(Homeless1AnimationLoader.instance.loadedResource().getMaxWidth())
+            .setMaxHeight(Homeless1AnimationLoader.instance.loadedResource().getMaxHeight())
             .build();
         this.changeState(startState);
         gameScreen.getScreenManager().addEnemy(this);

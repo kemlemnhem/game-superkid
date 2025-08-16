@@ -6,6 +6,8 @@ import dattran.game.superkid.loader.LoadedResource;
 
 public class Homeless1Animation implements LoadedResource {
     private Animation<TextureRegion> attack1, attack2, dead, hurt, idle1, idle2, jump, fall, run, special, walk;
+    private int maxHeight;
+    private int maxWidth;
 
     public Animation<TextureRegion> getAttack1() {
         return attack1;
@@ -51,6 +53,13 @@ public class Homeless1Animation implements LoadedResource {
         return walk;
     }
 
+    public int getMaxHeight() {
+        return maxHeight;
+    }
+
+    public int getMaxWidth() {
+        return maxWidth;
+    }
 
     public static final class Homeless1AnimationBuilder {
         private Animation<TextureRegion> attack1;
@@ -64,6 +73,10 @@ public class Homeless1Animation implements LoadedResource {
         private Animation<TextureRegion> run;
         private Animation<TextureRegion> special;
         private Animation<TextureRegion> walk;
+
+        private int maxHeight;
+        private int maxWidth;
+
 
         private Homeless1AnimationBuilder() {
         }
@@ -127,6 +140,15 @@ public class Homeless1Animation implements LoadedResource {
             return this;
         }
 
+        public Homeless1AnimationBuilder withMaxHeight(int maxHeight) {
+            this.maxHeight = maxHeight;
+            return this;
+        }
+        public Homeless1AnimationBuilder withMaxWidth(int maxWidth) {
+            this.maxWidth = maxWidth;
+            return this;
+        }
+
         public Homeless1Animation build() {
             Homeless1Animation homeless1Animation = new Homeless1Animation();
             homeless1Animation.fall = this.fall;
@@ -140,6 +162,8 @@ public class Homeless1Animation implements LoadedResource {
             homeless1Animation.hurt = this.hurt;
             homeless1Animation.walk = this.walk;
             homeless1Animation.special = this.special;
+            homeless1Animation.maxHeight = this.maxHeight;
+            homeless1Animation.maxWidth = this.maxWidth;
             return homeless1Animation;
         }
     }

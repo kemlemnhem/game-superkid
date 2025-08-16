@@ -1,0 +1,159 @@
+Kid.png
+size: 250, 706
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+pma: false
+Dead-0
+  bounds: 115, 0, 43, 63
+  offsets: 34, 0, 128, 64
+Dead-1
+  bounds: 76, 0, 39, 60
+  offsets: 34, 0, 128, 64
+Dead-2
+  bounds: 0, 0, 76, 16
+  offsets: 33, 0, 128, 64
+Fall-1
+  bounds: 204, 621, 36, 85
+  offsets: 47, 0, 128, 128
+Fall-2
+  bounds: 0, 621, 39, 84
+  offsets: 43, 2, 128, 128
+Fall-3
+  bounds: 33, 373, 31, 82
+  offsets: 53, 0, 128, 128
+Fall-4
+  bounds: 34, 139, 35, 75
+  offsets: 53, 0, 128, 128
+Fall-5
+  bounds: 0, 139, 34, 73
+  offsets: 53, 0, 128, 128
+Hurt-0
+  bounds: 97, 68, 41, 71
+  offsets: 37, 0, 128, 128
+Hurt-1
+  bounds: 138, 68, 41, 71
+  offsets: 37, 0, 128, 128
+Hurt-2
+  bounds: 0, 68, 41, 70
+  offsets: 38, 0, 128, 128
+Idle0
+  bounds: 64, 373, 32, 82
+  offsets: 45, 0, 128, 128
+Idle1
+  bounds: 136, 455, 32, 83
+  offsets: 45, 0, 128, 128
+Idle2
+  bounds: 168, 455, 33, 83
+  offsets: 44, 0, 128, 128
+Idle3
+  bounds: 201, 455, 34, 83
+  offsets: 43, 0, 128, 128
+Idle4
+  bounds: 96, 373, 33, 82
+  offsets: 44, 0, 128, 128
+Idle5
+  bounds: 129, 373, 32, 82
+  offsets: 45, 0, 128, 128
+Jump-0
+  bounds: 48, 292, 41, 79
+  offsets: 41, 0, 128, 128
+Jump-1
+  bounds: 207, 0, 42, 68
+  offsets: 38, 0, 128, 128
+Jump-2
+  bounds: 158, 0, 49, 66
+  offsets: 32, 0, 128, 128
+Jump-3
+  bounds: 89, 292, 45, 80
+  offsets: 37, 0, 128, 128
+Jump-4
+  bounds: 134, 292, 41, 81
+  offsets: 41, 4, 128, 128
+Kick-0
+  bounds: 175, 292, 54, 81
+  offsets: 34, 0, 128, 128
+Kick-1
+  bounds: 0, 373, 33, 81
+  offsets: 49, 0, 128, 128
+Kick-2
+  bounds: 179, 68, 69, 71
+  offsets: 44, 0, 128, 128
+Kick-3
+  bounds: 41, 68, 56, 70
+  offsets: 38, 0, 128, 128
+Punch-0
+  bounds: 0, 538, 52, 83
+  offsets: 35, 0, 128, 128
+Punch-1
+  bounds: 161, 373, 56, 82
+  offsets: 35, 0, 128, 128
+Punch-2
+  bounds: 0, 455, 59, 82
+  offsets: 35, 0, 128, 128
+Run-0
+  bounds: 173, 215, 42, 77
+  offsets: 41, 0, 128, 128
+Run-1
+  bounds: 182, 139, 51, 76
+  offsets: 37, 0, 128, 128
+Run-2
+  bounds: 69, 139, 54, 75
+  offsets: 33, 0, 128, 128
+Run-3
+  bounds: 0, 215, 39, 76
+  offsets: 47, 0, 128, 128
+Run-4
+  bounds: 215, 215, 35, 77
+  offsets: 45, 0, 128, 128
+Run-5
+  bounds: 39, 215, 46, 76
+  offsets: 37, 0, 128, 128
+Run-6
+  bounds: 123, 139, 59, 75
+  offsets: 31, 0, 128, 128
+Run-7
+  bounds: 85, 215, 40, 76
+  offsets: 47, 0, 128, 128
+Shield-0
+  bounds: 0, 292, 48, 77
+  offsets: 40, 0, 128, 128
+Shield-1
+  bounds: 125, 215, 48, 76
+  offsets: 40, 0, 128, 128
+Thump-0
+  bounds: 59, 455, 38, 82
+  offsets: 37, 0, 128, 128
+Thump-1
+  bounds: 97, 455, 39, 82
+  offsets: 37, 0, 128, 128
+Thump-2
+  bounds: 52, 538, 55, 83
+  offsets: 38, 0, 128, 128
+Thump-3
+  bounds: 39, 621, 59, 84
+  offsets: 38, 0, 128, 128
+Walk-0
+  bounds: 98, 621, 26, 84
+  offsets: 44, 0, 128, 128
+Walk-1
+  bounds: 124, 621, 29, 84
+  offsets: 44, 0, 128, 128
+Walk-2
+  bounds: 107, 538, 37, 83
+  offsets: 39, 0, 128, 128
+Walk-3
+  bounds: 144, 538, 30, 83
+  offsets: 41, 0, 128, 128
+Walk-4
+  bounds: 153, 621, 24, 84
+  offsets: 44, 0, 128, 128
+Walk-5
+  bounds: 177, 621, 27, 84
+  offsets: 44, 0, 128, 128
+Walk-6
+  bounds: 174, 538, 35, 83
+  offsets: 40, 0, 128, 128
+Walk-7
+  bounds: 209, 538, 30, 83
+  offsets: 42, 0, 128, 128

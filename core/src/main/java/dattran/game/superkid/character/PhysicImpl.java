@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import dattran.game.superkid.character.base.type.GameCharacter;
+import dattran.game.superkid.character.homeless1.Homeless1;
+import dattran.game.superkid.character.kid.type.Kid;
 import dattran.game.superkid.config.Flag;
 import dattran.game.superkid.config.GameConfig;
 
@@ -15,12 +17,16 @@ public class PhysicImpl implements Physic {
     private int groundContacts = 0;
     private final World world;
     private Body body;
+    private final int maxWidth;
+    private final int maxHeight;
 
     private boolean remove = false;
 
-    private PhysicImpl(GameCharacter<?,?> character, World world, Vector2 startPosition, String userData, Flag[] categoryFlags, Flag[] maskFlags) {
+    private PhysicImpl(GameCharacter<?,?> character, World world, Vector2 startPosition, String userData, Flag[] categoryFlags, Flag[] maskFlags, int maxWidth, int maxHeight) {
         this.character = character;
         this.world = world;
+        this.maxWidth = maxWidth;
+        this.maxHeight = maxHeight;
         this.body = defineBody(startPosition, userData, categoryFlags, maskFlags);
     }
 
@@ -34,8 +40,8 @@ public class PhysicImpl implements Physic {
         body.setUserData(this);
 
         PolygonShape bodyShape = new PolygonShape();
-        float bodyWidth = GameConfig.KID_WIDTH/2;
-        float bodyHeight = GameConfig.KID_HEIGHT /2;
+        float bodyWidth = maxWidth /(2*GameConfig.PPM);
+        float bodyHeight = maxHeight /(2*GameConfig.PPM) - 0.1f;
         bodyShape.setAsBox(bodyWidth, bodyHeight);
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -136,6 +142,8 @@ public class PhysicImpl implements Physic {
         private String userData;
         private Flag[] categoryFlags;
         private Flag[] maskFlags;
+        private int maxWidth;
+        private int maxHeight;
 
         private PhysikImplBuilder() {
         }
@@ -174,8 +182,18 @@ public class PhysicImpl implements Physic {
             return this;
         }
 
+        public PhysikImplBuilder setMaxHeight(int maxHeight) {
+            this.maxHeight = maxHeight;
+            return this;
+        }
+
+        public PhysikImplBuilder setMaxWidth(int maxWidth) {
+            this.maxWidth = maxWidth;
+            return this;
+        }
+
         public PhysicImpl build() {
-            return new PhysicImpl(character, world, startPosition, userData, categoryFlags, maskFlags);
+            return new PhysicImpl(character, world, startPosition, userData, categoryFlags, maskFlags, maxWidth, maxHeight);
         }
     }
 }

@@ -46,8 +46,8 @@ public final class GameConfig {
     public static final float KID_THUMP_WIDTH = 0.2f;
     public static final float KID_THUMP_HEIGHT = 0.2f;
 
-    public static final float KID_WIDTH  = 128 / PPM ;
-    public static final float KID_HEIGHT = 128 / PPM;
+    public static final float KID_WIDTH  = 30 / PPM ;
+    public static final float KID_HEIGHT = 81 / PPM;
     public static final float KID_HURT_SHIFT_X = 0.1f;
     public static final float KID_HURT_SHIFT_Y = 0f;
 

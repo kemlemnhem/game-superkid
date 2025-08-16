@@ -6,6 +6,7 @@ import dattran.game.superkid.loader.LoadedResource;
 
 public class KidAnimation implements LoadedResource {
     private Animation<TextureRegion> dead, hurt, idle, jump, fall, kick, punch, run, shield, thump, walk;
+    private int maxWidth, maxHeight;
 
     public Animation<TextureRegion> getDead() {
         return dead;
@@ -51,6 +52,13 @@ public class KidAnimation implements LoadedResource {
         return fall;
     }
 
+    public int getMaxHeight() {
+        return maxHeight;
+    }
+
+    public int getMaxWidth() {
+        return maxWidth;
+    }
 
     public static final class KidAnimationBuilder {
         private Animation<TextureRegion> dead;
@@ -64,6 +72,8 @@ public class KidAnimation implements LoadedResource {
         private Animation<TextureRegion> shield;
         private Animation<TextureRegion> thump;
         private Animation<TextureRegion> walk;
+        private int maxHeight;
+        private int maxWidth;
 
         private KidAnimationBuilder() {
         }
@@ -127,6 +137,16 @@ public class KidAnimation implements LoadedResource {
             return this;
         }
 
+        public KidAnimationBuilder withMaxHeight(int maxHeight) {
+            this.maxHeight = maxHeight;
+            return this;
+        }
+
+        public KidAnimationBuilder withMaxWidth(int maxWidth) {
+            this.maxWidth = maxWidth;
+            return this;
+        }
+
         public KidAnimation build() {
             KidAnimation kidAnimation = new KidAnimation();
             kidAnimation.idle = this.idle;
@@ -140,6 +160,8 @@ public class KidAnimation implements LoadedResource {
             kidAnimation.run = this.run;
             kidAnimation.jump = this.jump;
             kidAnimation.fall = this.fall;
+            kidAnimation.maxWidth = this.maxWidth;
+            kidAnimation.maxHeight = this.maxHeight;
             return kidAnimation;
         }
     }
