@@ -5,6 +5,10 @@ public interface KidInput {
 
     boolean isMoveRightPressed();
 
+    boolean isMoveUpPressed();
+
+    boolean isMoveDownPressed();
+
     boolean isRunKeyHeld();
 
     boolean isKickPressed();
@@ -16,4 +20,5 @@ public interface KidInput {
     boolean isShieldPressed();
 
     boolean isJumpHeld();
+
 }

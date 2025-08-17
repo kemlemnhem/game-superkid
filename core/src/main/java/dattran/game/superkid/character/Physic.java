@@ -34,7 +34,15 @@ public interface Physic {
 
     void markForRemoval();
 
-    void moveForward(float speed);
+    void moveForward();
 
-    void moveBackward(float speed);
+    void moveBackward();
+
+    void moveUp();
+
+    void moveDown();
+
+    void stopY();
+
+    void stopX();
 }

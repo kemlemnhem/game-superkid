@@ -30,10 +30,10 @@ public class Homeless1StateRun extends HomeLess1StateBase {
 
         homeless1.getPhysic().setFacingRight(homeless1.getPhysic().getBody().getPosition().x < homeless1.getGameScreen().getScreenManager().getKid().getPhysic().getBody().getPosition().x);
         if (homeless1.getPhysic().isFacingRight()) {
-            homeless1.getPhysic().moveForward(GameConfig.HOMELESS_1_WALK_SPEED);
+            homeless1.getPhysic().moveForward();
         }
         else {
-            homeless1.getPhysic().moveBackward(GameConfig.HOMELESS_1_WALK_SPEED);
+            homeless1.getPhysic().moveBackward();
         }
     }
 }

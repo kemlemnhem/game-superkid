@@ -2,27 +2,11 @@ package dattran.game.superkid.character.kid.state;
 
 import dattran.game.superkid.character.kid.type.KidCharacter;
 import dattran.game.superkid.character.kid.input.KidInput;
-import dattran.game.superkid.config.GameConfig;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class KidStateWalk extends KidStateBase {
-    private static final Logger LOGGER = Logger.getLogger(KidStateWalk.class.getName());
     @Override
     public void handleInput(KidCharacter kid, KidInput input) {
-        if (input.isMoveLeftPressed()) {
-            kid.getPhysic().setFacingRight(false);
-            kid.getPhysic().moveBackward(GameConfig.KID_WALK_SPEED);
-        } else if (input.isMoveRightPressed()) {
-            kid.getPhysic().setFacingRight(true);
-            kid.getPhysic().moveForward(GameConfig.KID_WALK_SPEED);
-        } else if (input.isKickPressed()) {
-            kid.changeState(new KidStateKick());
-        } else {
-            kid.changeState(new KidStateIdle());
-        }
-
+       inMovingState(kid, input);
         if (input.isRunKeyHeld()) {
             kid.changeState(new KidStateRun());
         }

@@ -7,6 +7,8 @@ import com.badlogic.gdx.InputAdapter;
 public class KidInputKeyboard extends InputAdapter implements KidInput {
     private boolean moveLeftPressed;
     private boolean moveRightPressed;
+    private boolean moveUpPressed;
+    private boolean moveDownPressed;
     private boolean runKeyHeld;
     private boolean kickPressed;
     private boolean punchPressed;
@@ -22,6 +24,12 @@ public class KidInputKeyboard extends InputAdapter implements KidInput {
                 break;
             case Input.Keys.RIGHT:
                 moveRightPressed = true;
+                break;
+            case Input.Keys.UP:
+                moveUpPressed = true;
+                break;
+            case Input.Keys.DOWN:
+                moveDownPressed = true;
                 break;
             case Input.Keys.CONTROL_LEFT:
                 runKeyHeld = true;
@@ -53,6 +61,12 @@ public class KidInputKeyboard extends InputAdapter implements KidInput {
                 break;
             case Input.Keys.RIGHT:
                 moveRightPressed = false;
+                break;
+            case Input.Keys.UP:
+                moveUpPressed = false;
+                break;
+            case Input.Keys.DOWN:
+                moveDownPressed = false;
                 break;
             case Input.Keys.CONTROL_LEFT:
                 runKeyHeld = false;
@@ -88,6 +102,16 @@ public class KidInputKeyboard extends InputAdapter implements KidInput {
     @Override
     public boolean isMoveRightPressed() {
         return moveRightPressed;
+    }
+
+    @Override
+    public boolean isMoveUpPressed() {
+        return moveUpPressed;
+    }
+
+    @Override
+    public boolean isMoveDownPressed() {
+        return moveDownPressed;
     }
 
     @Override

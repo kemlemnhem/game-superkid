@@ -15,9 +15,9 @@ public class Homeless1StateWalk extends HomeLess1StateBase {
         super.update(homeless1, delta);
 
         if (homeless1.getPhysic().isFacingRight()) {
-            homeless1.getPhysic().moveForward(GameConfig.HOMELESS_1_WALK_SPEED);
+            homeless1.getPhysic().moveForward();
         } else {
-            homeless1.getPhysic().moveBackward(GameConfig.HOMELESS_1_WALK_SPEED);
+            homeless1.getPhysic().moveBackward();
         }
 
         if (attackKid(homeless1) || huntKid(homeless1)) return;

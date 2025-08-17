@@ -20,6 +20,8 @@ public final class GameConfig {
     public static final int VIEWPORT_HEIGHT = 832;
 
 
+    public static final float WALK_SPEED = 0.8f;
+
     public static final  float KID_JUMP_VELOCITY = 3f;
     public static final float KID_JUMP_SPEED = 1.4f;
     public static final float KID_JUMP_GRAVITY_SCALE_SLOW = 0.5f;

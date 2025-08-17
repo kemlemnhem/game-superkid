@@ -126,13 +126,33 @@ public class PhysicImpl implements Physic {
     }
 
     @Override
-    public void moveForward(float speed) {
-        body.setLinearVelocity(speed, body.getLinearVelocity().y);
+    public void moveForward() {
+        body.setLinearVelocity(GameConfig.WALK_SPEED, body.getLinearVelocity().y);
     }
 
     @Override
-    public void moveBackward(float speed) {
-        body.setLinearVelocity(-speed, body.getLinearVelocity().y);
+    public void moveBackward() {
+        body.setLinearVelocity(-GameConfig.WALK_SPEED, body.getLinearVelocity().y);
+    }
+
+    @Override
+    public void moveUp() {
+        body.setLinearVelocity(body.getLinearVelocity().x, GameConfig.WALK_SPEED);
+    }
+
+    @Override
+    public void moveDown() {
+        body.setLinearVelocity(body.getLinearVelocity().x, -GameConfig.WALK_SPEED);
+    }
+
+    @Override
+    public void stopY() {
+        body.setLinearVelocity(body.getLinearVelocity().x, 0);
+    }
+
+    @Override
+    public void stopX() {
+        body.setLinearVelocity(0, body.getLinearVelocity().y);
     }
 
     public static final class PhysikImplBuilder {
