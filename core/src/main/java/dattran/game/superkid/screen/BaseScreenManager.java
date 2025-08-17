@@ -5,23 +5,23 @@ import com.badlogic.gdx.math.Vector2;
 import dattran.game.superkid.character.base.type.GameCharacter;
 import dattran.game.superkid.character.kid.type.KidCharacter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class BaseScreenManager implements ScreenManager {
     private KidCharacter kid;
-    private Set<GameCharacter<?,?>> enemies = new HashSet<>();
+    private List<GameCharacter<?,?>> characters = new ArrayList<>();
     private float mapWidth, mapHeight;
     private Vector2 kidPosition;
     @Override
     public void addKid(KidCharacter kid) {
         this.kid = kid;
+        characters.add(kid);
         kidPosition = kid.getPhysic().getBody().getPosition();
     }
 
     @Override
     public void addEnemy(GameCharacter<?, ?> enemy) {
-        enemies.add(enemy);
+        characters.add(enemy);
     }
 
     @Override
@@ -32,25 +32,24 @@ public class BaseScreenManager implements ScreenManager {
     @Override
     public void render(Batch batch) {
         update();
-        for(GameCharacter<?,?> character : enemies) {
+        for(GameCharacter<?,?> character : characters) {
             character.render(batch);
-        }
-        if (kid != null) {
-            kid.render(batch);
         }
     }
 
     private void update() {
         Set<GameCharacter<?,?>> enemiesToRemove = new HashSet<>();
-        for (GameCharacter<?,?> character : enemies) {
+        for (GameCharacter<?,?> character : characters) {
             if (character.getPhysic().isReadyToRemove()) {
                 enemiesToRemove.add(character);
             }
         }
         for(GameCharacter<?,?> character : enemiesToRemove) {
             character.getPhysic().dispose();
-            enemies.remove(character);
+            characters.remove(character);
         }
+
+        characters.sort((o1, o2) -> Float.compare(o1.getPhysic().getBody().getPosition().y, o2.getPhysic().getBody().getPosition().y));
 
         if (kid != null) {
             kidPosition = kid.getPhysic().getBody().getPosition();

@@ -5,9 +5,9 @@
     },
     "activeFile": "seaport.tmx",
     "expandedProjectPaths": [
+        "tileset",
         "decorator",
-        ".",
-        "tileset"
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -16,12 +16,17 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "elec.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "seaport.tmx": {
-            "scale": 1,
-            "selectedLayer": 1,
+            "scale": 0.75,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 1072,
-                "y": 374.5
+                "x": 1007.9999999999999,
+                "y": 809.9999999999999
             }
         },
         "tileset/container.tsx": {
@@ -41,10 +46,18 @@
         },
         "tileset/fore.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 1,
+            "scaleInDock": 2,
             "scaleInEditor": 1
         },
         "tileset/ground_tile_set.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "tileset/imageTileSet.tsx": {
+            "dynamicWrapping": true
+        },
+        "tileset/night_dark_color.tsx": {
             "dynamicWrapping": false,
             "scaleInDock": 2,
             "scaleInEditor": 1
@@ -55,17 +68,20 @@
             "scaleInEditor": 1
         }
     },
-    "last.imagePath": "C:/Projects/Privat/game/superkid/assets/graphic/level/seaport/tileset",
+    "last.imagePath": "C:/Projects/Privat/game/superkid/assets/graphic/level/seaport/tileset/imageTile",
     "map.lastUsedFormat": "tmx",
     "map.width": 250,
     "openFiles": [
-        "seaport.tmx",
-        "tileset/fore.tsx"
+        "tileset/fore.tsx",
+        "tileset/night_dark_color.tsx",
+        "seaport.tmx"
     ],
     "project": "seaport.tiled-project",
     "recentFiles": [
-        "seaport.tmx",
         "tileset/fore.tsx",
+        "tileset/night_dark_color.tsx",
+        "seaport.tmx",
+        "elec.tsx",
         "tileset/tileset1.tsx",
         "decorator/decorator.tsx",
         "tileset/ground_tile_set.tsx",
@@ -79,5 +95,5 @@
         "height": 32,
         "width": 32
     },
-    "tileset.type": 0
+    "tileset.type": 1
 }

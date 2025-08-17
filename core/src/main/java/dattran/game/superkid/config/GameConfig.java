@@ -19,6 +19,9 @@ public final class GameConfig {
     public static final int VIEWPORT_WIDTH = 2304;
     public static final int VIEWPORT_HEIGHT = 832;
 
+    public static final int LANE_START_ROW = 3;
+    public static final int LANE_END_ROW = 13;
+
 
     public static final float WALK_SPEED = 0.8f;
 
@@ -69,12 +72,6 @@ public final class GameConfig {
     public static final float HOMELESS_1_DETECT_RANGE = 0.4f;
     public static final float HOMELESS_1_ATTACK_DELAY  = 2f;
 
-
-
-
-
-    public static final float SEAPORT_MAP_WIDTH = 2304 /*72 tile * 32 size*/ / PPM;
-    public static final float SEAPORT_MAP_HEIGHT = 640 /*20 tile * 32 size*/ / PPM;
 
 
 

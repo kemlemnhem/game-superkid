@@ -73,37 +73,17 @@ public class BaseScreen implements GameScreen {
         screenManager.setMapHeight(mapEndY);
         createMapBoundaries(mapStartX, mapEndX, mapEndY);
 
-        /*for (RectangleMapObject object : tiledMap.getLayers().get("groundObject").getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = object.getRectangle();
-            BodyDef bodyDef = new BodyDef();
-            Body body;
-            PolygonShape shape = new PolygonShape();
-            FixtureDef fixtureDef = new FixtureDef();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((rect.x + rect.width / 2) / GameConfig.PPM,
-                (rect.y + rect.height / 2) / GameConfig.PPM);
-            body = world.createBody(bodyDef);
-
-            shape.setAsBox(rect.width / 2 / GameConfig.PPM, rect.height / 2 / GameConfig.PPM);
-
-            fixtureDef.shape = shape;
-            fixtureDef.filter.categoryBits  = Flag.combine(Flag.GROUND);
-            fixtureDef.filter.maskBits = Flag.combine(Flag.KID, Flag.ENEMY);
-            body.createFixture(fixtureDef).setUserData("ground");
-            shape.dispose();
-        }
-
-        //Enemy Layer
-        for (RectangleMapObject object : tiledMap.getLayers().get("enemyObject").getObjects().getByType(RectangleMapObject.class)) {
+        for (RectangleMapObject object : tiledMap.getLayers().get("Enemy").getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
             float x = rect.x / GameConfig.PPM;
-            float y = (Homeless1AnimationLoader.instance.loadedResource().getMaxHeight() + 32) / (2*GameConfig.PPM);
+            float y = rect.y / GameConfig.PPM + (Homeless1AnimationLoader.instance.loadedResource().getMaxHeight() + 32) / (2*GameConfig.PPM);
             String type = object.getProperties().get("type", String.class);
             if ("Homeless1".equals(type)) {
                 new Homeless1(this, new Vector2(x,y), new Homeless1StateIdle1());
             }
-        }*/
+        }
 
+        // TODO change kidY
         float kidX = KidAnimationLoader.instance.loadedResource().getMaxWidth() / (2*GameConfig.PPM);
         float kidY = (KidAnimationLoader.instance.loadedResource().getMaxHeight() + 32) / (2*GameConfig.PPM);
         new Kid(this, new Vector2(kidX, kidY), new KidStateIdle());

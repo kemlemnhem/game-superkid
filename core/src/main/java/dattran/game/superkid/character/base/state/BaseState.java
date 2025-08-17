@@ -2,8 +2,10 @@ package dattran.game.superkid.character.base.state;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import dattran.game.superkid.character.base.type.GameCharacter;
-import dattran.game.superkid.character.homeless1.state.Homeless1StateHurt;
+import dattran.game.superkid.config.GameConfig;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +39,18 @@ public abstract class BaseState<
             character.getPhysic().setFacingRight(!character.getPhysic().isFacingRight());
             character.getPhysic().getBody().setLinearVelocity(character.getPhysic().isFacingRight() ? -0.2f : 0.2f, character.getPhysic().getBody().getLinearVelocity().y);
         }
+
+        float height = frame.getRegionHeight() / GameConfig.PPM;
+        float minY = height / 2 + 64 / GameConfig.PPM;
+        float maxY = (11 * 32) / GameConfig.PPM - height / 2;
+
+        Vector2 pos = character.getPhysic().getBody().getPosition();
+        float clampedY = MathUtils.clamp(pos.y, minY, maxY);
+
+        // Giữ nguyên X, chỉ clamp Y
+        character.getPhysic().getBody().setTransform(pos.x, clampedY, 0);
+
+
         boolean facingRight = character.getPhysic().isFacingRight();
         if (!facingRight && !frame.isFlipX()) {
             frame.flip(true, false);

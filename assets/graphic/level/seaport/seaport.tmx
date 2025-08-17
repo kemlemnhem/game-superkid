@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="250" height="26" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="1">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="250" height="26" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="10">
  <tileset firstgid="1" source="tileset/tileset1.tsx"/>
  <tileset firstgid="61" source="tileset/ground_tile_set.tsx"/>
  <tileset firstgid="265" source="tileset/fore.tsx"/>
  <tileset firstgid="289" source="tileset/night_dark_color.tsx"/>
- <layer id="9" name="BackgroundColor" width="250" height="34" locked="1">
+ <tileset firstgid="290" source="tileset/imageTileSet.tsx"/>
+ <layer id="9" name="BackgroundColor" width="250" height="34">
   <data encoding="base64" compression="zlib">
    eJztwwEJAAAMA6A9yvqXXI+jYC+pqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr64gDNvGkl
   </data>
  </layer>
- <imagelayer id="2" name="Background" locked="1" parallaxx="0.4" repeatx="1">
+ <imagelayer id="2" name="Background" parallaxx="0.4" repeatx="1">
   <image source="background/citynight.png" width="576" height="324"/>
  </imagelayer>
- <layer id="7" name="MidGround" width="250" height="34" locked="1">
+ <layer id="7" name="MidGround" width="250" height="34">
   <data encoding="base64" compression="zlib">
-   eJzt08tKlVEYx+HvxsxM2OUBDyWUmngGzzchEtE8QppbpjegYWLDFIsaZpjoffQHF/ghOtHdRJ8Hfqz1slnw7cFbVQAAAAAAAAAAAAAAAAAAAAAA3AXLl9pLX2vzVtpOn8u8k76k3SveXldLepBa08PUlh6l9tRIj9OT1JE6U1fqLr81/tcfh3tkpTrfxTfl/Jl+VRc7+i3tp4MyH6bv6Uftbb1Xtfvrcvak3tSX+tPT9CwNpOfpRRpMQ2k4vUwjlT2HZnlbne/i+3KeprPqYld/p6P0p8zH6W86qb2t9652Xy3naBpL42kiTaapNJ1m0myaS/NpIS2mpcqeQ7OspQ9p8xZv6z6m9XL/lDZu/mkAAAAAAAAAAAAAAADcIf8ALUNDrA==
+   eJzt00tKXEEYhuHjXsw+xAUYNQPvRKMDb8kmgkhwHkLIPBddgQYVHaqYYIZGVHQf+YIFXYg90QalfR54qSoOdajJ3zQAAAAAAAAAAAAAAAAAAAAAAHSD97faS/vVeTNtpZ/lvJ120u4dd9s1UtVX1X/rW7uAh1lpbmZxrawn6U/TmtGDdJiOyvk4/Uq/q7t1q9X+Q1kH0ss0mIbScHpV+j/Ho2ksjaeJNJmmGnMOnfKxuZnFL2W9StdNa1ZP0990Vs7n6SJdVnfrPlX7z2V9nabTTHqTZtNcaT4tpMW0lJbT2/SuMefQKV/Ttw7e/Z5+lP162rjnvwEAAACgG/X2PPYLWl48obcAAAAAAAAA8Dz8A45vRFc=
   </data>
  </layer>
  <layer id="6" name="Ground" width="250" height="34">
@@ -22,14 +23,24 @@
    eJzt1cEJhDAQQFH7L0htQNQGUo85z0VUHKO+B4HPkkXMspOuAwAAAAAAAAAAAAAAAAAAAAAAAAAgQ1/XUNeotf5sz3Utda1a6892K/NGa+0+11q7z7XW7nOt/9ytzButtftca+0+11q7z7X+c+/Ngyl85455E5+RMecy3uutHc/myn7n/Mx/JO7f63Jw/5mOz8iYcxnv9dY++lsU59xcl/B5C7NKa31vb6BFebA=
   </data>
  </layer>
- <layer id="5" name="Foreground1" width="250" height="34" locked="1">
+ <layer id="5" name="Foreground1" width="250" height="34">
   <data encoding="base64" compression="zlib">
    eJztz8EJwDAMA8DsP2HTDdosUUPJL+9AxB0I/JPVGgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDvqvTKvbjTk7w1edvpe3f+OrueylsZizs9yVuTt52+d+evs+sDW9e2tA==
   </data>
  </layer>
- <layer id="8" name="Foreground0" width="250" height="34" locked="1">
+ <layer id="8" name="Foreground0" width="250" height="34">
   <data encoding="base64" compression="zlib">
    eJzt0ksKwjAUQNF0qBOdKIqi+9+RugN1E75JqbSjYNKPnAOhoYPX3JKUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4tmpSWjdTn+J3OuZl6R1LP3/fJlq2f9CjY16W3tGe/xb7e6xHGu5Lr0N879h0z5KzdzFvnzmzZmu/uWbHVG1jdOT+59J3rEbHmPeuPf8z3r1ivdNwX3pd4nvXpnuWnH2KeefMmTVb+801O6ZqG6Mj9z+XvmM1Osa8d+35PyOtkro=
   </data>
  </layer>
+ <objectgroup id="10" name="Enemy">
+  <object id="1" type="Homeless1" x="529.333" y="720"/>
+  <object id="2" type="Homeless1" x="849.333" y="706.667"/>
+  <object id="4" type="Homeless1" x="645.333" y="788"/>
+  <object id="5" type="Homeless1" x="801.333" y="789.333"/>
+  <object id="6" type="Homeless1" x="985.333" y="698.667"/>
+  <object id="7" type="Homeless1" x="658.667" y="677.333"/>
+  <object id="8" type="Homeless1" x="358.667" y="688"/>
+  <object id="9" type="Homeless1" x="245.333" y="698.667"/>
+ </objectgroup>
 </map>

@@ -14,36 +14,6 @@ public class CharacterContactListener implements ContactListener {
         if (physic != null && isPhysikGroundContact(contact)) {
             physic.incrementGroundContacts();
         }
-
-      /*  if (isKidAttackHitsEnemy(contact)) {
-           KidCharacter kid = getKid(contact);
-           Enemy enemy = getEnemy(contact);
-           if (kid != null && enemy != null) {
-               if (kid.getPunchHitBoxManager().isEnableHitBox() && kid.getPunchHitBoxManager().shouldHit(enemy)) {
-                   kid.getPunchHitBoxManager().enemyIsGettingHit(enemy);
-               }
-               else if(kid.getThumpHitBoxManager().isEnableHitBox() && kid.getThumpHitBoxManager().shouldHit(enemy)) {
-                   kid.getThumpHitBoxManager().enemyIsGettingHit(enemy);
-               }
-               else if(kid.getKickHitBoxManager().isEnableHitBox() && kid.getKickHitBoxManager().shouldHit(enemy)) {
-                   kid.getKickHitBoxManager().enemyIsGettingHit(enemy);
-               }
-           }
-        }*/
-    }
-
-    private boolean isKidAttackHitsEnemy(Contact contact) {
-        String udA = (String) contact.getFixtureA().getUserData();
-        String udB = (String) contact.getFixtureB().getUserData();
-        return (isKidAttackHitBox(udA) && isEnemy(udB)) || (isKidAttackHitBox(udB) && isEnemy(udA));
-    }
-
-    private boolean isKidAttackHitBox(String userData) {
-        return UserData.KID_KICK.equals(userData) || UserData.KID_PUNCH.equals(userData) || UserData.KID_THUMP.equals(userData);
-    }
-
-    private boolean isEnemy(String userData) {
-        return userData.startsWith("enemy_");
     }
 
     @Override
@@ -88,32 +58,6 @@ public class CharacterContactListener implements ContactListener {
         }
         if (isPhysik(contact.getFixtureB())) {
            return (Physic) contact.getFixtureB().getBody().getUserData();
-        }
-        return null;
-    }
-
-    private KidCharacter getKid(Contact contact) {
-        Object userData = contact.getFixtureA().getBody().getUserData();
-        if (userData instanceof KidCharacter) {
-            return (KidCharacter) userData;
-        } else {
-            userData = contact.getFixtureB().getBody().getUserData();
-            if (userData instanceof KidCharacter) {
-                return (KidCharacter) userData;
-            }
-        }
-        return null;
-    }
-
-    private Enemy getEnemy(Contact contact) {
-        Object userData = contact.getFixtureA().getBody().getUserData();
-        if (userData instanceof Enemy) {
-            return (Enemy) userData;
-        } else {
-            userData = contact.getFixtureB().getBody().getUserData();
-            if (userData instanceof Enemy) {
-                return (Enemy) userData;
-            }
         }
         return null;
     }
