@@ -73,7 +73,7 @@ public class BaseScreen implements GameScreen {
         screenManager.setMapHeight(mapEndY);
         createMapBoundaries(mapStartX, mapEndX, mapEndY);
 
-        for (RectangleMapObject object : tiledMap.getLayers().get("groundObject").getObjects().getByType(RectangleMapObject.class)) {
+        /*for (RectangleMapObject object : tiledMap.getLayers().get("groundObject").getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
             BodyDef bodyDef = new BodyDef();
             Body body;
@@ -102,7 +102,7 @@ public class BaseScreen implements GameScreen {
             if ("Homeless1".equals(type)) {
                 new Homeless1(this, new Vector2(x,y), new Homeless1StateIdle1());
             }
-        }
+        }*/
 
         float kidX = KidAnimationLoader.instance.loadedResource().getMaxWidth() / (2*GameConfig.PPM);
         float kidY = (KidAnimationLoader.instance.loadedResource().getMaxHeight() + 32) / (2*GameConfig.PPM);
@@ -144,10 +144,10 @@ public class BaseScreen implements GameScreen {
 
     public void clampCamera() {
         camera.position.x = Math.max(camera.viewportWidth / 2f,
-            Math.min(camera.position.x, GameConfig.SEAPORT_MAP_WIDTH - camera.viewportWidth / 2f));
+            Math.min(camera.position.x, GameConfig.VIEWPORT_WIDTH - camera.viewportWidth / 2f));
 
         camera.position.y = Math.max(camera.viewportHeight / 2f,
-            Math.min(camera.position.y, GameConfig.SEAPORT_MAP_HEIGHT - camera.viewportHeight / 2f));
+            Math.min(camera.position.y, GameConfig.VIEWPORT_HEIGHT - camera.viewportHeight / 2f));
     }
 
     @Override
@@ -167,8 +167,8 @@ public class BaseScreen implements GameScreen {
         float halfViewportWidth = camera.viewportWidth / 2f;
         float halfViewportHeight = camera.viewportHeight / 2f;
 
-        float cameraX = Math.min(Math.max(kidPosition.x, halfViewportWidth), GameConfig.SEAPORT_MAP_WIDTH - halfViewportWidth);
-        float cameraY = Math.min(Math.max(kidPosition.y, halfViewportHeight), GameConfig.SEAPORT_MAP_HEIGHT - halfViewportHeight);
+        float cameraX = Math.min(Math.max(kidPosition.x, halfViewportWidth), GameConfig.VIEWPORT_WIDTH - halfViewportWidth);
+        float cameraY = Math.min(Math.max(kidPosition.y, halfViewportHeight), GameConfig.VIEWPORT_HEIGHT - halfViewportHeight);
         camera.position.set(cameraX, cameraY, 0);
         clampCamera();
         camera.update();
@@ -183,6 +183,7 @@ public class BaseScreen implements GameScreen {
             camera.viewportWidth + 4,
             camera.viewportHeight + 4
         );
+
 
         mapRenderer.render();
 

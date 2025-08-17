@@ -3,22 +3,25 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "seaport.tmx",
     "expandedProjectPaths": [
-        "."
+        "decorator",
+        ".",
+        "tileset"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "decorator/decorator.tsx": {
             "dynamicWrapping": true,
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "seaport.tmx": {
-            "scale": 0.9256727430555556,
-            "selectedLayer": 4,
+            "scale": 1,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 1152.135036924159,
-                "y": 320.3075841050287
+                "x": 1072,
+                "y": 374.5
             }
         },
         "tileset/container.tsx": {
@@ -36,27 +39,45 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "tileset/fore.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tileset/ground_tile_set.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
         "tileset/tileset1.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 1
+            "scaleInDock": 2,
+            "scaleInEditor": 1
         }
     },
-    "last.imagePath": "C:/Projects/Privat/game/superkid/assets/graphic/level/seaport/decorator/fencing",
+    "last.imagePath": "C:/Projects/Privat/game/superkid/assets/graphic/level/seaport/tileset",
     "map.lastUsedFormat": "tmx",
-    "map.width": 36,
+    "map.width": 250,
     "openFiles": [
+        "seaport.tmx",
+        "tileset/fore.tsx"
     ],
     "project": "seaport.tiled-project",
     "recentFiles": [
         "seaport.tmx",
-        "tileset/decorator.tsx",
+        "tileset/fore.tsx",
+        "tileset/tileset1.tsx",
+        "decorator/decorator.tsx",
+        "tileset/ground_tile_set.tsx",
         "tileset/container.tsx",
+        "tileset/decorator.tsx",
         "tileset/deco.tsx"
     ],
+    "resizeMap.removeObjects": false,
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 64,
-        "width": 128
+        "height": 32,
+        "width": 32
     },
-    "tileset.type": 1
+    "tileset.type": 0
 }
