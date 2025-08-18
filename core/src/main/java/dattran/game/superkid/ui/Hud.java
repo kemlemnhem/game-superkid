@@ -3,25 +3,23 @@ package dattran.game.superkid.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import dattran.game.superkid.config.GameConfig;
 
 public class Hud {
     private final Stage stage;
-    private final HealthBar healthBar;
+    private final HUDActor hudActor;
     private final float margin = 20;
+    private int currentHp;
 
-    public Hud(float maxHealth) {
+    public Hud() {
         stage = new Stage(new ScreenViewport());
-        healthBar = new HealthBar(maxHealth);
-
-        stage.addActor(healthBar);
-        updateSizeAndPosition(); // thiết lập kích thước và vị trí ban đầu
-    }
-
-    public void updateHealth(float currentHealth) {
-        healthBar.setHealth(currentHealth);
+        hudActor = new HUDActor();
+        stage.addActor(hudActor);
+        updateSizeAndPosition();
     }
 
     public void draw() {
@@ -40,74 +38,76 @@ public class Hud {
 
         float barWidth = viewportWidth * 0.25f;
         float barHeight = viewportHeight * 0.03f;
-        healthBar.setSize(barWidth, barHeight);
-        healthBar.setPosition(margin, viewportHeight - barHeight - margin);
+        hudActor.setSize(barWidth, barHeight);
+        hudActor.setPosition(margin, viewportHeight - barHeight - margin);
     }
 
     public void dispose() {
         stage.dispose();
     }
 
-    private static class HealthBar extends Actor {
-        private final Texture backgroundTexture;
-        private final Texture barTexture;
-        private final Texture borderTexture;
-        private float maxHealth;
-        private float currentHealth;
-        private float displayedHealth; // thanh hiện tại để animation
+    public void updateHealth(int hp) {
+        this.currentHp = hp;
+    }
 
-        private final float lerpSpeed = 3f; // tốc độ giảm máu mượt
 
-        public HealthBar(float maxHealth) {
-            this.maxHealth = maxHealth;
-            this.currentHealth = maxHealth;
-            this.displayedHealth = maxHealth;
+    private class HUDActor extends Group {
+        private final Image avatar;
+        private final Texture redHeart;
+        private final Texture silberHeart;
+        private final Texture halbRedHeart;
+        private final Texture halbSilberHeart;
 
-            backgroundTexture = new Texture("white_pixel.png");
-            barTexture = new Texture("white_pixel.png");
-            borderTexture = new Texture("white_pixel.png");
-        }
+        private HUDActor() {
+            this.avatar = new Image(new Texture(Gdx.files.internal("graphic/kid/avatar/24x24.png")));
+            this.redHeart = new Texture(Gdx.files.internal("graphic/other/Red_Heart_12x11.png"));
+            this.silberHeart = new Texture(Gdx.files.internal("graphic/other/Silber_Heart_12x11.png"));
 
-        public void setHealth(float health) {
-            this.currentHealth = Math.max(0, Math.min(maxHealth, health));
-        }
+            this.halbRedHeart = new Texture(Gdx.files.internal("graphic/other/Halb_Red_Heart_6x11.png"));
+            this.halbSilberHeart = new Texture(Gdx.files.internal("graphic/other/Halb_Silber_Heart_6x11.png"));
 
-        @Override
-        public void act(float delta) {
-            super.act(delta);
-            // giảm mượt thanh hiện tại về currentHealth
-            if(displayedHealth > currentHealth) {
-                displayedHealth -= lerpSpeed * maxHealth * delta;
-                if(displayedHealth < currentHealth) displayedHealth = currentHealth;
-            }
+            avatar.setPosition(10,10);
+            addActor(avatar);
         }
 
         @Override
         public void draw(Batch batch, float parentAlpha) {
-            float x = getX();
-            float y = getY();
-            float width = getWidth();
-            float height = getHeight();
+            super.draw(batch, parentAlpha);
 
-            // Shadow (bóng mờ)
-            batch.setColor(0, 0, 0, 0.5f);
-            batch.draw(backgroundTexture, x + 3, y - 3, width, height);
+            int heartWidth = 12;
+            int heartHeight = 11;
 
-            // Nền health bar
-            batch.setColor(0.2f, 0.2f, 0.2f, 1f);
-            batch.draw(backgroundTexture, x, y, width, height);
+            int startX = (int)(getX() + 24 + 20);
+            int startY = (int)(getY() + 20);
 
-            // Thanh đỏ health với animation
-            batch.setColor(1, 0, 0, 1f);
-            batch.draw(barTexture, x, y, width * (displayedHealth / maxHealth), height);
+            int hp = Hud.this.currentHp;
+            int maxHp = GameConfig.KID_MAX_HP;
+            int hearts = maxHp / 10;
 
-            // Viền (border)
-            batch.setColor(1, 1, 1, 1f);
-            float borderThickness = 2f;
-            batch.draw(borderTexture, x - borderThickness, y - borderThickness, width + 2 * borderThickness, borderThickness);
-            batch.draw(borderTexture, x - borderThickness, y + height, width + 2 * borderThickness, borderThickness);
-            batch.draw(borderTexture, x - borderThickness, y, borderThickness, height);
-            batch.draw(borderTexture, x + width, y, borderThickness, height);
+            for (int i = 0; i < hearts; i++) {
+                if (hp >= 10) {
+                    batch.draw(redHeart, startX + i * (heartWidth + 2), startY, heartWidth, heartHeight);
+                } else if (hp >= 5) {
+                    batch.draw(halbRedHeart, startX + i * (heartWidth + 2), startY, heartWidth / 2f, heartHeight);
+                    batch.draw(halbSilberHeart, startX + i * (heartWidth + 2) + heartWidth / 2f, startY, heartWidth / 2f, heartHeight);
+                } else {
+                    batch.draw(silberHeart, startX + i * (heartWidth + 2), startY, heartWidth, heartHeight);
+                }
+                hp -= 10;
+            }
         }
+
+
+        @Override
+        public void clear() {
+            super.clear();
+            avatar.clear();
+            redHeart.dispose();
+            silberHeart.dispose();
+            halbSilberHeart.dispose();
+            halbRedHeart.dispose();
+        }
+
     }
+
 }

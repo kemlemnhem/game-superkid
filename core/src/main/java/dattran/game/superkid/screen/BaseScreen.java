@@ -90,7 +90,7 @@ public class BaseScreen implements GameScreen {
 
         //Hud
 
-        hud = new Hud(100);
+        hud = new Hud();
     }
 
     private void createWall(float x, float centerY, float height) {

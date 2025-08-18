@@ -5,12 +5,14 @@ import com.badlogic.gdx.math.Vector2;
 public final class GameConfig {
 
 
-    private GameConfig() {}
+    private GameConfig() {
+    }
+
     public static final float PPM = 100;
 
     public static final float WORLD_GRAVITY = 0f;
 
-    public static final float WORLD_DELTA_TIME = 1/60f;
+    public static final float WORLD_DELTA_TIME = 1 / 60f;
 
     public static final int WORLD_VELOCITY_ITERATION = 6;
 
@@ -25,7 +27,7 @@ public final class GameConfig {
 
     public static final float WALK_SPEED = 0.8f;
 
-    public static final  float KID_JUMP_VELOCITY = 3f;
+    public static final float KID_JUMP_VELOCITY = 3f;
     public static final float KID_JUMP_SPEED = 1.4f;
     public static final float KID_JUMP_GRAVITY_SCALE_SLOW = 0.5f;
     public static final float KID_JUMP_GRAVITY_SCALE_NORMAL = 1f;
@@ -35,30 +37,30 @@ public final class GameConfig {
     public static final float KID_RUN_SPEED = 1.2f;
     public static final float KID_WALK_IDLE_DIFFERENCE = 0.1f;
 
-    public static final Vector2 KID_KICK_OFFSET_RIGHT = new Vector2(0.3f,0f);
-    public static final Vector2 KID_KICK_OFFSET_LEFT = new Vector2(-0.3f,0f);
+    public static final Vector2 KID_KICK_OFFSET_RIGHT = new Vector2(0.3f, 0f);
+    public static final Vector2 KID_KICK_OFFSET_LEFT = new Vector2(-0.3f, 0f);
     public static final float KID_KICK_WIDTH = 0.1f;
     public static final float KID_KICK_HEIGHT = 0.1f;
     public static final float KID_KICK_HIT_BOX_MAX_ALLOW_DISTANCE = 0.13f;
     public static final float KID_KICK_BODY_MAX_ALLOW_DISTANCE = 0.15f;
 
-    public static final Vector2 KID_PUNCH_OFFSET = new Vector2(0.3f,0.15f);
+    public static final Vector2 KID_PUNCH_OFFSET = new Vector2(0.3f, 0.15f);
     public static final float KID_PUNCH_WIDTH = 0.2f;
     public static final float KID_PUNCH_HEIGHT = 0.2f;
 
 
-    public static final Vector2 KID_THUMP_OFFSET = new Vector2(0.3f,0.15f);
+    public static final Vector2 KID_THUMP_OFFSET = new Vector2(0.3f, 0.15f);
     public static final float KID_THUMP_WIDTH = 0.2f;
     public static final float KID_THUMP_HEIGHT = 0.2f;
 
-    public static final float KID_WIDTH  = 30 / PPM ;
+    public static final int KID_MAX_HP = 100;
+    public static final float KID_WIDTH = 30 / PPM;
     public static final float KID_HEIGHT = 81 / PPM;
     public static final float KID_HURT_SHIFT_X = 0.1f;
     public static final float KID_HURT_SHIFT_Y = 0f;
 
 
-
-    public static final float HOMELESS1_WIDTH  = 128 / PPM ;
+    public static final float HOMELESS1_WIDTH = 128 / PPM;
     public static final float HOMELESS1_HEIGHT = 128 / PPM;
     public static final float HOMELESS1_HURT_SHIFT_X = 0.3f;
     public static final float HOMELESS1_HURT_SHIFT_Y = 0f;
@@ -70,9 +72,7 @@ public final class GameConfig {
 
     public static final float HOMELESS_1_VIEW_RANGE = 1.5f;
     public static final float HOMELESS_1_DETECT_RANGE = 0.4f;
-    public static final float HOMELESS_1_ATTACK_DELAY  = 2f;
-
-
+    public static final float HOMELESS_1_ATTACK_DELAY = 2f;
 
 
 }

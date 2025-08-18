@@ -13,6 +13,7 @@ import dattran.game.superkid.character.kid.input.KidInput;
 import dattran.game.superkid.character.kid.input.KidInputKeyboard;
 import dattran.game.superkid.character.kid.state.*;
 import dattran.game.superkid.config.Flag;
+import dattran.game.superkid.config.GameConfig;
 import dattran.game.superkid.config.UserData;
 import dattran.game.superkid.loader.graphic.kid.KidAnimationLoader;
 import dattran.game.superkid.screen.GameScreen;
@@ -25,7 +26,7 @@ public class Kid implements KidCharacter, Player {
     private KidState currentState;
     private final KidInput playerInput;
 
-    private int hp = 100;
+    private int hp = GameConfig.KID_MAX_HP;
 
     private final KidHitBox kickHitBoxManager = KidHitBox.createKick(this);
     private final KidHitBox punchHitBoxManager = KidHitBox.createPunch(this);
