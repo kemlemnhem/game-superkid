@@ -25,6 +25,7 @@ public class Homeless1StateRun extends HomeLess1StateBase {
             return;
         }
         if (dist <= GameConfig.HOMELESS_1_ATTACK_RANGE) {
+            homeless1.getPhysic().getBody().setLinearVelocity(0,0);
             return;
         }
 
@@ -35,5 +36,14 @@ public class Homeless1StateRun extends HomeLess1StateBase {
         else {
             homeless1.getPhysic().moveBackward();
         }
+
+        float epsilon = 0.1f;
+        float dy = homeless1.getPhysic().getBody().getPosition().y - kid.getPhysic().getBody().getPosition().y;
+        if (dy < -epsilon) {
+            homeless1.getPhysic().moveUp();
+        } else if (dy > epsilon) {
+            homeless1.getPhysic().moveDown();
+        }
+
     }
 }

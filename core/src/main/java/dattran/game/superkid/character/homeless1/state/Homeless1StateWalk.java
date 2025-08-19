@@ -20,6 +20,10 @@ public class Homeless1StateWalk extends HomeLess1StateBase {
             homeless1.getPhysic().moveBackward();
         }
 
+        if (random.nextFloat() < 0.01f) {
+            homeless1.getPhysic().setFacingRight(!homeless1.getPhysic().isFacingRight());
+        }
+
         if (attackKid(homeless1) || huntKid(homeless1)) return;
 
         if (stateTime >= walkDuration) {
